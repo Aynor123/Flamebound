@@ -1,11 +1,27 @@
+@font-face {
+    font-family: 'Game-Over';
+    src: url('../assets/Fonts/game-over.ttf');
+}
+
 body {
+    font-family: 'Game-Over', Arial, sans-serif;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    margin: 0;
 }
 
 canvas {
     background-color: black;
 }
+
+.background-img {
+    height: 100vh;
+    width: 100vw;
+    background-image: url('../assets/Background-Image.png');
+    background-size: cover;
+    background-position: bottom;
+}
+
+/* A pixel art wallpaper for a 2D game where a hooded fire mage with a sword must defeat a necromancer. */

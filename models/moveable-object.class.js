@@ -1,10 +1,10 @@
 class MoveableObject {
     x = 120;
-    y = 200;
+    y = 100;
     img;
     mirroredImg;
-    height = 200;
-    width = 200;
+    height = 300;
+    width = 300;
     
 
 
