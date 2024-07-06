@@ -6,6 +6,10 @@ class World {
         new Enemy()
     ];
 
+    skies = [
+        new Sky()
+    ];
+
     canvas;
     ctx;
 
@@ -18,6 +22,10 @@ class World {
     draw() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
+        this.skies.forEach(sky => {
+            this.ctx.drawImage(sky.img, sky.x, sky.y, sky.width, sky.height);
+        });
+
         this.ctx.drawImage(this.character.img, this.character.x, this.character.y, this.character.width, this.character.height);
 
         this.enemies.forEach(enemy => {
@@ -26,7 +34,7 @@ class World {
 
         //draw() wird immer wieder aufgerufen.
         let self = this;
-        requestAnimationFrame(function() {
+        requestAnimationFrame(function () {
             self.draw();
         });
     }
