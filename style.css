@@ -19,9 +19,14 @@ canvas {
 .background-img {
     height: 100vh;
     width: 100vw;
-    background-image: url('../assets/Background-Image.png');
+    background-image: url('../assets/Background-Image_2.png');
     background-size: cover;
-    background-position: bottom;
+    background-position: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
-/* A pixel art wallpaper for a 2D game where a hooded fire mage with a sword must defeat a necromancer. */
+/* A pixel art wallpaper for a 2D game where a hooded fire mage with a sword must defeat a necromancer. The background must be a graveyard. The name of the game is "Flamebound".
+A pixel art wallpaper with a graveyard in flames.*/
