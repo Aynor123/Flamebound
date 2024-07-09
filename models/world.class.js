@@ -22,24 +22,33 @@ class World {
 
     canvas;
 
+    keyboard;
+
     ctx;
 
-    constructor(canvas) {
+    camera_x = -100; //Nach links schieben nicht nach rechts.
+
+    constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
         this.canvas = canvas;
+        this.keyboard = keyboard;
         this.draw();
+        this.setWorld();
+    }
+
+    setWorld() {
+        this.character.world = this; //Alle Parameter aus Klasse World werdn in Klasse Character übergeben.
     }
 
     draw() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-
-        // this.skies.forEach(sky => {
-        //     this.addToMap(sky);
-        // });
+        // this.ctx.translate(this.camera_x, 0);
 
         this.addObjectsToMap(this.skies);
         this.addObjectsToMap(this.backgroundObjects);
         this.addObjectsToMap(this.enemies);
+
+        // this.ctx.translate(-this.camera_x, 0);
 
         this.addToMap(this.character);
 
@@ -57,6 +66,16 @@ class World {
     }
 
     addToMap(moveableObject) {
+        if (moveableObject.otherDirection) {
+            this.ctx.save();
+            this.ctx.translate(moveableObject.width, 0);
+            this.ctx.scale(-1, 1);
+            moveableObject.x = moveableObject.x * -1;
+        }
         this.ctx.drawImage(moveableObject.img, moveableObject.x, moveableObject.y, moveableObject.width, moveableObject.height);
+        if (moveableObject.otherDirection) {
+            this.ctx.restore();
+            moveableObject.x = moveableObject.x * -1;
+        }
     }
 }

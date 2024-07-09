@@ -3,6 +3,7 @@ class Sky extends MoveableObject {
     y = 0;
     width = 720;
     height = 480;
+    speed = 0.1;
 
     constructor() {
         super().loadImage('../assets/Backgrounds/Battlegrounds/PNG/Graveyard Battleground4/Bright/sky.png');
@@ -11,8 +12,12 @@ class Sky extends MoveableObject {
     }
 
     animate() {
-        setInterval( () => {
-            this.x -= 0.1;
+        this.moveLeft();
+    }
+
+    moveLeft() {
+        setInterval(() => {
+            this.x -= this.speed;
         }, 1000 / 60); // 60 FPS
     }
 

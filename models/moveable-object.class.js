@@ -7,6 +7,8 @@ class MoveableObject {
     width = 300;
     imageCache = {}; //JSON
     currentImage = 0;
+    speed = 0.1;
+    otherDirection = false;
 
     loadImage(path) {
         this.img = new Image(); // this.img= document.getElementbyId('image')
@@ -25,12 +27,16 @@ class MoveableObject {
         console.log('moving right');
     }
 
-    moveLeft() {
 
+    moveLeft() {
+        setInterval(() => {
+            this.x -= this.speed;
+        }, 1000 / 60); // 60 FPS
     }
+
 
     attack() {
 
     }
-    
+
 }
