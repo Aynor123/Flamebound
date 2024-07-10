@@ -10,7 +10,10 @@ class Character extends MoveableObject {
     ];
 
     world;
-    speed = 11.0;
+    speed = 1.5;
+    x = 0;
+   
+    
 
     constructor() {
         super().loadImage('../assets/Fire_Wizard/Walk/tile000.png');
@@ -24,18 +27,20 @@ class Character extends MoveableObject {
                 this.x -= this.speed;
                 this.otherDirection = true;
             }
-        }, 1000 / 9);
+            // this.world.camera_x = this.x; FALSCH?!
+        }, 1000 / 60);
 
         setInterval(() => {
             if (this.world.keyboard.RIGHT) {
                 this.x += this.speed;
                 this.otherDirection = false;
             }
-        }, 1000 / 9);
+            this.world.camera_x = -this.x;
+        }, 1000 / 60);
+        
 
         setInterval(() => {
             if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
-                // this.x += this.speed;
                 let i = this.currentImage % this.IMAGES_WALKING.length; // let i = 0 % 6; % steht für Modulu, der mathematische Rest ( 7tes Bild durch 6 ist 1 Rest 1) dh. i = 0, 1, 2, 3, 4, 5, 6, 0
                 let path = this.IMAGES_WALKING[i];
                 this.img = this.imageCache[path];

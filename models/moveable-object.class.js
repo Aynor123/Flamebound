@@ -1,5 +1,5 @@
 class MoveableObject {
-    x = 120;
+    x = 0;
     y = 100;
     img;
     mirroredImg;
