@@ -1,11 +1,13 @@
 class World {
     character = new Character();
 
-    enemies = level1.enemies;
+    level = level1;
 
-    skies = level1.skies;
+    // enemies = level1.enemies;
 
-    backgroundObjects = level1.backgroundObjects;
+    // skies = level1.skies;
+
+    // backgroundObjects = level1.backgroundObjects;
 
     // backgroundObjects = [
     //     new BackgroundObject('../assets/Backgrounds/Battlegrounds/PNG/Graveyard Battleground4/Bright/graves.png', 0, 0),
@@ -59,9 +61,9 @@ class World {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         this.ctx.translate(this.camera_x, 0);
 
-        this.addObjectsToMap(this.skies);
-        this.addObjectsToMap(this.backgroundObjects);
-        this.addObjectsToMap(this.enemies);
+        this.addObjectsToMap(this.level.skies);
+        this.addObjectsToMap(this.level.backgroundObjects);
+        this.addObjectsToMap(this.level.enemies);
 
         
 

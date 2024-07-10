@@ -11,7 +11,6 @@ class Character extends MoveableObject {
 
     world;
     speed = 1.5;
-    x = 0;
    
     
 
@@ -23,7 +22,7 @@ class Character extends MoveableObject {
 
     animate() {
         setInterval(() => {
-            if (this.world.keyboard.LEFT) {
+            if (this.world.keyboard.LEFT && this.x > 0) { // Forbids to walk further left at xxx pixel.
                 this.x -= this.speed;
                 this.otherDirection = true;
             }
@@ -31,11 +30,11 @@ class Character extends MoveableObject {
         }, 1000 / 60);
 
         setInterval(() => {
-            if (this.world.keyboard.RIGHT) {
+            if (this.world.keyboard.RIGHT && this.x < world.level.level_end_x) {
                 this.x += this.speed;
                 this.otherDirection = false;
             }
-            this.world.camera_x = -this.x;
+            this.world.camera_x = -this.x + 200; //Sets Character more to the right.
         }, 1000 / 60);
         
 
