@@ -11,8 +11,8 @@ class Character extends MoveableObject {
 
     world;
     speed = 1.5;
-   
-    
+    walking_sound = new Audio('../sounds/walking.mp3');
+
 
     constructor() {
         super().loadImage('../assets/Fire_Wizard/Walk/tile000.png');
@@ -22,21 +22,23 @@ class Character extends MoveableObject {
 
     animate() {
         setInterval(() => {
+            this.walking_sound.pause(); 
             if (this.world.keyboard.LEFT && this.x > 0) { // Forbids to walk further left at xxx pixel.
                 this.x -= this.speed;
                 this.otherDirection = true;
+                this.walking_sound.play(); 
             }
-            // this.world.camera_x = this.x; FALSCH?!
-        }, 1000 / 60);
 
-        setInterval(() => {
+
+   
             if (this.world.keyboard.RIGHT && this.x < world.level.level_end_x) {
                 this.x += this.speed;
                 this.otherDirection = false;
+                this.walking_sound.play(); 
             }
             this.world.camera_x = -this.x + 200; //Sets Character more to the right.
         }, 1000 / 60);
-        
+
 
         setInterval(() => {
             if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
