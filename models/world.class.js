@@ -90,7 +90,17 @@ class World {
             this.ctx.scale(-1, 1);
             moveableObject.x = moveableObject.x * -1;
         }
-        this.ctx.drawImage(moveableObject.img, moveableObject.x, moveableObject.y, moveableObject.width, moveableObject.height);
+
+        moveableObject.draw(this.ctx);
+
+        moveableObject.drawFrame(this.ctx);
+
+        this.ctx.beginPath();
+        this.ctx.lineWidth = '3';
+        this.ctx.strokeStyle = 'blue';
+        this.ctx.rect(moveableObject.x, moveableObject.y, moveableObject.width, moveableObject.height);
+        this.ctx.stroke();
+
         if (moveableObject.otherDirection) {
             this.ctx.restore();
             moveableObject.x = moveableObject.x * -1;

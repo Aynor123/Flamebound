@@ -21,7 +21,10 @@ class Enemy extends MoveableObject {
     }
 
     animate() {
-        this.moveLeft();
+        setInterval(() => {
+            this.moveLeft();
+        }, 1000 / 60);
+        
         setInterval(() => {
             let i = this.currentImage % this.IMAGES_WALKING.length;
             let path = this.IMAGES_WALKING[i];
