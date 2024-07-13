@@ -85,11 +85,13 @@ class MoveableObject {
     }
 
     drawFrame(ctx) {
-        ctx.beginPath();
-        ctx.lineWidth = '3';
-        ctx.strokeStyle = 'blue';
-        ctx.rect(this.x, this.y, this.width - 100, this.height -100);
-        ctx.stroke();
-    }
+        if (this instanceof Character || this instanceof Enemy) { // instanceof will show frames only fpr Character and Enemy
 
+            ctx.beginPath();
+            ctx.lineWidth = '3';
+            ctx.strokeStyle = 'red';
+            ctx.rect(this.x + 120, this.y + 145, this.width - 250, this.height - 145);
+            ctx.stroke();
+        }
+    }
 }
