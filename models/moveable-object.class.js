@@ -15,6 +15,7 @@ class MoveableObject {
     isJumping = false;
     health = 100;
     lastHit = 0;
+    hasPlayedAnimation = false;
 
     playJumpAnimation(images) {
         let i = this.currentImage % images.length;
@@ -41,15 +42,39 @@ class MoveableObject {
         this.currentImage++;
     }
 
+
     playOneTimeAnimation(images) {
-        setInterval(() => {
-            this.currentImage = 0;
-            if (this.currentImage <= images.length) {
-                let path = images[this.currentImage];
+        // let i = this.currentImage;
+        // let path = images[i];
+        // this.img = this.imageCache[path];
+        // if (this.currentImage < images.length) {
+        //     this.currentImage++;
+        // } else {
+        //     this.hasPlayedDeathAnimation = true;
+        // }
+
+        // this.currentImage = 0;
+
+        let i = 0;
+
+            if (i < 6) {
+                let path = images[i];
                 this.img = this.imageCache[path];
-                this.currentImage++;
+            } else {
+                return;
             }
-        }, 9);
+            i++;
+        
+
+        // if (this.currentImage < images.length && !this.hasPlayedAnimation) {
+        //     let i = this.currentImage;
+        //     let path = images[i];
+        //     this.img = this.imageCache[path];
+        //     this.currentImage++;
+        // } else {
+        //     this.hasPlayedAnimation = true;
+        //     return;
+        // }
     }
 
     applyGravity() {

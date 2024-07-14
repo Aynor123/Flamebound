@@ -76,41 +76,43 @@ class Character extends MoveableObject {
         }, 1000 / 60);
 
 
+        // let i = 0;
+        // setInterval(() => {
+        //     if (i < 6 && this.isDead()) {
+        //         this.playAnimation(this.IMAGES_DEAD);
+        //     } else {
+        //         return;
+        //     }
+        //     i++;
+        // }, 1000 / 9);
+
+        // setInterval(() => {
+        //    if (this.isHurt()) {
+        //         this.playAnimation(this.IMAGES_HURT);
+        //     } else if (this.isAboveGround()) {
+        //         this.playAnimation(this.IMAGES_JUMPING);
+        //     } else {
+        //         if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
+        //             this.playAnimation(this.IMAGES_WALKING);
+        //         }
+        //     }
+        // }, 1000 / 9);
+
+        let death = 0;
         setInterval(() => {
-
-            // if (this.world.keyboard.SPACE && !this.isAboveGround()) {
-            //     this.isJumping = true; // Set jumping state when SPACE is pressed
-            //     this.playJumpAnimation(this.IMAGES_JUMPING);
-            //     // Only set speedY after the first three frames
-            //     if (this.currentImage > 3) {
-            //         this.speedY = 17; // Sets jump height
-            //     } else {
-            //         this.speedY = 0; // Keep speedY zero for the first three frames
-            //     }
-            // } else {
-            //     if (!this.isAboveGround && (this.world.keyboard.RIGHT || this.world.keyboard.LEFT))
-            //         this.playAnimation(this.IMAGES_WALKING);
-            //     this.isJumping = false; // Ensure jumping state is reset when not jumping
-            // }
-
-            if (this.isDead()) {
-                this.playOneTimeAnimation(this.IMAGES_DEAD);
-            } else if (this.isHurt()) {
+            if (this.isDead() && death < this.IMAGES_DEAD.length) {
+                this.playAnimation(this.IMAGES_DEAD);
+                death++;
+            } else if (this.isHurt() && !this.isDead()) {
                 this.playAnimation(this.IMAGES_HURT);
             } else if (this.isAboveGround()) {
                 this.playAnimation(this.IMAGES_JUMPING);
             } else {
-
                 if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
                     this.playAnimation(this.IMAGES_WALKING);
-                    // let i = this.currentImage % this.IMAGES_WALKING.length; // let i = 0 % 6; % steht für Modulu, der mathematische Rest ( 7tes Bild durch 6 ist 1 Rest 1) dh. i = 0, 1, 2, 3, 4, 5, 6, 0
-                    // let path = this.IMAGES_WALKING[i];
-                    // this.img = this.imageCache[path];
-                    // this.currentImage++;
                 }
             }
         }, 1000 / 9);
-
     }
 
 }
