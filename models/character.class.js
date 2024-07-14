@@ -21,6 +21,21 @@ class Character extends MoveableObject {
         '../assets/Fire_Wizard/Jump/tile008.png'
     ];
 
+    IMAGES_DEAD = [
+        '../assets/Fire_Wizard/Dead/tile000.png',
+        '../assets/Fire_Wizard/Dead/tile001.png',
+        '../assets/Fire_Wizard/Dead/tile002.png',
+        '../assets/Fire_Wizard/Dead/tile003.png',
+        '../assets/Fire_Wizard/Dead/tile004.png',
+        '../assets/Fire_Wizard/Dead/tile005.png'
+    ];
+
+    IMAGES_HURT = [
+        '../assets/Fire_Wizard/Hurt/tile000.png',
+        '../assets/Fire_Wizard/Hurt/tile001.png',
+        '../assets/Fire_Wizard/Hurt/tile002.png'
+    ];
+
     world;
     speed = 1.5;
     walking_sound = new Audio('../sounds/walking.mp3');
@@ -30,6 +45,8 @@ class Character extends MoveableObject {
     constructor() {
         super().loadImage('../assets/Fire_Wizard/Walk/tile000.png');
         this.loadImages(this.IMAGES_WALKING);
+        this.loadImages(this.IMAGES_DEAD);
+        this.loadImages(this.IMAGES_HURT);
         this.loadImages(this.IMAGES_JUMPING);
         this.applyGravity();
         this.animate();
@@ -76,9 +93,11 @@ class Character extends MoveableObject {
             //     this.isJumping = false; // Ensure jumping state is reset when not jumping
             // }
 
-
-
-            if (this.isAboveGround()) {
+            if (this.isDead()) {
+                this.playOneTimeAnimation(this.IMAGES_DEAD);
+            } else if (this.isHurt()) {
+                this.playAnimation(this.IMAGES_HURT);
+            } else if (this.isAboveGround()) {
                 this.playAnimation(this.IMAGES_JUMPING);
             } else {
 

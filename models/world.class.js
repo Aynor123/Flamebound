@@ -51,10 +51,22 @@ class World {
         this.keyboard = keyboard;
         this.draw();
         this.setWorld();
+        this.checkCollisions();
     }
 
     setWorld() {
         this.character.world = this; //Alle Parameter aus Klasse World werdn in Klasse Character übergeben.
+    }
+
+    checkCollisions() {
+        setInterval(() => {
+            this.level.enemies.forEach((i) => {
+                if (this.character.isColliding(i)) {
+                    this.character.isHit();
+                     console.log('collision with char, health is', this.character.health);
+                }
+            });
+        }, 1000 / 30);
     }
 
     draw() {
@@ -108,19 +120,4 @@ class World {
         this.ctx.restore();
         moveableObject.x = moveableObject.x * -1;
     }
-    
-    isColliding(moveableObject) {
-        return this.x + this.width > moveableObject.x &&
-        this.y + this.height > moveableObject.y &&
-        this.x < moveableObject.x &&
-        this.y < moveableObject.y + moveableObject.height
-    }
-
-//     isColliding (obj) {
-//         return  (this.X + this.width) >= obj.X && this.X <= (obj.X + obj.width) && 
-//                 (this.Y + this.offsetY + this.height) >= obj.Y &&
-//                 (this.Y + this.offsetY) <= (obj.Y + obj.height) && 
-//                 obj.onCollisionCourse; // Optional: hiermit könnten wir schauen, ob ein Objekt sich in die richtige Richtung bewegt. Nur dann kollidieren wir. Nützlich bei Gegenständen, auf denen man stehen kann.
-
-// }
 }

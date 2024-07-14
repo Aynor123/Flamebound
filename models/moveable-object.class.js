@@ -13,6 +13,8 @@ class MoveableObject {
     acceleration = 1.3;
     jumpFrameCount = 0; // Tracks frames since jump started
     isJumping = false;
+    health = 100;
+    lastHit = 0;
 
     playJumpAnimation(images) {
         let i = this.currentImage % images.length;
@@ -37,6 +39,17 @@ class MoveableObject {
         let path = images[i];
         this.img = this.imageCache[path];
         this.currentImage++;
+    }
+
+    playOneTimeAnimation(images) {
+        setInterval(() => {
+            this.currentImage = 0;
+            if (this.currentImage <= images.length) {
+                let path = images[this.currentImage];
+                this.img = this.imageCache[path];
+                this.currentImage++;
+            }
+        }, 9);
     }
 
     applyGravity() {
@@ -93,5 +106,40 @@ class MoveableObject {
             ctx.rect(this.x + 120, this.y + 145, this.width - 250, this.height - 145);
             ctx.stroke();
         }
+    }
+
+    //character.isColliding(enemy);
+    isColliding(moveableObject) {
+        return this.x + 120 + this.width - 250 > moveableObject.x + 120 &&
+            this.y + 145 + this.height - 145 > moveableObject.y + 145 &&
+            this.x + 120 < moveableObject.x + 120 &&
+            this.y + 145 < moveableObject.y + 145 + moveableObject.height - 145;
+    }
+
+    //     isColliding (obj) {
+    //         return  (this.X + this.width) >= obj.X && this.X <= (obj.X + obj.width) && 
+    //                 (this.Y + this.offsetY + this.height) >= obj.Y &&
+    //                 (this.Y + this.offsetY) <= (obj.Y + obj.height) && 
+    //                 obj.onCollisionCourse; // Optional: hiermit könnten wir schauen, ob ein Objekt sich in die richtige Richtung bewegt. Nur dann kollidieren wir. Nützlich bei Gegenständen, auf denen man stehen kann.
+
+    // }
+
+    isHit() {
+        this.health -= 1;
+        if (this.health < 0) {
+            this.health = 0;
+        } else {
+            this.lastHit = new Date().getTime();
+        }
+    }
+
+    isDead() {
+        return this.health == 0;
+    }
+
+    isHurt() {
+        let timePassed = new Date().getTime() - this.lastHit; // Difference in ms.
+        timePassed = timePassed / 1000; // Difference in s.
+        return timePassed < 0.8; // true if hit between 5 seconds.
     }
 }
