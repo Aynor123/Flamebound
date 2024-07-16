@@ -40,6 +40,7 @@ class Character extends MoveableObject {
     speed = 1.5;
     walking_sound = new Audio('../sounds/walking.mp3');
     y = 100;
+    
 
 
     constructor() {
@@ -98,11 +99,16 @@ class Character extends MoveableObject {
         //     }
         // }, 1000 / 9);
 
-        let death = 0;
-        setInterval(() => {
-            if (this.isDead() && death < this.IMAGES_DEAD.length) {
-                this.playAnimation(this.IMAGES_DEAD);
-                death++;
+        let deathFrame = 0;
+        let isReset = true;
+        let charInterval = setInterval(() => {
+            if (this.isDead() && deathFrame < this.IMAGES_DEAD.length) {
+                this.playOneTimeAnimation(this.IMAGES_DEAD, isReset);
+                isReset = false;
+                deathFrame++;
+                if (deathFrame === this.IMAGES_DEAD.length) {
+                    clearInterval(charInterval);
+                }
             } else if (this.isHurt() && !this.isDead()) {
                 this.playAnimation(this.IMAGES_HURT);
             } else if (this.isAboveGround()) {

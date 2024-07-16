@@ -1,12 +1,5 @@
-class MoveableObject {
-    x = 0;
-    y = 100;
-    img;
+class MoveableObject extends DrawableObject {
     mirroredImg;
-    height = 300;
-    width = 300;
-    imageCache = {}; //JSON
-    currentImage = 0;
     speed = 0.1;
     otherDirection = false;
     speedY = 0;
@@ -35,6 +28,13 @@ class MoveableObject {
         this.speedY = 20; //Sets jump height
     }
 
+    // playAnimation(images) {
+    //     let i = this.currentImage % images.length;
+    //     let path = images[i];
+    //     this.img = this.imageCache[path];
+    //     this.currentImage++;
+    // }
+
     playAnimation(images) {
         let i = this.currentImage % images.length;
         let path = images[i];
@@ -42,40 +42,17 @@ class MoveableObject {
         this.currentImage++;
     }
 
-
-    playOneTimeAnimation(images) {
-        // let i = this.currentImage;
-        // let path = images[i];
-        // this.img = this.imageCache[path];
-        // if (this.currentImage < images.length) {
-        //     this.currentImage++;
-        // } else {
-        //     this.hasPlayedDeathAnimation = true;
-        // }
-
-        // this.currentImage = 0;
-
-        let i = 0;
-
-            if (i < 6) {
-                let path = images[i];
-                this.img = this.imageCache[path];
-            } else {
-                return;
-            }
-            i++;
-        
-
-        // if (this.currentImage < images.length && !this.hasPlayedAnimation) {
-        //     let i = this.currentImage;
-        //     let path = images[i];
-        //     this.img = this.imageCache[path];
-        //     this.currentImage++;
-        // } else {
-        //     this.hasPlayedAnimation = true;
-        //     return;
-        // }
+    playOneTimeAnimation(images, isReset) {
+        if (isReset) {
+            this.currentImage = 0;  // Reset the current image index if needed.
+        }
+        let i = this.currentImage % images.length;
+        let path = images[i];
+        this.img = this.imageCache[path];
+        this.currentImage++;
+        isReset = false;
     }
+
 
     applyGravity() {
         setInterval(() => {
@@ -90,36 +67,17 @@ class MoveableObject {
         return this.y < 100;
     }
 
-    loadImage(path) {
-        this.img = new Image(); // this.img= document.getElementbyId('image')
-        this.img.src = path;
-    }
-
-    loadImages(arr) {
-        arr.forEach(path => {
-            let img = new Image();
-            img.src = path;
-            this.imageCache[path] = img;
-        });
-    }
-
     moveRight() {
         this.x += this.speed;
         this.walking_sound.play();
     }
 
-
     moveLeft() {
         this.x -= this.speed;
     }
 
-
     attack() {
 
-    }
-
-    draw(ctx) {
-        ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
     }
 
     drawFrame(ctx) {
@@ -160,6 +118,7 @@ class MoveableObject {
 
     isDead() {
         return this.health == 0;
+        
     }
 
     isHurt() {

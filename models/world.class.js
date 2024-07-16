@@ -1,49 +1,11 @@
 class World {
     character = new Character();
-
     level = level1;
-
-    // enemies = level1.enemies;
-
-    // skies = level1.skies;
-
-    // backgroundObjects = level1.backgroundObjects;
-
-    // backgroundObjects = [
-    //     new BackgroundObject('../assets/Backgrounds/Battlegrounds/PNG/Graveyard Battleground4/Bright/graves.png', 0, 0),
-    //     new BackgroundObject('../assets/Backgrounds/Battlegrounds/PNG/Graveyard Battleground4/Bright/back_trees.png', 0, 0),
-    //     new BackgroundObject('../assets/Backgrounds/Battlegrounds/PNG/Graveyard Battleground4/Bright/tree.png', 0, 0),
-    //     new BackgroundObject('../assets/Backgrounds/Battlegrounds/PNG/Graveyard Battleground4/Bright/wall.png', 0, 0),
-    //     new BackgroundObject('../assets/Backgrounds/Battlegrounds/PNG/Graveyard Battleground4/Pale/ground.png', 0, 0),
-    //     new BackgroundObject('../assets/Backgrounds/Battlegrounds/PNG/Graveyard Battleground4/Bright/wall_mirrored.png', 0, 250),
-
-    //     new BackgroundObject('../assets/Backgrounds/Battlegrounds/PNG/Graveyard Battleground4/Bright/graves.png', 720, 0),
-    //     new BackgroundObject('../assets/Backgrounds/Battlegrounds/PNG/Graveyard Battleground4/Bright/back_trees.png', 720, 0),
-    //     new BackgroundObject('../assets/Backgrounds/Battlegrounds/PNG/Graveyard Battleground4/Bright/wall.png', 720, 0),
-    //     new BackgroundObject('../assets/Backgrounds/Battlegrounds/PNG/Graveyard Battleground4/Pale/ground.png', 720, 0),
-    //     new BackgroundObject('../assets/Backgrounds/Battlegrounds/PNG/Graveyard Battleground4/Bright/wall_mirrored.png', 720, 250),
-
-    //     new BackgroundObject('../assets/Backgrounds/Battlegrounds/PNG/Graveyard Battleground4/Bright/graves.png', 720 * 2, 0),
-    //     new BackgroundObject('../assets/Backgrounds/Battlegrounds/PNG/Graveyard Battleground4/Bright/back_trees.png', 720 * 2, 0),
-    //     new BackgroundObject('../assets/Backgrounds/Battlegrounds/PNG/Graveyard Battleground4/Bright/crypt.png', 720 * 2, 0),
-    //     new BackgroundObject('../assets/Backgrounds/Battlegrounds/PNG/Graveyard Battleground4/Bright/wall.png', 720 * 2, 0),
-    //     new BackgroundObject('../assets/Backgrounds/Battlegrounds/PNG/Graveyard Battleground4/Pale/ground.png', 720 * 2, 0),
-    //     new BackgroundObject('../assets/Backgrounds/Battlegrounds/PNG/Graveyard Battleground4/Bright/wall_mirrored.png', 720 * 2, 250)
-    // ]
-
-    // skies = [
-    //     new Sky('../assets/Backgrounds/Battlegrounds/PNG/Graveyard Battleground4/Bright/sky.png', 0, 0),
-    //     new Sky('../assets/Backgrounds/Battlegrounds/PNG/Graveyard Battleground4/Bright/sky.png', 720, 0),
-    //     new Sky('../assets/Backgrounds/Battlegrounds/PNG/Graveyard Battleground4/Bright/sky.png', 720 * 2, 0)
-    // ]
-
     canvas;
-
     keyboard;
-
     ctx;
-
     camera_x = 0; //Nach links schieben nicht nach rechts. Value irrelevant für meinen Code?
+    statusBar = new StatusBar();
 
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
@@ -72,13 +34,10 @@ class World {
     draw() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         this.ctx.translate(this.camera_x, 0);
-
+        this.addToMap(this.statusBar);
         this.addObjectsToMap(this.level.skies);
         this.addObjectsToMap(this.level.backgroundObjects);
         this.addObjectsToMap(this.level.enemies);
-
-
-
         this.addToMap(this.character);
         this.ctx.translate(-this.camera_x, 0);
 
