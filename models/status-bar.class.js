@@ -1,5 +1,10 @@
 class StatusBar extends DrawableObject {
-    IMAGE_STATUSBARFRAME = '../assets/Status-Bars/LoadingBar_5_Background.png';
+
+
+
+    IMAGE_STATUSBARFRAME = [
+        '../assets/Status-Bars/LoadingBar_5_Background.png'
+    ];
 
     IMAGES_HEALTH = [
         '../assets/Status-Bars/LoadingBar_5_Fill_Red_100.png',
@@ -12,8 +17,11 @@ class StatusBar extends DrawableObject {
     constructor() {
         super();
         this.loadImages(this.IMAGES_HEALTH);
-        this.x = 100;
-        this.y = 100;
+        this.loadImages(this.IMAGE_STATUSBARFRAME);
+        this.x = 30;
+        this.y = 20;
+        this.width = 200;
+        this.height = 30;
         this.setPercentage(100);
     }
 
@@ -28,7 +36,7 @@ class StatusBar extends DrawableObject {
             return 0;
         } else if (this.percentage > 90) {
             return 1;
-        } else if (this.percentage > 80) {
+        } else {
             return 2;
         }
     }

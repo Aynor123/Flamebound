@@ -25,7 +25,7 @@ class World {
             this.level.enemies.forEach((i) => {
                 if (this.character.isColliding(i)) {
                     this.character.isHit();
-                     console.log('collision with char, health is', this.character.health);
+                     this.statusBar.setPercentage();
                 }
             });
         }, 1000 / 30);
@@ -34,11 +34,15 @@ class World {
     draw() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         this.ctx.translate(this.camera_x, 0);
-        this.addToMap(this.statusBar);
         this.addObjectsToMap(this.level.skies);
         this.addObjectsToMap(this.level.backgroundObjects);
         this.addObjectsToMap(this.level.enemies);
         this.addToMap(this.character);
+        
+        this.ctx.translate(-this.camera_x, 0); // Back. Nächste Funktion umschließen, um Objekt an Position zu halten.
+        this.addToMap(this.statusBar);
+        this.ctx.translate(this.camera_x, 0); // Forward
+
         this.ctx.translate(-this.camera_x, 0);
 
         //draw() wird immer wieder aufgerufen.
