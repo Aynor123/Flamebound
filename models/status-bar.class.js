@@ -7,9 +7,17 @@ class StatusBar extends DrawableObject {
     ];
 
     IMAGES_HEALTH = [
-        '../assets/Status-Bars/LoadingBar_5_Fill_Red_100.png',
-        '../assets/Status-Bars/LoadingBar_5_Fill_Red_90.png',
-        '../assets/Status-Bars/LoadingBar_5_Fill_Red_80.png'
+        '../assets/Status-Bars/Health_Bar_100.png',
+        '../assets/Status-Bars/Health_Bar_90.png',
+        '../assets/Status-Bars/Health_Bar_80.png',
+        '../assets/Status-Bars/Health_Bar_70.png',
+        '../assets/Status-Bars/Health_Bar_60.png',
+        '../assets/Status-Bars/Health_Bar_50.png',
+        '../assets/Status-Bars/Health_Bar_40.png',
+        '../assets/Status-Bars/Health_Bar_30.png',
+        '../assets/Status-Bars/Health_Bar_20.png',
+        '../assets/Status-Bars/Health_Bar_10.png',
+        '../assets/Status-Bars/Health_Bar_0.png'
     ];
 
     percentage = 100;
@@ -36,8 +44,24 @@ class StatusBar extends DrawableObject {
             return 0;
         } else if (this.percentage > 90) {
             return 1;
-        } else {
+        } else if (this.percentage > 80) {
             return 2;
+        } else if (this.percentage > 70) {
+            return 3;
+        } else if (this.percentage > 60) {
+            return 4;
+        } else if (this.percentage > 50) {
+            return 5;
+        } else if (this.percentage > 40) {
+            return 6;
+        } else if (this.percentage > 30) {
+            return 7;
+        } else if (this.percentage > 20) {
+            return 8;
+        } else if (this.percentage > 10) {
+            return 9;
+        } else {
+            return 10;
         }
     }
 }

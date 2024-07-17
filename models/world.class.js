@@ -25,7 +25,7 @@ class World {
             this.level.enemies.forEach((i) => {
                 if (this.character.isColliding(i)) {
                     this.character.isHit();
-                     this.statusBar.setPercentage();
+                    this.statusBar.setPercentage(this.character.health);
                 }
             });
         }, 1000 / 30);
@@ -38,7 +38,7 @@ class World {
         this.addObjectsToMap(this.level.backgroundObjects);
         this.addObjectsToMap(this.level.enemies);
         this.addToMap(this.character);
-        
+
         this.ctx.translate(-this.camera_x, 0); // Back. Nächste Funktion umschließen, um Objekt an Position zu halten.
         this.addToMap(this.statusBar);
         this.ctx.translate(this.camera_x, 0); // Forward
