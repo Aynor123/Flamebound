@@ -6,6 +6,7 @@ class World {
     ctx;
     camera_x = 0; //Nach links schieben nicht nach rechts. Value irrelevant für meinen Code?
     statusBar = new StatusBar();
+    throwableObjects = [];
 
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
@@ -13,22 +14,36 @@ class World {
         this.keyboard = keyboard;
         this.draw();
         this.setWorld();
-        this.checkCollisions();
+        // this.checkCollisions();
+        this.run();
     }
 
     setWorld() {
         this.character.world = this; //Alle Parameter aus Klasse World werdn in Klasse Character übergeben.
     }
 
-    checkCollisions() {
+    run() {
         setInterval(() => {
-            this.level.enemies.forEach((i) => {
-                if (this.character.isColliding(i)) {
-                    this.character.isHit();
-                    this.statusBar.setPercentage(this.character.health);
-                }
-            });
+            this.checkCollisions();
+            this.checkThrowObjects();
         }, 1000 / 30);
+    }
+
+    checkThrowObjects() {
+        if (this.keyboard.D) {
+            let bottle = new ThrowableObject(this.character.x, this.character.y);
+            this.throwableObjects.push(bottle);
+        }
+    }
+
+    checkCollisions() {
+        this.level.enemies.forEach((i) => {
+            if (this.character.isColliding(i)) {
+                this.character.isHit();
+                this.statusBar.setPercentage(this.character.health);
+            }
+        })
+
     }
 
     draw() {
@@ -38,6 +53,7 @@ class World {
         this.addObjectsToMap(this.level.backgroundObjects);
         this.addObjectsToMap(this.level.enemies);
         this.addToMap(this.character);
+        this.addObjectsToMap(this.throwableObjects);
 
         this.ctx.translate(-this.camera_x, 0); // Back. Nächste Funktion umschließen, um Objekt an Position zu halten.
         this.addToMap(this.statusBar);
