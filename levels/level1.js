@@ -1,4 +1,9 @@
-const level1 = new Level(
+
+// GAAAANZ WICHTIG MUSS IMPLEMENTIERT WERDEN
+// let level1;
+// function initLevel() {} Funktion implementieren, sobald man auf Start drückt
+
+let level1 = new Level(
     [
         new Enemy(),
         new Enemy(),
@@ -6,9 +11,12 @@ const level1 = new Level(
         new Endboss()
     ],
     [
+        new Sky('../assets/Backgrounds/Battlegrounds/PNG/Graveyard Battleground4/Bright/sky.png', -225 - 719 - 720 - 720, 0),
+        new Sky('../assets/Backgrounds/Battlegrounds/PNG/Graveyard Battleground4/Bright/sky.png', -225 - 719 - 720, 0),
+        new Sky('../assets/Backgrounds/Battlegrounds/PNG/Graveyard Battleground4/Bright/sky.png', -225 - 719, 0),
         new Sky('../assets/Backgrounds/Battlegrounds/PNG/Graveyard Battleground4/Bright/sky.png', -225, 0),
-        new Sky('../assets/Backgrounds/Battlegrounds/PNG/Graveyard Battleground4/Bright/sky.png', -225 + 720, 0),
-        new Sky('../assets/Backgrounds/Battlegrounds/PNG/Graveyard Battleground4/Bright/sky.png', -225 + 720 + 720, 0)
+        new Sky('../assets/Backgrounds/Battlegrounds/PNG/Graveyard Battleground4/Bright/sky.png', -225 + 719, 0),
+        new Sky('../assets/Backgrounds/Battlegrounds/PNG/Graveyard Battleground4/Bright/sky.png', -225 + 719 + 720, 0)
     ],
     [
         new BackgroundObject('../assets/Backgrounds/Battlegrounds/PNG/Graveyard Battleground4/Bright/graves.png', -225, 0),

@@ -6,6 +6,7 @@ class World {
     ctx;
     camera_x = 0; //Nach links schieben nicht nach rechts. Value irrelevant für meinen Code?
     statusBar = new StatusBar();
+    manaBar = new ManaBar();
     throwableObjects = [];
 
     constructor(canvas, keyboard) {
@@ -57,6 +58,7 @@ class World {
 
         this.ctx.translate(-this.camera_x, 0); // Back. Nächste Funktion umschließen, um Objekt an Position zu halten.
         this.addToMap(this.statusBar);
+        this.addToMap(this.manaBar);
         this.ctx.translate(this.camera_x, 0); // Forward
 
         this.ctx.translate(-this.camera_x, 0);

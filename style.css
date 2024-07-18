@@ -1,10 +1,12 @@
 @font-face {
     font-family: 'Game-Over';
     src: url('../assets/Fonts/game-over.ttf');
+    font-family: 'Inferno';
+    src: url('../assets/Fonts/inferno.ttf');
 }
 
 body {
-    font-family: 'Game-Over', Arial, sans-serif;
+    font-family: 'Inferno', Arial, sans-serif;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -12,8 +14,45 @@ body {
     margin: 0;
 }
 
+h1 {
+    color: rgb(255,182,108);
+}
+
+.fire-text {
+    background: url('../assets/Fonts/plasma-texture.jpg');
+    background-repeat: repeat;
+    background-size: 100% 400px;
+    background-position: 0 0;
+    color: #fff;
+    -webkit-text-fill-color: transparent;
+    -webkit-background-clip: text;
+    -moz-background-clip: text; 
+    background-clip: text; 
+    font-family: Inferno, sans-serif;
+    font-size: 80px;
+    padding: 0;
+    margin-bottom: 25px;
+    text-align: center;
+    -webkit-text-stroke: 1px rgb(255,182,108);
+    -webkit-animation: stripes 2s linear infinite;
+    animation: stripes 8s linear infinite;
+}
+
+@-webkit-keyframes stripes {
+    100% {
+      background-position: 0 -530px;
+    }
+  }
+  
+  @keyframes stripes {
+    100% {
+      background-position: 0 -400px;
+    }
+  }
+
 canvas {
     background-color: black;
+    display: block;
 }
 
 .background-img {
@@ -30,3 +69,29 @@ canvas {
 
 /* A pixel art wallpaper for a 2D game where a hooded fire mage with a sword must defeat a necromancer. The background must be a graveyard. The name of the game is "Flamebound".
 A pixel art wallpaper with a graveyard in flames.*/
+
+@media only screen and (max-width: 720px) {
+    canvas {
+        width: 100%;
+    }
+
+    h1 {
+        display: none;
+    }
+}
+
+@media only screen and (max-height: 480px) {
+    canvas {
+        height: 100vh;
+    }
+
+    h1 {
+        display: none;
+    }
+}
+
+@media (max-height: 600px) {
+    h1 {
+        display: none;
+    }
+}

@@ -1,11 +1,5 @@
 class StatusBar extends DrawableObject {
 
-
-
-    IMAGE_STATUSBARFRAME = [
-        '../assets/Status-Bars/LoadingBar_5_Background.png'
-    ];
-
     IMAGES_HEALTH = [
         '../assets/Status-Bars/Health_Bar_100.png',
         '../assets/Status-Bars/Health_Bar_90.png',
@@ -25,7 +19,6 @@ class StatusBar extends DrawableObject {
     constructor() {
         super();
         this.loadImages(this.IMAGES_HEALTH);
-        this.loadImages(this.IMAGE_STATUSBARFRAME);
         this.x = 30;
         this.y = 20;
         this.width = 200;
