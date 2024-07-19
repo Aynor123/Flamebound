@@ -115,4 +115,8 @@ class MoveableObject extends DrawableObject {
         timePassed = timePassed / 1000; // Difference in s.
         return timePassed < 0.8; // true if hit between 5 seconds.
     }
+
+    isCasting() {
+        return this.casting = true;
+    }
 }

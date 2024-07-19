@@ -56,3 +56,18 @@ class Endboss extends MoveableObject {
       // }, 1000 / 9);
    }
 }
+
+// <--- Endboss ändert richtung --->
+
+//     checkCharacterPositionEndboss() {
+//    const endboss = this.level.endboss[0];
+//    if (endboss && !endboss.isDead) {
+//      if (this.character.x > endboss.x + endboss.width) {
+//        endboss.otherDirection = true;
+//        endboss.moveLeft();
+//      } else if (this.character.x < endboss.x + 100) {
+//        endboss.otherDirection = false;
+//        endboss.moveLeft();
+//      }
+//    }
+//  }

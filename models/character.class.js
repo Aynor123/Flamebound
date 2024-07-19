@@ -36,11 +36,22 @@ class Character extends MoveableObject {
         '../assets/Fire_Wizard/Hurt/tile002.png'
     ];
 
+    IMAGES_CHARGE_FIREBALL = [
+        '../assets/Fire_Wizard/Charge_Fireball/tile000.png',
+        '../assets/Fire_Wizard/Charge_Fireball/tile001.png',
+        '../assets/Fire_Wizard/Charge_Fireball/tile002.png',
+        '../assets/Fire_Wizard/Charge_Fireball/tile003.png',
+        '../assets/Fire_Wizard/Charge_Fireball/tile004.png',
+        '../assets/Fire_Wizard/Charge_Fireball/tile005.png',
+        '../assets/Fire_Wizard/Charge_Fireball/tile006.png',
+        '../assets/Fire_Wizard/Charge_Fireball/tile007.png'
+    ];
+
     world;
     speed = 1.5;
     walking_sound = new Audio('../sounds/walking.mp3');
     y = 100;
-    
+
 
 
     constructor() {
@@ -49,6 +60,7 @@ class Character extends MoveableObject {
         this.loadImages(this.IMAGES_DEAD);
         this.loadImages(this.IMAGES_HURT);
         this.loadImages(this.IMAGES_JUMPING);
+        this.loadImages(this.IMAGES_CHARGE_FIREBALL);
         this.applyGravity();
         this.animate();
     }
@@ -76,29 +88,6 @@ class Character extends MoveableObject {
             this.world.camera_x = -this.x + 200; //Sets Character more to the right.
         }, 1000 / 60);
 
-
-        // let i = 0;
-        // setInterval(() => {
-        //     if (i < 6 && this.isDead()) {
-        //         this.playAnimation(this.IMAGES_DEAD);
-        //     } else {
-        //         return;
-        //     }
-        //     i++;
-        // }, 1000 / 9);
-
-        // setInterval(() => {
-        //    if (this.isHurt()) {
-        //         this.playAnimation(this.IMAGES_HURT);
-        //     } else if (this.isAboveGround()) {
-        //         this.playAnimation(this.IMAGES_JUMPING);
-        //     } else {
-        //         if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
-        //             this.playAnimation(this.IMAGES_WALKING);
-        //         }
-        //     }
-        // }, 1000 / 9);
-
         let deathFrame = 0;
         let isReset = true;
         let charInterval = setInterval(() => {
@@ -109,6 +98,9 @@ class Character extends MoveableObject {
                 if (deathFrame === this.IMAGES_DEAD.length) {
                     clearInterval(charInterval);
                 }
+            } else if (this.isCasting()) {
+                this.playOneTimeAnimation(this.IMAGES_CHARGE_FIREBALL, isReset);
+                isReset = false;
             } else if (this.isHurt() && !this.isDead()) {
                 this.playAnimation(this.IMAGES_HURT);
             } else if (this.isAboveGround()) {

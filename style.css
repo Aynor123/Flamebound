@@ -19,7 +19,7 @@ h1 {
 }
 
 .fire-text {
-    background: url('../assets/Fonts/plasma-texture.jpg');
+    background: url('../assets/Fonts/fire-texture.jpg');
     background-repeat: repeat;
     background-size: 100% 400px;
     background-position: 0 0;
@@ -58,7 +58,7 @@ canvas {
 .background-img {
     height: 100vh;
     width: 100vw;
-    background-image: url('../assets/Background-Image_2.png');
+    background-image: url('../assets/output_2694186077_0.jpg');
     background-size: cover;
     background-position: center;
     display: flex;

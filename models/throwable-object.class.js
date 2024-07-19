@@ -1,5 +1,5 @@
 class ThrowableObject extends MoveableObject {
-    speedX = 10;
+    speedX = 1;
 
     constructor(x, y) {
         super().loadImage('../assets/Fireball/tile000.png');
@@ -14,6 +14,7 @@ class ThrowableObject extends MoveableObject {
         this.speedX;
         this.height = 175;
         this.width = 175;
+        this.acceleration = 0.5;
         setInterval(() => {
             this.x += this.speedX;
             this.speedX += this.acceleration;
