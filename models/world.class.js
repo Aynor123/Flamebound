@@ -9,7 +9,6 @@ class World {
     manaBar = new ManaBar();
     throwableObjects = [];
     lastThrowTime = 0;
-    moveableObject = new MoveableObject();
 
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
@@ -33,11 +32,13 @@ class World {
 
     checkThrowObjects() {
         let currentTime = Date.now();
-        if (this.keyboard.D && (currentTime - this.lastThrowTime >= 1000)) {
-            this.moveableObject.casting = true;
-            let bottle = new ThrowableObject(this.character.x, this.character.y);
-            this.throwableObjects.push(bottle);
-            this.lastThrowTime = currentTime;
+        if (this.keyboard.D && (currentTime - this.lastThrowTime >= 875)) {
+            setTimeout(() => {
+                let bottle = new ThrowableObject(this.character.x, this.character.y);
+                this.throwableObjects.push(bottle);
+            }, 500);
+                this.lastThrowTime = currentTime;
+           
         }
     }
 

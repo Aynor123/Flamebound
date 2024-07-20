@@ -84,11 +84,16 @@ class Character extends MoveableObject {
                 this.jump();
             }
 
+            if (this.world.keyboard.D) {
+                this.casting = true;
+            }
+
 
             this.world.camera_x = -this.x + 200; //Sets Character more to the right.
         }, 1000 / 60);
 
         let deathFrame = 0;
+        let castingFrame = 0;
         let isReset = true;
         let charInterval = setInterval(() => {
             if (this.isDead() && deathFrame < this.IMAGES_DEAD.length) {
@@ -98,9 +103,15 @@ class Character extends MoveableObject {
                 if (deathFrame === this.IMAGES_DEAD.length) {
                     clearInterval(charInterval);
                 }
-            } else if (this.isCasting()) {
+            } else if (this.isCasting() && castingFrame < this.IMAGES_CHARGE_FIREBALL.length) {
                 this.playOneTimeAnimation(this.IMAGES_CHARGE_FIREBALL, isReset);
                 isReset = false;
+                castingFrame++;
+                if (castingFrame === this.IMAGES_CHARGE_FIREBALL.length) {
+                    isReset = true;
+                    castingFrame = 0;
+                    this.casting = false;
+                }
             } else if (this.isHurt() && !this.isDead()) {
                 this.playAnimation(this.IMAGES_HURT);
             } else if (this.isAboveGround()) {

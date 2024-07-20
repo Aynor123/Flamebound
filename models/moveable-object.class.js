@@ -9,6 +9,7 @@ class MoveableObject extends DrawableObject {
     health = 100;
     lastHit = 0;
     hasPlayedAnimation = false;
+    casting = false;
 
     playJumpAnimation(images) {
         let i = this.currentImage % images.length;
@@ -50,7 +51,7 @@ class MoveableObject extends DrawableObject {
         let path = images[i];
         this.img = this.imageCache[path];
         this.currentImage++;
-        isReset = false;
+        // isReset = false;
     }
 
 
@@ -117,6 +118,6 @@ class MoveableObject extends DrawableObject {
     }
 
     isCasting() {
-        return this.casting = true;
+        return this.casting == true;
     }
 }
