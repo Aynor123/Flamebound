@@ -50,7 +50,6 @@ class Character extends MoveableObject {
     world;
     speed = 1.5;
     walking_sound = new Audio('../sounds/walking.mp3');
-    y = 100;
 
 
 
@@ -70,7 +69,6 @@ class Character extends MoveableObject {
             this.walking_sound.pause();
             if (this.world.keyboard.LEFT && this.x > 0) { // Forbids to walk further left at xxx pixel.
                 this.moveLeft();
-                debugger;
                 this.otherDirection = true;
                 this.walking_sound.play();
             }

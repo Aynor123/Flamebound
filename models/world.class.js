@@ -34,8 +34,8 @@ class World {
         let currentTime = Date.now();
         if (this.keyboard.D && (currentTime - this.lastThrowTime >= 875)) {
             setTimeout(() => {
-                let bottle = new ThrowableObject(this.character.x, this.character.y);
-                this.throwableObjects.push(bottle);
+                let fireball = new ThrowableObject(this.character.x, this.character.y, this.character.otherDirection);
+                this.throwableObjects.push(fireball);
             }, 500);
                 this.lastThrowTime = currentTime;
            
