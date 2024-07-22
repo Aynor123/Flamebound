@@ -16,14 +16,14 @@ class ManaBar extends DrawableObject {
 
     percentage = 100;
 
-    constructor() {
+    constructor(percentage) {
         super();
         this.loadImages(this.IMAGES_MANA);
         this.x = 30;
         this.y = 40;
         this.width = 200;
         this.height = 30;
-        this.setPercentage(100);
+        this.setPercentage(percentage);
     }
 
     setPercentage(percentage) {

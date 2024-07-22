@@ -7,6 +7,7 @@ class MoveableObject extends DrawableObject {
     jumpFrameCount = 0; // Tracks frames since jump started
     isJumping = false;
     health = 100;
+    mana = 100
     lastHit = 0;
     hasPlayedAnimation = false;
     casting = false;
@@ -29,13 +30,6 @@ class MoveableObject extends DrawableObject {
         this.speedY = 20; //Sets jump height
     }
 
-    // playAnimation(images) {
-    //     let i = this.currentImage % images.length;
-    //     let path = images[i];
-    //     this.img = this.imageCache[path];
-    //     this.currentImage++;
-    // }
-
     playAnimation(images) {
         let i = this.currentImage % images.length;
         let path = images[i];
@@ -53,7 +47,6 @@ class MoveableObject extends DrawableObject {
         this.currentImage++;
         // isReset = false;
     }
-
 
     applyGravity() {
         setInterval(() => {
@@ -108,7 +101,7 @@ class MoveableObject extends DrawableObject {
 
     isDead() {
         return this.health == 0;
-        
+
     }
 
     isHurt() {
@@ -119,5 +112,16 @@ class MoveableObject extends DrawableObject {
 
     isCasting() {
         return this.casting == true;
+    }
+
+    isCastingFireball() {
+        debugger;
+        if (isCasting()) {
+            this.character.mana -= 10;
+            this.manabar.setPercentage(this.character.mana);
+            if (this.character.mana < 0) {
+                this.character.mana = 0;
+            }
+        }
     }
 }
