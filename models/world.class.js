@@ -33,6 +33,8 @@ class World {
     checkThrowObjects() {
         let currentTime = Date.now();
         if (this.keyboard.D && (currentTime - this.lastThrowTime >= 875)) {
+            this.character.isCastingFireball();
+            this.manaBar.setPercentage(this.character.mana);
             setTimeout(() => {
                 let fireball = new ThrowableObject(this.character.x, this.character.y, this.character.otherDirection);
                 this.throwableObjects.push(fireball);

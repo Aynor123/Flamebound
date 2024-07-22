@@ -40,6 +40,7 @@ class ThrowableObject extends MoveableObject {
                 this.speedX += this.acceleration;
             }, 1000 / 60);
             this.animateFireball();
+            this.isCastingFireball();
         } else if (this.otherDirection) {
             this.x += 55;
             setInterval(() => {
@@ -47,6 +48,8 @@ class ThrowableObject extends MoveableObject {
                 this.speedX += this.acceleration;
             }, 1000 / 60);
             this.animateFireball();
+            debugger;
+            this.isCastingFireball();
         }
     }
 
@@ -57,5 +60,9 @@ class ThrowableObject extends MoveableObject {
             this.img = this.imageCache[path];
             this.currentImage++;
         }, 1000 / 10);
+    }
+
+    reduceMana() {
+
     }
 }
