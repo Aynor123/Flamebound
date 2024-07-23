@@ -25,7 +25,7 @@ class DrawableObject {
     }
 
     drawFrame(ctx) {
-        if (this instanceof Character || this instanceof Enemy) { // instanceof will show frames only fpr Character and Enemy
+        if (this instanceof Character || this instanceof Enemy || this instanceof Endboss) { // instanceof will show frames only fpr Character and Enemy
             ctx.beginPath();
             ctx.lineWidth = '3';
             ctx.strokeStyle = 'red';
@@ -33,4 +33,15 @@ class DrawableObject {
             ctx.stroke();
         }
     }
+
+    drawFrameFireball(ctx) {
+        if (this instanceof ThrowableObject) { // instanceof will show frames only fpr Character and Enemy
+            ctx.beginPath();
+            ctx.lineWidth = '3';
+            ctx.strokeStyle = 'red';
+            ctx.rect(this.x + 160, this.y + 70, this.width - 250, this.height - 145);
+            ctx.stroke();
+        }
+    }
 }
+

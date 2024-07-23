@@ -27,20 +27,20 @@ class World {
         setInterval(() => {
             this.checkCollisions();
             this.checkThrowObjects();
-        }, 1000 / 30);
+
+        }, 1000 / 60);
     }
 
     checkThrowObjects() {
         let currentTime = Date.now();
-        if (this.keyboard.D && (currentTime - this.lastThrowTime >= 875)) {
+        if (this.keyboard.D && (currentTime - this.lastThrowTime >= 875) && this.character.mana > 0) {
             this.character.isCastingFireball();
             this.manaBar.setPercentage(this.character.mana);
             setTimeout(() => {
                 let fireball = new ThrowableObject(this.character.x, this.character.y, this.character.otherDirection);
                 this.throwableObjects.push(fireball);
             }, 500);
-                this.lastThrowTime = currentTime;
-           
+            this.lastThrowTime = currentTime;
         }
     }
 
@@ -50,9 +50,32 @@ class World {
                 this.character.isHit();
                 this.statusBar.setPercentage(this.character.health);
             }
-        })
+        });
 
+        this.throwableObjects.forEach((throwableObject, i) => {
+            // debugger;
+            this.level.enemies.forEach((enemy, j) => {
+                
+                if (throwableObject.isCollidingFireball(enemy)) {
+                    this.throwableObjects.splice(i, 1);
+                    this.level.enemies.splice(j, 1);
+                    console.log('hit');
+                }
+            });
+        });
     }
+
+    // checkCollisionsFireball() {
+    //     this.throwableObjects.forEach((throwableObject, i) => {
+    //         this.level.enemies.forEach((enemy, j) => {
+    //             if (throwableObject.isColliding(enemy)) {
+    //                 this.throwableObjects.splice(i, 1);
+    //                 this.level.enemies.splice(j, 1);
+    //                 console.log('hit');
+    //             }
+    //         });
+    //     });
+    // }
 
     draw() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
@@ -91,6 +114,8 @@ class World {
         moveableObject.draw(this.ctx);
 
         moveableObject.drawFrame(this.ctx);
+        moveableObject.drawFrameFireball(this.ctx);
+
 
         if (moveableObject.otherDirection) {
             this.flipImageBack(moveableObject);

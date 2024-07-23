@@ -40,7 +40,6 @@ class ThrowableObject extends MoveableObject {
                 this.speedX += this.acceleration;
             }, 1000 / 60);
             this.animateFireball();
-            this.isCastingFireball();
         } else if (this.otherDirection) {
             this.x += 55;
             setInterval(() => {
@@ -48,8 +47,6 @@ class ThrowableObject extends MoveableObject {
                 this.speedX += this.acceleration;
             }, 1000 / 60);
             this.animateFireball();
-            debugger;
-            this.isCastingFireball();
         }
     }
 
@@ -62,7 +59,40 @@ class ThrowableObject extends MoveableObject {
         }, 1000 / 10);
     }
 
-    reduceMana() {
-
+    startBottleSplash(enemy) {
+        this.splash = true;
+        let interval = setInterval(() => {
+            this.playAnimation(this.IMAGES_BOTTLE_SPLASH);
+            this.handleCollision(enemy);
+            clearInterval(interval);
+            this.splash = false;
+        }, 10);
     }
+
+    // handleCollision(enemy) {
+    //     if (enemy instanceof Endboss) {
+    //         this.onHitEndboss(enemy);
+    //     } else {
+    //         this.onHitEnemy(enemy);
+    //     }}
+
+    //     onHitEndboss(endboss) {
+    //         endboss.takeDamage(endboss);
+    //     }
+
+    //     onHitEnemy(enemy) {
+    //         enemy.deadAnimateChicken(enemy);
+    //     }
+
+    //     animateHurtsEndboss() {
+    //         let index = 0;
+    //         const interval = setInterval(() => {
+    //             if (index < this.IMAGES_HURT_ENDBOSS.length) {
+    //                 this.playAnimation([this.IMAGES_HURT_ENDBOSS[index]]);
+    //                 index++;
+    //             } else {
+    //                 clearInterval(interval);
+    //             }
+    //         }, 300);
+    //     }
 }

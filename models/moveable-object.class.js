@@ -82,6 +82,29 @@ class MoveableObject extends DrawableObject {
             this.y + 145 < moveableObject.y + 145 + moveableObject.height - 145;
     }
 
+    //fireball colliding
+    isCollidingFireball(moveableObject) {
+        if (!this.otherDirection) {
+            return this.x + 160 + this.width - 250 > moveableObject.x + 120;
+        } else if (this.otherDirection) {
+            return this.x + 50 + this.width - 250  < moveableObject.x + 120;
+        }
+    }
+
+
+
+
+        // //fireball colliding
+        // isCollidingFireball(moveableObject) {
+        //     return this.x + 160 + this.width - 250 > moveableObject.x + 120 && 
+        //         this.y + 70 + this.height - 145 > moveableObject.y + 145 &&
+        //         this.x + 160 < moveableObject.x + 120 &&
+        //         this.y + 145 < moveableObject.y + 145 + moveableObject.height - 145;
+        // }
+
+    // ctx.rect(this.x + 160, this.y + 70, this.width - 250, this.height - 145);
+
+
     //     isColliding (obj) {
     //         return  (this.X + this.width) >= obj.X && this.X <= (obj.X + obj.width) && 
     //                 (this.Y + this.offsetY + this.height) >= obj.Y &&
