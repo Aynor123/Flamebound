@@ -30,6 +30,8 @@ class ThrowableObject extends MoveableObject {
         this.acceleration = 0.5;
         this.speedX = 1;
         this.throw();
+        this.hitFrame = 0;
+        this.isReset = true;
     }
 
     throw() {
@@ -59,40 +61,27 @@ class ThrowableObject extends MoveableObject {
         }, 1000 / 10);
     }
 
-    startBottleSplash(enemy) {
-        this.splash = true;
+    animateFireballHit(i, j, fireballs, enemies) {    
         let interval = setInterval(() => {
-            this.playAnimation(this.IMAGES_BOTTLE_SPLASH);
-            this.handleCollision(enemy);
-            clearInterval(interval);
-            this.splash = false;
-        }, 10);
+            if (this.hitFrame < this.IMAGES_FLAMES_HIT.length) {
+                this.speedX = 0;
+                this.playOneTimeAnimation(this.IMAGES_FLAMES_HIT, this.isReset);
+                this.isReset = false;
+                this.hitFrame++;
+            
+              if (this.hitFrame === this.IMAGES_FLAMES_HIT.length) {
+                this.isReset = true;
+                this.hitFrame = 0;           
+                fireballs.splice(i, 1);
+
+                // enemies.splice(j, 1);
+                clearInterval(interval);
+            }
+        }
+        }, 1000 / 60);
+        
     }
-
-    // handleCollision(enemy) {
-    //     if (enemy instanceof Endboss) {
-    //         this.onHitEndboss(enemy);
-    //     } else {
-    //         this.onHitEnemy(enemy);
-    //     }}
-
-    //     onHitEndboss(endboss) {
-    //         endboss.takeDamage(endboss);
-    //     }
-
-    //     onHitEnemy(enemy) {
-    //         enemy.deadAnimateChicken(enemy);
-    //     }
-
-    //     animateHurtsEndboss() {
-    //         let index = 0;
-    //         const interval = setInterval(() => {
-    //             if (index < this.IMAGES_HURT_ENDBOSS.length) {
-    //                 this.playAnimation([this.IMAGES_HURT_ENDBOSS[index]]);
-    //                 index++;
-    //             } else {
-    //                 clearInterval(interval);
-    //             }
-    //         }, 300);
-    //     }
 }
+
+
+

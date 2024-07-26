@@ -44,8 +44,11 @@ class MoveableObject extends DrawableObject {
         let i = this.currentImage % images.length;
         let path = images[i];
         this.img = this.imageCache[path];
-        this.currentImage++;
-        // isReset = false;
+        if (this.currentImage <= images.length) {
+            this.currentImage++;
+        } else {
+            return;
+        }
     }
 
     applyGravity() {
@@ -84,34 +87,12 @@ class MoveableObject extends DrawableObject {
 
     //fireball colliding
     isCollidingFireball(moveableObject) {
-        if (!this.otherDirection) {
-            return this.x + 160 + this.width - 250 > moveableObject.x + 120;
-        } else if (this.otherDirection) {
-            return this.x + 50 + this.width - 250  < moveableObject.x + 120;
-        }
+        return this.x + 80 + this.width - 100 > moveableObject.x + 120 &&
+            this.y + 75 + this.height - 145 > moveableObject.y + 145 &&
+            this.x - 0 < moveableObject.x + 120 &&
+            this.y + 75 < moveableObject.y + 145 + moveableObject.height - 145;
     }
 
-
-
-
-        // //fireball colliding
-        // isCollidingFireball(moveableObject) {
-        //     return this.x + 160 + this.width - 250 > moveableObject.x + 120 && 
-        //         this.y + 70 + this.height - 145 > moveableObject.y + 145 &&
-        //         this.x + 160 < moveableObject.x + 120 &&
-        //         this.y + 145 < moveableObject.y + 145 + moveableObject.height - 145;
-        // }
-
-    // ctx.rect(this.x + 160, this.y + 70, this.width - 250, this.height - 145);
-
-
-    //     isColliding (obj) {
-    //         return  (this.X + this.width) >= obj.X && this.X <= (obj.X + obj.width) && 
-    //                 (this.Y + this.offsetY + this.height) >= obj.Y &&
-    //                 (this.Y + this.offsetY) <= (obj.Y + obj.height) && 
-    //                 obj.onCollisionCourse; // Optional: hiermit könnten wir schauen, ob ein Objekt sich in die richtige Richtung bewegt. Nur dann kollidieren wir. Nützlich bei Gegenständen, auf denen man stehen kann.
-
-    // }
 
     isHit() {
         this.health -= 1;

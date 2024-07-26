@@ -1,5 +1,9 @@
 class Enemy extends MoveableObject {
 
+    speed = 0.1;
+    health = 20;
+    isDead = false;
+
     IMAGES_WALKING = [
         '../assets/Enemies/Skeleton_Warrior/Walk_Mirrored/tile000.png',
         '../assets/Enemies/Skeleton_Warrior/Walk_Mirrored/tile001.png',
@@ -10,28 +14,64 @@ class Enemy extends MoveableObject {
         '../assets/Enemies/Skeleton_Warrior/Walk_Mirrored/tile006.png'
     ];
 
-    speed = 0.1;
+    IMAGES_DEAD = [
+        '../assets/Enemies/Skeleton_Warrior/Dead/tile000.png',
+        '../assets/Enemies/Skeleton_Warrior/Dead/tile001.png',
+        '../assets/Enemies/Skeleton_Warrior/Dead/tile002.png',
+        '../assets/Enemies/Skeleton_Warrior/Dead/tile003.png'
+    ];
+
 
     constructor() {
         super().loadImage('../assets/Enemies/Skeleton_Warrior/Walk_Mirrored/tile000.png');
         this.loadImages(this.IMAGES_WALKING);
+        this.loadImages(this.IMAGES_DEAD);
         this.x = 420 + Math.random() * 500;
         this.speed = 0.5 + Math.random() * 0.7;
         this.animate();
+        this.health;
     }
 
     animate() {
-        setInterval(() => {
+        let moveLeftInterval = setInterval(() => {
             this.moveLeft();
         }, 1000 / 60);
-        
-        setInterval(() => {
+
+        let walkingInterval = setInterval(() => {
             let i = this.currentImage % this.IMAGES_WALKING.length;
             let path = this.IMAGES_WALKING[i];
             this.img = this.imageCache[path];
             this.currentImage++;
         }, 1000 / 9);
+
+        setInterval(() => {
+            if (this.health <= 0) {
+                clearInterval(moveLeftInterval);
+                clearInterval(walkingInterval);
+                console.log('died');
+
+                this.playOneTimeAnimation(this.IMAGES_DEAD, 'true');
+                // this.level1.enemies.splice(j, 1);
+
+            }
+        }, 1000 / 10);
+        // let hurtIntervall = setInterval(() => {
+        //     if (this.damageProcess && this.HP > 0) {
+        //         this.playSingleAnimation(this.hurtImages, hurtIntervall);
+        //     }
+        // }, 60);
+
+
+        // // DYING Images
+        // let dyingIntervall = setInterval(() => {
+        //     if (this.isDead()) {
+        //         this.playSingleAnimation(this.dyingImages, dyingIntervall);
+        //     };
+        // }, 60);
+
     }
+
+
 
 
 

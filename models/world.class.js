@@ -9,6 +9,8 @@ class World {
     manaBar = new ManaBar();
     throwableObjects = [];
     lastThrowTime = 0;
+    lastFireballImpactTime = 0;
+    fireballImpact = false;
 
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
@@ -21,6 +23,9 @@ class World {
 
     setWorld() {
         this.character.world = this; //Alle Parameter aus Klasse World werdn in Klasse Character übergeben.
+        this.level.enemies.forEach(enemy => {
+            enemy.world = this;
+        });
     }
 
     run() {
@@ -53,29 +58,20 @@ class World {
         });
 
         this.throwableObjects.forEach((throwableObject, i) => {
-            // debugger;
             this.level.enemies.forEach((enemy, j) => {
-                
                 if (throwableObject.isCollidingFireball(enemy)) {
-                    this.throwableObjects.splice(i, 1);
-                    this.level.enemies.splice(j, 1);
-                    console.log('hit');
+                    let currentTime = Date.now();
+                    if (currentTime - this.lastFireballImpactTime >= 875) {
+                        throwableObject.animateFireballHit(i, j, this.throwableObjects, this.level.enemies);
+                        this.lastFireballImpactTime = currentTime;
+                        this.level.enemies[j].health -= 20;
+                        //    this.level.enemies.splice(j, 1);
+                    }
                 }
+
             });
         });
     }
-
-    // checkCollisionsFireball() {
-    //     this.throwableObjects.forEach((throwableObject, i) => {
-    //         this.level.enemies.forEach((enemy, j) => {
-    //             if (throwableObject.isColliding(enemy)) {
-    //                 this.throwableObjects.splice(i, 1);
-    //                 this.level.enemies.splice(j, 1);
-    //                 console.log('hit');
-    //             }
-    //         });
-    //     });
-    // }
 
     draw() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
@@ -85,15 +81,12 @@ class World {
         this.addObjectsToMap(this.level.enemies);
         this.addToMap(this.character);
         this.addObjectsToMap(this.throwableObjects);
-
         this.ctx.translate(-this.camera_x, 0); // Back. Nächste Funktion umschließen, um Objekt an Position zu halten.
         this.addToMap(this.statusBar);
         this.addToMap(this.manaBar);
         this.ctx.translate(this.camera_x, 0); // Forward
-
         this.ctx.translate(-this.camera_x, 0);
 
-        //draw() wird immer wieder aufgerufen.
         let self = this;
         requestAnimationFrame(function () {
             self.draw();
