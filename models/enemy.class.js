@@ -3,6 +3,7 @@ class Enemy extends MoveableObject {
     speed = 0.1;
     health = 20;
     isDead = false;
+    imagesAreReset = true;
 
     IMAGES_WALKING = [
         '../assets/Enemies/Skeleton_Warrior/Walk_Mirrored/tile000.png',
@@ -44,13 +45,13 @@ class Enemy extends MoveableObject {
             this.currentImage++;
         }, 1000 / 9);
 
-        setInterval(() => {
+        let enemyDiesInterval = setInterval(() => {
             if (this.health <= 0) {
                 clearInterval(moveLeftInterval);
                 clearInterval(walkingInterval);
                 console.log('died');
-
-                this.playOneTimeAnimation(this.IMAGES_DEAD, 'true');
+// debugger;
+                this.playOneTimeAnimationRevB(this.IMAGES_DEAD, enemyDiesInterval, this.imagesAreReset);
                 // this.level1.enemies.splice(j, 1);
 
             }

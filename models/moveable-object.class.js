@@ -12,6 +12,7 @@ class MoveableObject extends DrawableObject {
     hasPlayedAnimation = false;
     casting = false;
 
+
     playJumpAnimation(images) {
         let i = this.currentImage % images.length;
         let path = images[i];
@@ -49,6 +50,21 @@ class MoveableObject extends DrawableObject {
         } else {
             return;
         }
+    }
+
+    playOneTimeAnimationRevB(images, intervalID, imagesAreReset) {
+        if (imagesAreReset) {
+            this.currentImage = 0;  // Reset the current image index if needed.
+        }
+        if (this.currentImage < images.length) {
+            let i = this.currentImage % images.length;
+            let path = images[i];
+            this.img = this.imageCache[path];
+            this.currentImage++;
+        } else {
+            clearInterval(intervalID);
+        }
+
     }
 
     applyGravity() {
