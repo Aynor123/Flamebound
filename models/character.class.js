@@ -83,7 +83,7 @@ class Character extends MoveableObject {
                 this.jump();
             }
 
-            if (this.world.keyboard.D) {
+            if (this.world.keyboard.S) {
                 this.casting = true;
             }
 

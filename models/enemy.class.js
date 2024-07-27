@@ -3,7 +3,7 @@ class Enemy extends MoveableObject {
     speed = 0.1;
     health = 20;
     isDead = false;
-    imagesAreReset = true;
+    
 
     IMAGES_WALKING = [
         '../assets/Enemies/Skeleton_Warrior/Walk_Mirrored/tile000.png',
@@ -31,6 +31,7 @@ class Enemy extends MoveableObject {
         this.speed = 0.5 + Math.random() * 0.7;
         this.animate();
         this.health;
+        this.collisionAllowed = true;
     }
 
     animate() {
@@ -50,10 +51,8 @@ class Enemy extends MoveableObject {
                 clearInterval(moveLeftInterval);
                 clearInterval(walkingInterval);
                 console.log('died');
-// debugger;
-                this.playOneTimeAnimationRevB(this.IMAGES_DEAD, enemyDiesInterval, this.imagesAreReset);
-                // this.level1.enemies.splice(j, 1);
-
+                this.playOneTimeAnimationRevB(this.IMAGES_DEAD, enemyDiesInterval);
+                this.collisionAllowed = false;
             }
         }, 1000 / 10);
         // let hurtIntervall = setInterval(() => {

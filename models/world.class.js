@@ -38,7 +38,7 @@ class World {
 
     checkThrowObjects() {
         let currentTime = Date.now();
-        if (this.keyboard.D && (currentTime - this.lastThrowTime >= 875) && this.character.mana > 0) {
+        if (this.keyboard.S && (currentTime - this.lastThrowTime >= 875) && this.character.mana > 0) {
             this.character.isCastingFireball();
             this.manaBar.setPercentage(this.character.mana);
             setTimeout(() => {
@@ -50,8 +50,8 @@ class World {
     }
 
     checkCollisions() {
-        this.level.enemies.forEach((i) => {
-            if (this.character.isColliding(i)) {
+        this.level.enemies.forEach((enemy) => {
+            if (enemy.collisionAllowed && this.character.isColliding(enemy)) {
                 this.character.isHit();
                 this.statusBar.setPercentage(this.character.health);
             }
@@ -65,7 +65,7 @@ class World {
                         throwableObject.animateFireballHit(i, j, this.throwableObjects, this.level.enemies);
                         this.lastFireballImpactTime = currentTime;
                         this.level.enemies[j].health -= 20;
-                        //    this.level.enemies.splice(j, 1);
+                        this.level.enemies[j].collisionAllowed = false;
                     }
                 }
 
@@ -108,6 +108,7 @@ class World {
 
         moveableObject.drawFrame(this.ctx);
         moveableObject.drawFrameFireball(this.ctx);
+        moveableObject.drawFrameEnboss(this.ctx);
 
 
         if (moveableObject.otherDirection) {

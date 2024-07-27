@@ -4,7 +4,7 @@ class Endboss extends MoveableObject {
    width = 280;
    x = 0;
    y = 120;
-   health = 100;
+   health = 20;
 
    IMAGES_IDLE = [
       '../assets/Enemies/witch/Witch_2/idle_2/tile000.png',

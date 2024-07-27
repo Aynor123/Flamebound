@@ -11,6 +11,8 @@ class MoveableObject extends DrawableObject {
     lastHit = 0;
     hasPlayedAnimation = false;
     casting = false;
+    imageIndex = 0;
+    collisionAllowed = true;
 
 
     playJumpAnimation(images) {
@@ -52,19 +54,14 @@ class MoveableObject extends DrawableObject {
         }
     }
 
-    playOneTimeAnimationRevB(images, intervalID, imagesAreReset) {
-        if (imagesAreReset) {
-            this.currentImage = 0;  // Reset the current image index if needed.
-        }
-        if (this.currentImage < images.length) {
-            let i = this.currentImage % images.length;
-            let path = images[i];
+    playOneTimeAnimationRevB(images, intervalID) {
+        if (this.imageIndex < images.length) { 
+            let path = images[this.imageIndex];
             this.img = this.imageCache[path];
-            this.currentImage++;
+            this.imageIndex++;
         } else {
-            clearInterval(intervalID);
+            clearInterval(intervalID); 
         }
-
     }
 
     applyGravity() {
@@ -95,10 +92,11 @@ class MoveableObject extends DrawableObject {
 
     //character.isColliding(enemy);
     isColliding(moveableObject) {
-        return this.x + 120 + this.width - 250 > moveableObject.x + 120 &&
+            return this.x + 120 + this.width - 250 > moveableObject.x + 120 &&
             this.y + 145 + this.height - 145 > moveableObject.y + 145 &&
             this.x + 120 < moveableObject.x + 120 &&
             this.y + 145 < moveableObject.y + 145 + moveableObject.height - 145;
+
     }
 
     //fireball colliding
@@ -111,7 +109,7 @@ class MoveableObject extends DrawableObject {
 
 
     isHit() {
-        this.health -= 1;
+        this.health -= 0.2;
         if (this.health < 0) {
             this.health = 0;
         } else {
