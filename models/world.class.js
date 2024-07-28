@@ -64,7 +64,8 @@ class World {
                     if (currentTime - this.lastFireballImpactTime >= 875) {
                         throwableObject.animateFireballHit(i, j, this.throwableObjects, this.level.enemies);
                         this.lastFireballImpactTime = currentTime;
-                        this.level.enemies[j].health -= 20;
+                        enemy.health -= 20;
+                        // enemy.updateHitDetection();
                     }
                 }
 

@@ -4,7 +4,7 @@ class Endboss extends MoveableObject {
    width = 280;
    x = 0;
    y = 120;
-   health = 40;
+   health = 60;
 
    IMAGES_IDLE = [
       '../assets/Enemies/witch/Witch_2/idle_2/tile000.png',
@@ -58,22 +58,24 @@ class Endboss extends MoveableObject {
          this.img = this.imageCache[path];
          this.currentImage++;
       }, 1000 / 9);
-
-      let enemyDiesInterval = setInterval(() => {
-         if (this.health <= 0) {
-            clearInterval(endbossIdleStormy);
-            clearInterval(enemyHurtInterval);
-            this.playOneTimeAnimationRevB(this.IMAGES_DEAD, enemyDiesInterval);
-            this.collisionAllowed = false;
-         }
-      }, 1000 / 10);
-
+      
       let enemyHurtInterval = setInterval(() => {
          if (this.hitDetection && this.health > 0) {
             clearInterval(endbossIdleStormy);
             this.playOneTimeAnimationRevB(this.IMAGES_HURT, enemyHurtInterval);
          }
-      }, 1000 / 10);
+      }, 1000 / 30);
+
+      let enemyDiesInterval = setInterval(() => {
+         if (!this.hitDetection && this.health <= 0) {
+            clearInterval(endbossIdleStormy);
+            clearInterval(enemyHurtInterval);
+            this.playOneTimeAnimationRevB(this.IMAGES_DEAD, enemyDiesInterval);
+            this.collisionAllowed = false;
+         }
+      }, 1000 / 9);
+
+
 
       //    setInterval(() => {
       //       let i = this.currentImage % this.IMAGES_IDLE.length;

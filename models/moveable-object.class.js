@@ -139,4 +139,11 @@ class MoveableObject extends DrawableObject {
             this.mana = 0;
         }
     }
+
+    updateHitDetection() {
+        this.hitDetection = true;
+        setTimeout(() => {
+            this.hitDetection = false;
+        }, 1000 / 1);
+    }
 }
