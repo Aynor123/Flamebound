@@ -4,7 +4,7 @@ class Endboss extends MoveableObject {
    width = 280;
    x = 0;
    y = 120;
-   health = 20;
+   health = 40;
 
    IMAGES_IDLE = [
       '../assets/Enemies/witch/Witch_2/idle_2/tile000.png',
@@ -17,9 +17,26 @@ class Endboss extends MoveableObject {
       '../assets/Enemies/witch/Witch_2/idle_2/tile007.png'
    ];
 
+   IMAGES_DEAD = [
+      '../assets/Enemies/witch/Witch_2/dead/tile000.png',
+      '../assets/Enemies/witch/Witch_2/dead/tile001.png',
+      '../assets/Enemies/witch/Witch_2/dead/tile002.png',
+      '../assets/Enemies/witch/Witch_2/dead/tile003.png'
+   ];
+
+   IMAGES_HURT = [
+      '../assets/Enemies/witch/Witch_2/hurt/tile000.png',
+      '../assets/Enemies/witch/Witch_2/hurt/tile001.png',
+      '../assets/Enemies/witch/Witch_2/hurt/tile002.png',
+      '../assets/Enemies/witch/Witch_2/hurt/tile003.png',
+      '../assets/Enemies/witch/Witch_2/hurt/tile004.png'
+   ];
+
    constructor() {
       super().loadImage('../assets/Enemies/witch/Witch_2/walk/tile000.png');
       this.loadImages(this.IMAGES_IDLE);
+      this.loadImages(this.IMAGES_DEAD);
+      this.loadImages(this.IMAGES_HURT);
       this.x = 700;
       this.animate();
    }
@@ -28,7 +45,7 @@ class Endboss extends MoveableObject {
       // this.moveLeft();
 
       /** IDLE STORMY */
-      setInterval(() => {
+      let endbossIdleStormy = setInterval(() => {
          let i;
          if (this.currentImage < 7) {
             // First phase: iterate through the first seven images
@@ -41,6 +58,22 @@ class Endboss extends MoveableObject {
          this.img = this.imageCache[path];
          this.currentImage++;
       }, 1000 / 9);
+
+      let enemyDiesInterval = setInterval(() => {
+         if (this.health <= 0) {
+            clearInterval(endbossIdleStormy);
+            clearInterval(enemyHurtInterval);
+            this.playOneTimeAnimationRevB(this.IMAGES_DEAD, enemyDiesInterval);
+            this.collisionAllowed = false;
+         }
+      }, 1000 / 10);
+
+      let enemyHurtInterval = setInterval(() => {
+         if (this.hitDetection && this.health > 0) {
+            clearInterval(endbossIdleStormy);
+            this.playOneTimeAnimationRevB(this.IMAGES_HURT, enemyHurtInterval);
+         }
+      }, 1000 / 10);
 
       //    setInterval(() => {
       //       let i = this.currentImage % this.IMAGES_IDLE.length;

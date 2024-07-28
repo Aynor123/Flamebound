@@ -13,6 +13,7 @@ class MoveableObject extends DrawableObject {
     casting = false;
     imageIndex = 0;
     collisionAllowed = true;
+    hitDetection = false;
 
 
     playJumpAnimation(images) {

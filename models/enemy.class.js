@@ -30,8 +30,8 @@ class Enemy extends MoveableObject {
         this.x = 420 + Math.random() * 500;
         this.speed = 0.5 + Math.random() * 0.7;
         this.animate();
-        this.health;
-        this.collisionAllowed = true;
+        // this.health;
+        // this.collisionAllowed = true;
     }
 
     animate() {
@@ -50,7 +50,6 @@ class Enemy extends MoveableObject {
             if (this.health <= 0) {
                 clearInterval(moveLeftInterval);
                 clearInterval(walkingInterval);
-                console.log('died');
                 this.playOneTimeAnimationRevB(this.IMAGES_DEAD, enemyDiesInterval);
                 this.collisionAllowed = false;
             }

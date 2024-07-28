@@ -59,13 +59,12 @@ class World {
 
         this.throwableObjects.forEach((throwableObject, i) => {
             this.level.enemies.forEach((enemy, j) => {
-                if (throwableObject.isCollidingFireball(enemy)) {
+                if (enemy.collisionAllowed && throwableObject.isCollidingFireball(enemy)) {
                     let currentTime = Date.now();
                     if (currentTime - this.lastFireballImpactTime >= 875) {
                         throwableObject.animateFireballHit(i, j, this.throwableObjects, this.level.enemies);
                         this.lastFireballImpactTime = currentTime;
                         this.level.enemies[j].health -= 20;
-                        this.level.enemies[j].collisionAllowed = false;
                     }
                 }
 
