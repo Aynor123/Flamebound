@@ -70,10 +70,11 @@ class Endboss extends MoveableObject {
          if (!this.hitDetection && this.health <= 0) {
             clearInterval(endbossIdleStormy);
             clearInterval(enemyHurtInterval);
+            // debugger;
             this.playOneTimeAnimationRevB(this.IMAGES_DEAD, enemyDiesInterval);
             this.collisionAllowed = false;
          }
-      }, 1000 / 9);
+      }, 1000 / 10);
 
 
 

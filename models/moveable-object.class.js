@@ -61,6 +61,7 @@ class MoveableObject extends DrawableObject {
             this.img = this.imageCache[path];
             this.imageIndex++;
         } else {
+            this.imageIndex = 0;
             clearInterval(intervalID); 
         }
     }
@@ -144,6 +145,6 @@ class MoveableObject extends DrawableObject {
         this.hitDetection = true;
         setTimeout(() => {
             this.hitDetection = false;
-        }, 1000 / 1);
+        }, 1000 / 8);
     }
 }

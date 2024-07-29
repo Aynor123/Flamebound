@@ -1,4 +1,5 @@
 class Character extends MoveableObject {
+    mana = 200;
 
     IMAGES_WALKING = [
         '../assets/Fire_Wizard/Walk/tile000.png',

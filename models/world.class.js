@@ -7,10 +7,14 @@ class World {
     camera_x = 0; //Nach links schieben nicht nach rechts. Value irrelevant für meinen Code?
     statusBar = new StatusBar();
     manaBar = new ManaBar();
+    portionBar = new PortionBar();
     throwableObjects = [];
     lastThrowTime = 0;
     lastFireballImpactTime = 0;
     fireballImpact = false;
+    collectedCoins = 0;
+    totalPortions = 3;
+
 
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
@@ -65,8 +69,12 @@ class World {
                         throwableObject.animateFireballHit(i, j, this.throwableObjects, this.level.enemies);
                         this.lastFireballImpactTime = currentTime;
                         enemy.health -= 20;
-                        // enemy.updateHitDetection();
+                        // enemy.hitDetection = true;
+                      
+                        enemy.updateHitDetection();
                     }
+                } else {
+                    // enemy.hitDetection = false;
                 }
 
             });
@@ -84,6 +92,7 @@ class World {
         this.ctx.translate(-this.camera_x, 0); // Back. Nächste Funktion umschließen, um Objekt an Position zu halten.
         this.addToMap(this.statusBar);
         this.addToMap(this.manaBar);
+        this.addToMap(this.portionBar);
         this.ctx.translate(this.camera_x, 0); // Forward
         this.ctx.translate(-this.camera_x, 0);
 
