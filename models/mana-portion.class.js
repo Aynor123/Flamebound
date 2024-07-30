@@ -1,16 +1,16 @@
 class ManaPortion extends MoveableObject {
-    width = 20;
-    height = 40;
+    width = 50;
+    height = 70;
 
     IMAGES_PORTION = [
-        '../assets/Potions/BLUE/Sprites/Big Vial - BLUE - 0000.png',
-        '../assets/Potions/BLUE/Sprites/Big Vial - BLUE - 0001.png',
-        '../assets/Potions/BLUE/Sprites/Big Vial - BLUE - 0002.png',
-        '../assets/Potions/BLUE/Sprites/Big Vial - BLUE - 0003.png',
-        '../assets/Potions/BLUE/Sprites/Big Vial - BLUE - 0004.png',
-        '../assets/Potions/BLUE/Sprites/Big Vial - BLUE - 0005.png',
-        '../assets/Potions/BLUE/Sprites/Big Vial - BLUE - 0006.png',
-        '../assets/Potions/BLUE/Sprites/Big Vial - BLUE - 0007.png'
+        '../assets/Potions/BLUE/Sprites/my-image.png',
+        '../assets/Potions/BLUE/Sprites/my-image (1).png',
+        '../assets/Potions/BLUE/Sprites/my-image (2).png',
+        '../assets/Potions/BLUE/Sprites/my-image (3).png',
+        '../assets/Potions/BLUE/Sprites/my-image (4).png',
+        '../assets/Potions/BLUE/Sprites/my-image (5).png',
+        '../assets/Potions/BLUE/Sprites/my-image (6).png',
+        '../assets/Potions/BLUE/Sprites/my-image (7).png'
     ];
 
     constructor(imagePath, x, y) {
