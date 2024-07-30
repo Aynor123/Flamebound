@@ -12,7 +12,7 @@ class World {
     lastThrowTime = 0;
     lastFireballImpactTime = 0;
     fireballImpact = false;
-    collectedCoins = 0;
+    collectedPortions = 0;
     totalPortions = 3;
 
 
@@ -30,13 +30,14 @@ class World {
         this.level.enemies.forEach(enemy => {
             enemy.world = this;
         });
+        this.portionBar.world = this;
     }
 
     run() {
         setInterval(() => {
             this.checkCollisions();
             this.checkThrowObjects();
-
+            this.drawCollectedPortions();
         }, 1000 / 60);
     }
 
@@ -87,12 +88,14 @@ class World {
         this.addObjectsToMap(this.level.skies);
         this.addObjectsToMap(this.level.backgroundObjects);
         this.addObjectsToMap(this.level.enemies);
+        this.addObjectsToMap(this.level.manaPortions);
         this.addToMap(this.character);
         this.addObjectsToMap(this.throwableObjects);
         this.ctx.translate(-this.camera_x, 0); // Back. Nächste Funktion umschließen, um Objekt an Position zu halten.
         this.addToMap(this.statusBar);
         this.addToMap(this.manaBar);
         this.addToMap(this.portionBar);
+        this.drawCollectedPortions();
         this.ctx.translate(this.camera_x, 0); // Forward
         this.ctx.translate(-this.camera_x, 0);
 
@@ -136,4 +139,21 @@ class World {
         this.ctx.restore();
         moveableObject.x = moveableObject.x * -1;
     }
+
+    drawCollectedPortions() {
+        this.ctx.font = '40px Inferno';
+        this.ctx.fillStyle = 'rgb(125,142,203)';
+        this.ctx.strokeStyle = 'black';
+        this.ctx.lineWidth = '1';
+        this.ctx.shadowColor = 'rgba(0, 0, 0, 1)';
+        this.ctx.shadowBlur = 2;
+        this.ctx.shadowOffsetX = 4;
+        this.ctx.shadowOffsetY = 4;
+        this.ctx.fillText(`${this.collectedPortions}/${this.totalPortions}`, 80, 120);
+        this.ctx.strokeText(`${this.collectedPortions}/${this.totalPortions}`, 80, 120);
+        this.ctx.shadowColor = 'transparent';
+        this.ctx.shadowBlur = 0;
+        this.ctx.shadowOffsetX = 0;
+        this.ctx.shadowOffsetY = 0;
+      }
 }

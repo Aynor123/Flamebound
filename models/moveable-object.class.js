@@ -135,7 +135,7 @@ class MoveableObject extends DrawableObject {
     }
 
     isCastingFireball() {
-        this.mana -= 20;
+        this.mana -= 10;
         if (this.mana < 0) {
             this.mana = 0;
         }

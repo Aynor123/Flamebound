@@ -19,4 +19,10 @@ class PortionBar extends DrawableObject {
         this.width = 50;
         this.height = 70;
     }
+
+    drawCollectedCoins() {
+        ctx.font = '20px Arial';
+        ctx.fillStyle = 'black';
+        ctx.fillText(this.collectedPortions/this.totalPortions, 10, 30);
+      }
 }

@@ -41,6 +41,11 @@ let level1 = new Level(
         new BackgroundObject('../assets/Backgrounds/Battlegrounds/PNG/Graveyard Battleground4/Bright/wall.png', -225 + 720 + 720, 0),
         new BackgroundObject('../assets/Backgrounds/Battlegrounds/PNG/Graveyard Battleground4/Pale/ground.png', -225 + 720 + 720, 0),
         new BackgroundObject('../assets/Backgrounds/Battlegrounds/PNG/Graveyard Battleground4/Bright/wall_mirrored.png', -225 + 720 + 720, 250)
+    ],
+    [
+        new ManaPortion('../assets/Potions/BLUE/Sprites/Big Vial - BLUE - 0000.png', -225 + 620, 300),
+        new ManaPortion('../assets/Potions/BLUE/Sprites/Big Vial - BLUE - 0000.png', -225 + (720 * 1.5), 340),
+        new ManaPortion('../assets/Potions/BLUE/Sprites/Big Vial - BLUE - 0000.png', -225 + (720 * 2.0), 260)
     ]
 
 );
