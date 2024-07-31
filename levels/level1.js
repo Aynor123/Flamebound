@@ -44,7 +44,7 @@ let level1 = new Level(
     ],
     [
         new ManaPortion('../assets/Potions/BLUE/Sprites/Big Vial - BLUE - 0000.png', -225 + 620, 300),
-        new ManaPortion('../assets/Potions/BLUE/Sprites/Big Vial - BLUE - 0000.png', -225 + (720 * 1.5), 340),
+        new ManaPortion('../assets/Potions/BLUE/Sprites/Big Vial - BLUE - 0000.png', -225 + (720 * 1.2), 300),
         new ManaPortion('../assets/Potions/BLUE/Sprites/Big Vial - BLUE - 0000.png', -225 + (720 * 2.0), 260)
     ]
 

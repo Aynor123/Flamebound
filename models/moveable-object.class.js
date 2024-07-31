@@ -56,13 +56,13 @@ class MoveableObject extends DrawableObject {
     }
 
     playOneTimeAnimationRevB(images, intervalID) {
-        if (this.imageIndex < images.length) { 
+        if (this.imageIndex < images.length) {
             let path = images[this.imageIndex];
             this.img = this.imageCache[path];
             this.imageIndex++;
         } else {
             this.imageIndex = 0;
-            clearInterval(intervalID); 
+            clearInterval(intervalID);
         }
     }
 
@@ -94,7 +94,7 @@ class MoveableObject extends DrawableObject {
 
     //character.isColliding(enemy);
     isColliding(moveableObject) {
-            return this.x + 120 + this.width - 250 > moveableObject.x + 120 &&
+        return this.x + 120 + this.width - 250 > moveableObject.x + 120 &&
             this.y + 145 + this.height - 145 > moveableObject.y + 145 &&
             this.x + 120 < moveableObject.x + 120 &&
             this.y + 145 < moveableObject.y + 145 + moveableObject.height - 145;
@@ -107,6 +107,14 @@ class MoveableObject extends DrawableObject {
             this.y + 75 + this.height - 145 > moveableObject.y + 145 &&
             this.x - 0 < moveableObject.x + 120 &&
             this.y + 75 < moveableObject.y + 145 + moveableObject.height - 145;
+    }
+
+    //fireball colliding
+    isCollidingManaPortion(moveableObject) {
+        return this.x + 120 + this.width - 250 > moveableObject.x + 40 &&
+            this.y + 145 + this.height - 145 > moveableObject.y + 60 &&
+            this.x + 120 < moveableObject.x + 40 &&
+            this.y + 145 < moveableObject.y + 60 + moveableObject.height - 115;
     }
 
 

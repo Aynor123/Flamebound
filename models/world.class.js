@@ -30,6 +30,9 @@ class World {
         this.level.enemies.forEach(enemy => {
             enemy.world = this;
         });
+        this.level.manaPortions.forEach(manaPortion => {
+            manaPortion.world = this;
+        });
         this.portionBar.world = this;
     }
 
@@ -70,15 +73,18 @@ class World {
                         throwableObject.animateFireballHit(i, j, this.throwableObjects, this.level.enemies);
                         this.lastFireballImpactTime = currentTime;
                         enemy.health -= 20;
-                        // enemy.hitDetection = true;
-                      
                         enemy.updateHitDetection();
                     }
-                } else {
-                    // enemy.hitDetection = false;
                 }
 
             });
+        });
+
+        this.level.manaPortions.forEach((manaPortion, i) => {
+            if (this.character.isCollidingManaPortion(manaPortion)) {
+                console.log('mana');
+                this.level.manaPortions.splice(i, 1);
+            }
         });
     }
 
@@ -121,6 +127,7 @@ class World {
         moveableObject.drawFrame(this.ctx);
         moveableObject.drawFrameFireball(this.ctx);
         moveableObject.drawFrameEnboss(this.ctx);
+        moveableObject.drawFrameManaPortion(this.ctx);
 
 
         if (moveableObject.otherDirection) {

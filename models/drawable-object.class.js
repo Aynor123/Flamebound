@@ -53,5 +53,15 @@ class DrawableObject {
             ctx.stroke();
         }
     }
+
+    drawFrameManaPortion(ctx) {
+        if (this instanceof ManaPortion) { // instanceof will show frames only fpr Character and Enemy and endboos
+            ctx.beginPath();
+            ctx.lineWidth = '3';
+            ctx.strokeStyle = 'red';
+            ctx.rect(this.x + 40, this.y + 60, this.width - 80, this.height - 115);
+            ctx.stroke();
+        }
+    }
 }
 
