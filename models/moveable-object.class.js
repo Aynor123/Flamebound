@@ -14,24 +14,12 @@ class MoveableObject extends DrawableObject {
     imageIndex = 0;
     collisionAllowed = true;
     hitDetection = false;
-
-
-    playJumpAnimation(images) {
-        let i = this.currentImage % images.length;
-        let path = images[i];
-        this.img = this.imageCache[path];
-        this.currentImage++;
-
-        // Reset jumpFrameCount if starting a new jump animation
-        if (this.isJumping && this.currentImage <= 3) {
-            this.jumpFrameCount = this.currentImage;
-        } else {
-            this.isJumping = false; // Reset jumping state after first three frames
-        }
-    }
+    drinkingMana = false;
+    manaBar = new ManaBar();
+    isJumping = false;
 
     jump() {
-        this.speedY = 20; //Sets jump height
+        this.speedY = 22 //Sets jump height
     }
 
     playAnimation(images) {
@@ -88,11 +76,6 @@ class MoveableObject extends DrawableObject {
         this.x -= this.speed;
     }
 
-    attack() {
-
-    }
-
-    //character.isColliding(enemy);
     isColliding(moveableObject) {
         return this.x + 120 + this.width - 250 > moveableObject.x + 120 &&
             this.y + 145 + this.height - 145 > moveableObject.y + 145 &&
@@ -101,7 +84,6 @@ class MoveableObject extends DrawableObject {
 
     }
 
-    //fireball colliding
     isCollidingFireball(moveableObject) {
         return this.x + 80 + this.width - 100 > moveableObject.x + 120 &&
             this.y + 75 + this.height - 145 > moveableObject.y + 145 &&
@@ -109,14 +91,12 @@ class MoveableObject extends DrawableObject {
             this.y + 75 < moveableObject.y + 145 + moveableObject.height - 145;
     }
 
-    //fireball colliding
     isCollidingManaPortion(moveableObject) {
         return this.x + 120 + this.width - 250 > moveableObject.x + 40 &&
             this.y + 145 + this.height - 145 > moveableObject.y + 60 &&
             this.x + 120 < moveableObject.x + 40 &&
             this.y + 145 < moveableObject.y + 60 + moveableObject.height - 115;
     }
-
 
     isHit() {
         this.health -= 0.2;
@@ -143,7 +123,7 @@ class MoveableObject extends DrawableObject {
     }
 
     isCastingFireball() {
-        this.mana -= 10;
+        this.mana -= 20;
         if (this.mana < 0) {
             this.mana = 0;
         }
@@ -153,6 +133,6 @@ class MoveableObject extends DrawableObject {
         this.hitDetection = true;
         setTimeout(() => {
             this.hitDetection = false;
-        }, 1000 / 8);
+        }, 1000 / 5);
     }
 }

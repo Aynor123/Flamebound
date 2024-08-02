@@ -10,6 +10,7 @@ class World {
     portionBar = new PortionBar();
     throwableObjects = [];
     lastThrowTime = 0;
+    lastDrinkTime = 0;
     lastFireballImpactTime = 0;
     fireballImpact = false;
     collectedPortions = 0;
@@ -40,7 +41,7 @@ class World {
         setInterval(() => {
             this.checkCollisions();
             this.checkThrowObjects();
-            this.drawCollectedPortions();
+            this.checkDrinkingManaPortions();
         }, 1000 / 60);
     }
 
@@ -54,6 +55,18 @@ class World {
                 this.throwableObjects.push(fireball);
             }, 500);
             this.lastThrowTime = currentTime;
+        }
+    }
+
+    // && (currentTime - this.lastDrinkTime >= 875) && !this.character.mana == 100
+
+    checkDrinkingManaPortions() {
+        let currentTime = Date.now();
+        if (this.keyboard.F && this.collectedPortions > 0 && this.character.mana < 100) {
+            this.collectedPortions--;
+            this.character.mana = 100;
+            this.manaBar.setPercentage(this.character.mana);
+            this.lastDrinkTime = currentTime;
         }
     }
 
@@ -76,13 +89,23 @@ class World {
                         enemy.updateHitDetection();
                     }
                 }
-
             });
+            if ((throwableObject.x - this.character.x) > 350) {
+                this.throwableObjects.splice(i, 1);
+            }
+            if ((this.character.x - throwableObject.x) > 225) {
+                this.throwableObjects.splice(i, 1);
+            }
         });
 
         this.level.manaPortions.forEach((manaPortion, i) => {
             if (this.character.isCollidingManaPortion(manaPortion)) {
                 console.log('mana');
+                if (this.collectedPortions >= 3) {
+                    this.collectedPortions = 3;
+                } else {
+                    this.collectedPortions++;
+                }
                 this.level.manaPortions.splice(i, 1);
             }
         });
@@ -148,7 +171,7 @@ class World {
     }
 
     drawCollectedPortions() {
-        this.ctx.font = '40px Inferno';
+        this.ctx.font = '32px Inferno';
         this.ctx.fillStyle = 'rgb(125,142,203)';
         this.ctx.strokeStyle = 'black';
         this.ctx.lineWidth = '1';
@@ -156,11 +179,11 @@ class World {
         this.ctx.shadowBlur = 2;
         this.ctx.shadowOffsetX = 4;
         this.ctx.shadowOffsetY = 4;
-        this.ctx.fillText(`${this.collectedPortions}/${this.totalPortions}`, 80, 120);
-        this.ctx.strokeText(`${this.collectedPortions}/${this.totalPortions}`, 80, 120);
+        this.ctx.fillText(`${this.collectedPortions}/${this.totalPortions}`, 65, 110);
+        this.ctx.strokeText(`${this.collectedPortions}/${this.totalPortions}`, 65, 110);
         this.ctx.shadowColor = 'transparent';
         this.ctx.shadowBlur = 0;
         this.ctx.shadowOffsetX = 0;
         this.ctx.shadowOffsetY = 0;
-      }
+    }
 }

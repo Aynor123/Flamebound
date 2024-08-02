@@ -18,8 +18,8 @@ class Character extends MoveableObject {
         '../assets/Fire_Wizard/Jump/tile004.png',
         '../assets/Fire_Wizard/Jump/tile005.png',
         '../assets/Fire_Wizard/Jump/tile006.png',
-        '../assets/Fire_Wizard/Jump/tile007.png',
-        '../assets/Fire_Wizard/Jump/tile008.png'
+        '../assets/Fire_Wizard/Jump/tile007.png'
+        // '../assets/Fire_Wizard/Jump/tile008.png'
     ];
 
     IMAGES_DEAD = [
@@ -48,6 +48,17 @@ class Character extends MoveableObject {
         '../assets/Fire_Wizard/Charge_Fireball/tile007.png'
     ];
 
+    IMAGES_DRINK_MANA = [
+        '../assets/Fire_Wizard/Ekixir/tile000.png',
+        '../assets/Fire_Wizard/Ekixir/tile001.png',
+        '../assets/Fire_Wizard/Ekixir/tile002.png',
+        '../assets/Fire_Wizard/Ekixir/tile003.png',
+        '../assets/Fire_Wizard/Ekixir/tile004.png',
+        '../assets/Fire_Wizard/Ekixir/tile005.png',
+        '../assets/Fire_Wizard/Ekixir/tile006.png',
+        '../assets/Fire_Wizard/Ekixir/tile007.png'
+    ];
+
     world;
     speed = 1.5;
     walking_sound = new Audio('../sounds/walking.mp3');
@@ -61,6 +72,7 @@ class Character extends MoveableObject {
         this.loadImages(this.IMAGES_HURT);
         this.loadImages(this.IMAGES_JUMPING);
         this.loadImages(this.IMAGES_CHARGE_FIREBALL);
+        this.loadImages(this.IMAGES_DRINK_MANA);
         this.applyGravity();
         this.animate();
     }
@@ -82,41 +94,66 @@ class Character extends MoveableObject {
 
             if (this.world.keyboard.SPACE && !this.isAboveGround()) {
                 this.jump();
+                this.isJumping = true;
             }
 
             if (this.world.keyboard.S) {
                 this.casting = true;
+                this.speed = 0;
+            }
+
+            if (this.world.keyboard.F) {
+                this.drinkingMana = true;
+                this.speed = 0;
             }
 
 
             this.world.camera_x = -this.x + 200; //Sets Character more to the right.
         }, 1000 / 60);
 
-        let deathFrame = 0;
-        let castingFrame = 0;
+        let frame = 0;
         let isReset = true;
         let charInterval = setInterval(() => {
-            if (this.isDead() && deathFrame < this.IMAGES_DEAD.length) {
+            if (this.isDead() && frame < this.IMAGES_DEAD.length) {
                 this.playOneTimeAnimation(this.IMAGES_DEAD, isReset);
                 isReset = false;
-                deathFrame++;
-                if (deathFrame === this.IMAGES_DEAD.length) {
+                frame++;
+                if (frame === this.IMAGES_DEAD.length) {
                     clearInterval(charInterval);
                 }
-            } else if (this.isCasting() && castingFrame < this.IMAGES_CHARGE_FIREBALL.length) {
+            } else if (this.isCasting() && frame < this.IMAGES_CHARGE_FIREBALL.length) {
                 this.playOneTimeAnimation(this.IMAGES_CHARGE_FIREBALL, isReset);
                 isReset = false;
-                castingFrame++;
-                if (castingFrame === this.IMAGES_CHARGE_FIREBALL.length) {
+                frame++;
+                if (frame === this.IMAGES_CHARGE_FIREBALL.length) {
                     isReset = true;
-                    castingFrame = 0;
+                    frame = 0;
                     this.casting = false;
+                    this.speed = 1.5;
                 }
             } else if (this.isHurt() && !this.isDead()) {
                 this.playAnimation(this.IMAGES_HURT);
-            } else if (this.isAboveGround()) {
-                this.playAnimation(this.IMAGES_JUMPING);
-            } else {
+            } else if (this.isAboveGround() && this.isJumping) {
+                this.playOneTimeAnimation(this.IMAGES_JUMPING, isReset);
+                isReset = false;
+                frame++;
+                if (frame === this.IMAGES_JUMPING.length) {
+                    isReset = true;
+                    frame = 0;
+                    this.isJumping = false;
+                }
+            } else if (this.drinkingMana && frame < this.IMAGES_DRINK_MANA.length) {
+                this.playOneTimeAnimation(this.IMAGES_DRINK_MANA, isReset);
+                isReset = false;
+                frame++;
+                if (frame === this.IMAGES_DRINK_MANA.length) {
+                    isReset = true;
+                    frame = 0;
+                    this.drinkingMana = false;
+                    this.speed = 1.5;
+                }
+            }
+            else {
                 if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
                     this.playAnimation(this.IMAGES_WALKING);
                 }

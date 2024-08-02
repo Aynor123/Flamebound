@@ -16,7 +16,7 @@ class PortionBar extends DrawableObject {
         this.loadImages(this.IMAGES_PORTION);
         this.x = 30;
         this.y = 70;
-        this.width = 50;
-        this.height = 70;
+        this.width = 30;
+        this.height = 50;
     }
 }
