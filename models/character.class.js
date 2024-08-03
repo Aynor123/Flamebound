@@ -93,9 +93,7 @@ class Character extends MoveableObject {
                 this.walking_sound.play();
             }
         
-            // && !this.isAboveGround()
-            if (this.world.keyboard.SPACE) {
-                this.currentYPosition = this.y;
+            if (this.world.keyboard.SPACE && !this.isAboveGround()) {
                 this.jump();
                 this.isJumping = true;
             }
