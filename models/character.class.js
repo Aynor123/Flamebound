@@ -86,13 +86,16 @@ class Character extends MoveableObject {
                 this.walking_sound.play();
             }
 
+
             if (this.world.keyboard.RIGHT && this.x < world.level.level_end_x) {
                 this.moveRight();
                 this.otherDirection = false;
                 this.walking_sound.play();
             }
-
-            if (this.world.keyboard.SPACE && !this.isAboveGround()) {
+        
+            // && !this.isAboveGround()
+            if (this.world.keyboard.SPACE) {
+                this.currentYPosition = this.y;
                 this.jump();
                 this.isJumping = true;
             }
@@ -105,6 +108,16 @@ class Character extends MoveableObject {
             if (this.world.keyboard.F) {
                 this.drinkingMana = true;
                 this.speed = 0;
+            }
+       
+            if (this.world.keyboard.UP && this.y > -50) { // Forbids to walk further up.
+                this.moveUp();
+                this.walking_sound.play();
+            }
+
+            if (this.world.keyboard.DOWN && this.y < 120) { 
+                this.moveDown();
+                this.walking_sound.play();
             }
 
 

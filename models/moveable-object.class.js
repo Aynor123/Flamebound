@@ -17,6 +17,7 @@ class MoveableObject extends DrawableObject {
     drinkingMana = false;
     manaBar = new ManaBar();
     isJumping = false;
+    currentYPosition;
 
     jump() {
         this.speedY = 22 //Sets jump height
@@ -54,9 +55,10 @@ class MoveableObject extends DrawableObject {
         }
     }
 
+    // || this.speedY > 0
     applyGravity() {
         setInterval(() => {
-            if (this.isAboveGround() || this.speedY > 0) { // y = 100 equals ground level for enemies, character and boss. Q.v "is>AboveGround".
+            if (this.isAboveGround() || this.y < this.currentYPosition) { // y = 100 equals ground level for enemies, character and boss. Q.v "is>AboveGround".
                 this.y -= this.speedY;
                 this.speedY -= this.acceleration;
             }
@@ -64,16 +66,25 @@ class MoveableObject extends DrawableObject {
     }
 
     isAboveGround() {
-        return this.y < 100;
+          return this.y < this.currentYPosition;
+        //  return this.y < 100;
+        
     }
 
     moveRight() {
         this.x += this.speed;
-        this.walking_sound.play();
     }
 
     moveLeft() {
         this.x -= this.speed;
+    }
+
+    moveUp() {
+        this.y -= this.speed;
+    }
+
+    moveDown() {
+        this.y += this.speed;
     }
 
     isColliding(moveableObject) {
