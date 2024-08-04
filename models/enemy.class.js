@@ -3,7 +3,6 @@ class Enemy extends MoveableObject {
     speed = 0.1;
     health = 20;
     isDead = false;
-    
 
     IMAGES_WALKING = [
         '../assets/Enemies/Skeleton_Warrior/Walk_Mirrored/tile000.png',
@@ -21,7 +20,6 @@ class Enemy extends MoveableObject {
         '../assets/Enemies/Skeleton_Warrior/Dead/tile002.png',
         '../assets/Enemies/Skeleton_Warrior/Dead/tile003.png'
     ];
-
 
     constructor() {
         super().loadImage('../assets/Enemies/Skeleton_Warrior/Walk_Mirrored/tile000.png');
@@ -54,25 +52,5 @@ class Enemy extends MoveableObject {
                 this.collisionAllowed = false;
             }
         }, 1000 / 10);
-        // let hurtIntervall = setInterval(() => {
-        //     if (this.damageProcess && this.HP > 0) {
-        //         this.playSingleAnimation(this.hurtImages, hurtIntervall);
-        //     }
-        // }, 60);
-
-
-        // // DYING Images
-        // let dyingIntervall = setInterval(() => {
-        //     if (this.isDead()) {
-        //         this.playSingleAnimation(this.dyingImages, dyingIntervall);
-        //     };
-        // }, 60);
-
     }
-
-
-
-
-
-
 }

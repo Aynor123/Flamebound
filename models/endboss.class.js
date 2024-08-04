@@ -108,3 +108,19 @@ class Endboss extends MoveableObject {
 //      }
 //    }
 //  }
+
+// updateMovementTargets(target) {
+//    if (world && this.x > target.x) {
+//        this.shouldSwimLeft = true;
+//        this.shouldSwimRight = false;
+//    } else {
+//        this.shouldSwimLeft = false;
+//        this.shouldSwimRight = true;
+//    }
+//    if (world && this.y > target.y) {
+//        this.shouldSwimUp = false;
+//        this.shouldSwimDown = true;
+//    } else {
+//        this.shouldSwimUp = true;
+//        this.shouldSwimDown = false;
+//    }

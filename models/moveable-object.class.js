@@ -20,9 +20,7 @@ class MoveableObject extends DrawableObject {
     groundLevel = 100; //Initialisiere Groundlevel. Muss mit this Y im drawable Class übereinstimmen!
 
     jump() {
-        this.isJumoing = true;
-        this.groundLevel = this.y;
-        this.speedY = 22 //Sets jump height
+        this.speedY = 23 //Sets jump height
     }
 
     playAnimation(images) {
@@ -61,19 +59,12 @@ class MoveableObject extends DrawableObject {
         setInterval(() => {
             if (this.isAboveGround() || this.speedY > 0) { // y = 100 equals ground level for enemies, character and boss. Q.v "is>AboveGround".
                 this.y -= this.speedY;
-                this.speedY -= this.acceleration;
-
-                if (this.y > this.groundLevel) {
-                    this.y = this.groundLevel;
-                    this.speedY = 0;
-                    this.jumping = false;
-                }
-            }
+                this.speedY -= this.acceleration;            }
         }, 1000 / 60); // Sets animation speed.
     }
 
     isAboveGround() {
-        return this.y < this.groundLevel;
+        return this.y < this.groundLevel;   
         //  return this.y < 100;
 
     }
@@ -87,14 +78,27 @@ class MoveableObject extends DrawableObject {
     }
 
     moveUp() {
+        if (this.isAboveGround()) {
+            return;
+        }
         this.y -= this.speed;
         this.groundLevel = this.y;
     }
 
     moveDown() {
-        this.y += this.speed;
-        // this.groundLevel = this.y;
+        if (this.isAboveGround()) {
+            return;
+        }
+            this.y += this.speed; 
+            this.groundLevel = this.y;   
     }
+
+    // moveDown() {
+    //     if (!this.isAboveGround()) {
+    //         this.groundLevel = this.y;
+    //     }
+    //         this.y += this.speed;    
+    // }
 
     isColliding(moveableObject) {
         return this.x + 120 + this.width - 250 > moveableObject.x + 120 &&
