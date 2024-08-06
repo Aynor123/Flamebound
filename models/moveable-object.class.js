@@ -57,16 +57,15 @@ class MoveableObject extends DrawableObject {
 
     applyGravity() {
         setInterval(() => {
-            if (this.isAboveGround() || this.speedY > 0) { // y = 100 equals ground level for enemies, character and boss. Q.v "is>AboveGround".
+            if (this.isAboveGround() || this.speedY > 0) {
                 this.y -= this.speedY;
-                this.speedY -= this.acceleration;            }
-        }, 1000 / 60); // Sets animation speed.
+                this.speedY -= this.acceleration;
+            }
+        }, 1000 / 60);
     }
 
     isAboveGround() {
-        return this.y < this.groundLevel;   
-        //  return this.y < 100;
-
+        return this.y < this.groundLevel;
     }
 
     moveRight() {
@@ -89,22 +88,15 @@ class MoveableObject extends DrawableObject {
         if (this.isAboveGround()) {
             return;
         }
-            this.y += this.speed; 
-            this.groundLevel = this.y;   
+        this.y += this.speed;
+        this.groundLevel = this.y;
     }
-
-    // moveDown() {
-    //     if (!this.isAboveGround()) {
-    //         this.groundLevel = this.y;
-    //     }
-    //         this.y += this.speed;    
-    // }
 
     isColliding(moveableObject) {
         return this.x + 120 + this.width - 250 > moveableObject.x + 120 &&
-            this.y + 145 + this.height - 145 > moveableObject.y + 145 &&
-            this.x + 120 < moveableObject.x + 120 &&
-            this.y + 145 < moveableObject.y + 145 + moveableObject.height - 145;
+        this.x + 120 < moveableObject.x + 120 + moveableObject.width - 250 &&
+        this.y + 145 + this.height - 145 > moveableObject.y + 145 &&
+        this.y + 145 < this.y + 145 + this.height - 145;
 
     }
 

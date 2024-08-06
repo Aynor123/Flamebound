@@ -21,36 +21,81 @@ class Enemy extends MoveableObject {
         '../assets/Enemies/Skeleton_Warrior/Dead/tile003.png'
     ];
 
+    IMAGES_ATTACK = [
+        '../assets/Enemies/Skeleton_Warrior/Attack_1_Mirrored/tile000.png',
+        '../assets/Enemies/Skeleton_Warrior/Attack_1_Mirrored/tile001.png',
+        '../assets/Enemies/Skeleton_Warrior/Attack_1_Mirrored/tile002.png',
+        '../assets/Enemies/Skeleton_Warrior/Attack_1_Mirrored/tile003.png',
+        '../assets/Enemies/Skeleton_Warrior/Attack_1_Mirrored/tile004.png',
+        '../assets/Enemies/Skeleton_Warrior/Attack_2_Mirrored/tile000.png',
+        '../assets/Enemies/Skeleton_Warrior/Attack_2_Mirrored/tile001.png',
+        '../assets/Enemies/Skeleton_Warrior/Attack_2_Mirrored/tile002.png',
+        '../assets/Enemies/Skeleton_Warrior/Attack_2_Mirrored/tile003.png',
+        '../assets/Enemies/Skeleton_Warrior/Attack_2_Mirrored/tile004.png',
+        '../assets/Enemies/Skeleton_Warrior/Attack_2_Mirrored/tile005.png'
+    ];
+
     constructor() {
         super().loadImage('../assets/Enemies/Skeleton_Warrior/Walk_Mirrored/tile000.png');
         this.loadImages(this.IMAGES_WALKING);
         this.loadImages(this.IMAGES_DEAD);
+        this.loadImages(this.IMAGES_ATTACK);
         this.x = 420 + Math.random() * 500;
         this.speed = 0.5 + Math.random() * 0.7;
         this.animate();
-        // this.health;
-        // this.collisionAllowed = true;
     }
 
     animate() {
-        let moveLeftInterval = setInterval(() => {
-            this.moveLeft();
-        }, 1000 / 60);
+        // let moveLeftInterval = setInterval(() => {
+        //     this.moveLeft();
+        // }, 1000 / 60);
 
         let walkingInterval = setInterval(() => {
-            let i = this.currentImage % this.IMAGES_WALKING.length;
-            let path = this.IMAGES_WALKING[i];
-            this.img = this.imageCache[path];
-            this.currentImage++;
+            if (!this.world.character.isColliding(this)) {
+                this.playAnimation(this.IMAGES_WALKING);
+            }
+            if (this.world.character.isColliding(this)) {
+                this.playAnimation(this.IMAGES_ATTACK);
+            }
         }, 1000 / 9);
 
         let enemyDiesInterval = setInterval(() => {
             if (this.health <= 0) {
-                clearInterval(moveLeftInterval);
+                clearInterval(moveTowardsCharacter);
                 clearInterval(walkingInterval);
                 this.playOneTimeAnimationRevB(this.IMAGES_DEAD, enemyDiesInterval);
                 this.collisionAllowed = false;
             }
         }, 1000 / 10);
+
+        let moveTowardsCharacter = setInterval(() => {
+            if (this.world.character.x < this.x) {
+                this.otherDirection = false;
+                this.moveLeft();
+            } else {
+                this.otherDirection = true;
+                this.moveRight();
+            }
+            if (this.world.character.y > this.y) {
+                this.moveDownEnemy();
+            } else {
+                this.moveUpEnemy();
+            }
+        }, 1000 / 30);
+
+        // let enemyAttack = setInterval(() => {
+        //     if (this.world.character.isColliding(this)) {
+        //         clearInterval(walkingInterval);
+        //         this.playAnimation(this.IMAGES_ATTACK);
+        //     }
+        // }, 1000 / 10);
+    }
+
+    moveUpEnemy() {
+        this.y -= this.speed;
+    }
+
+    moveDownEnemy() {
+        this.y += this.speed;
     }
 }
