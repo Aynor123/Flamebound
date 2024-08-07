@@ -7,6 +7,7 @@ class World {
     camera_x = 0; //Nach links schieben nicht nach rechts. Value irrelevant für meinen Code?
     statusBar = new StatusBar();
     manaBar = new ManaBar();
+    healthBarEndboss = new HealthBarEndboss;
     portionBar = new PortionBar();
     throwableObjects = [];
     lastThrowTime = 0;
@@ -27,7 +28,7 @@ class World {
     }
 
     setWorld() {
-        this.character.world = this; //Alle Parameter aus Klasse World werdn in Klasse Character übergeben.
+        this.character.world = this; //Alle Parameter aus Klasse World werden in Klasse Character übergeben.
         this.level.enemies.forEach(enemy => {
             enemy.world = this;
         });
@@ -90,10 +91,10 @@ class World {
                     }
                 }
             });
-            if ((throwableObject.x - this.character.x) > 350) {
+            if ((throwableObject.x - this.character.x) > 300) {
                 this.throwableObjects.splice(i, 1);
             }
-            if ((this.character.x - throwableObject.x) > 225) {
+            if ((this.character.x - throwableObject.x) > 165) {
                 this.throwableObjects.splice(i, 1);
             }
         });
@@ -123,6 +124,7 @@ class World {
         this.ctx.translate(-this.camera_x, 0); // Back. Nächste Funktion umschließen, um Objekt an Position zu halten.
         this.addToMap(this.statusBar);
         this.addToMap(this.manaBar);
+        this.addToMap(this.healthBarEndboss);
         this.addToMap(this.portionBar);
         this.drawCollectedPortions();
         this.ctx.translate(this.camera_x, 0); // Forward
