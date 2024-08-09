@@ -4,7 +4,7 @@ class Endboss extends MoveableObject {
    width = 280;
    x = 0;
    y = 120;
-   health = 60;
+   health = 100;
 
    IMAGES_IDLE = [
       '../assets/Enemies/witch/Witch_2/idle_2/tile000.png',
@@ -70,57 +70,10 @@ class Endboss extends MoveableObject {
          if (!this.hitDetection && this.health <= 0) {
             clearInterval(endbossIdleStormy);
             clearInterval(enemyHurtInterval);
-            // debugger;
             this.playOneTimeAnimationRevB(this.IMAGES_DEAD, enemyDiesInterval);
             this.collisionAllowed = false;
          }
       }, 1000 / 10);
-
-
-
-      //    setInterval(() => {
-      //       let i = this.currentImage % this.IMAGES_IDLE.length;
-      //       let path = this.IMAGES_IDLE[i];
-      //       this.img = this.imageCache[path];
-      //       this.currentImage++;
-      //   }, 1000 / 9);
-
-      // setInterval(() => {
-      //     let i = this.currentImage % this.IMAGES_WALKING.length;
-      //     let path = this.IMAGES_WALKING[i];
-      //     this.img = this.imageCache[path];
-      //     this.currentImage++;
-      // }, 1000 / 9);
    }
 }
 
-// <--- Endboss ändert richtung --->
-
-//     checkCharacterPositionEndboss() {
-//    const endboss = this.level.endboss[0];
-//    if (endboss && !endboss.isDead) {
-//      if (this.character.x > endboss.x + endboss.width) {
-//        endboss.otherDirection = true;
-//        endboss.moveLeft();
-//      } else if (this.character.x < endboss.x + 100) {
-//        endboss.otherDirection = false;
-//        endboss.moveLeft();
-//      }
-//    }
-//  }
-
-// updateMovementTargets(target) {
-//    if (world && this.x > target.x) {
-//        this.shouldSwimLeft = true;
-//        this.shouldSwimRight = false;
-//    } else {
-//        this.shouldSwimLeft = false;
-//        this.shouldSwimRight = true;
-//    }
-//    if (world && this.y > target.y) {
-//        this.shouldSwimUp = false;
-//        this.shouldSwimDown = true;
-//    } else {
-//        this.shouldSwimUp = true;
-//        this.shouldSwimDown = false;
-//    }

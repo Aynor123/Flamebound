@@ -4,6 +4,7 @@ class Enemy extends MoveableObject {
     health = 20;
     isDead = false;
     tolerance = 3;
+    sightrangeOfEnemy = 350;
 
     IMAGES_WALKING = [
         '../assets/Enemies/Skeleton_Warrior/Walk_Mirrored/tile000.png',
@@ -83,7 +84,7 @@ class Enemy extends MoveableObject {
 
         //Tolerances needed to prevent bouncing sprites of the enemy when aligning to chracter's y-coordinates
         let moveTowardsCharacter = setInterval(() => {
-            if (this.x - this.world.character.x < 350) {
+            if (this.x - this.world.character.x < this.sightrangeOfEnemy) {
                 if (!this.world.character.isColliding(this)) {
                     this.playAnimation(this.IMAGES_WALKING);
                 }

@@ -16,6 +16,14 @@ class World {
     fireballImpact = false;
     collectedPortions = 0;
     totalPortions = 3;
+    endboss = this.level.enemies[3];
+    rangeToRightFireball = 300;
+    rangeToLeftFireball = 165;
+    sightrangeOfEnemy = 350;
+    collect_portion_sound = new Audio('../sounds/collectportion.mp3');
+    fireball_hit_sound = new Audio('../sounds/fireballhitshortened.mp3');
+    fireball_casting_sound = new Audio('../sounds/fireballcasting.mp3');
+    fireball_failed_to_cast_sound = new Audio('../sounds/failedtocastfireball.mp3');
 
 
     constructor(canvas, keyboard) {
@@ -43,20 +51,25 @@ class World {
             this.checkCollisions();
             this.checkThrowObjects();
             this.checkDrinkingManaPortions();
+            this.checkEndbossVisibility();
         }, 1000 / 60);
     }
 
     checkThrowObjects() {
         let currentTime = Date.now();
-        if (this.keyboard.S && (currentTime - this.lastThrowTime >= 875) && this.character.mana > 0) {
+        if (this.keyboard.S && (currentTime - this.lastThrowTime >= 1000) && this.character.mana > 0) {
             this.character.isCastingFireball();
+            this.fireball_casting_sound.play();
             this.manaBar.setPercentage(this.character.mana);
             setTimeout(() => {
                 let fireball = new ThrowableObject(this.character.x, this.character.y, this.character.otherDirection);
                 this.throwableObjects.push(fireball);
             }, 500);
             this.lastThrowTime = currentTime;
+        } else if (this.keyboard.S && (currentTime - this.lastThrowTime >= 1000) && this.character.mana <= 0) {
+            this.fireball_failed_to_cast_sound.play();
         }
+        
     }
 
     // && (currentTime - this.lastDrinkTime >= 875) && !this.character.mana == 100
@@ -87,25 +100,26 @@ class World {
                         throwableObject.animateFireballHit(i, j, this.throwableObjects, this.level.enemies);
                         this.lastFireballImpactTime = currentTime;
                         enemy.health -= 20;
+                        this.fireball_hit_sound.play();
                         enemy.updateHitDetection();
                     }
                 }
             });
-            if ((throwableObject.x - this.character.x) > 300) {
+            if ((throwableObject.x - this.character.x) > this.rangeToRightFireball) {
                 this.throwableObjects.splice(i, 1);
             }
-            if ((this.character.x - throwableObject.x) > 165) {
+            if ((this.character.x - throwableObject.x) > this.rangeToLeftFireball) {
                 this.throwableObjects.splice(i, 1);
             }
         });
 
         this.level.manaPortions.forEach((manaPortion, i) => {
             if (this.character.isCollidingManaPortion(manaPortion)) {
-                console.log('mana');
                 if (this.collectedPortions >= 3) {
                     this.collectedPortions = 3;
                 } else {
                     this.collectedPortions++;
+                    this.collect_portion_sound.play();
                 }
                 this.level.manaPortions.splice(i, 1);
             }
@@ -125,6 +139,7 @@ class World {
         this.addToMap(this.statusBar);
         this.addToMap(this.manaBar);
         this.addToMap(this.healthBarEndboss);
+        this.drawBlackRoundedRect(35, 70, 105, 50, 5);
         this.addToMap(this.portionBar);
         this.drawCollectedPortions();
         this.ctx.translate(this.camera_x, 0); // Forward
@@ -176,16 +191,40 @@ class World {
         this.ctx.font = '32px Inferno';
         this.ctx.fillStyle = 'rgb(125,142,203)';
         this.ctx.strokeStyle = 'black';
-        this.ctx.lineWidth = '1';
+        this.ctx.lineWidth = '0.4';
         this.ctx.shadowColor = 'rgba(0, 0, 0, 1)';
         this.ctx.shadowBlur = 2;
         this.ctx.shadowOffsetX = 4;
         this.ctx.shadowOffsetY = 4;
-        this.ctx.fillText(`${this.collectedPortions}/${this.totalPortions}`, 65, 110);
-        this.ctx.strokeText(`${this.collectedPortions}/${this.totalPortions}`, 65, 110);
+        this.ctx.fillText(`${this.collectedPortions}/${this.totalPortions}`, 75, 110);
+        this.ctx.strokeText(`${this.collectedPortions}/${this.totalPortions}`, 75, 110);
         this.ctx.shadowColor = 'transparent';
         this.ctx.shadowBlur = 0;
         this.ctx.shadowOffsetX = 0;
         this.ctx.shadowOffsetY = 0;
+    }
+
+    drawBlackRoundedRect(x, y, width, height, radius) {
+        this.ctx.beginPath();
+        this.ctx.moveTo(x + radius, y);
+        this.ctx.lineTo(x + width - radius, y);
+        this.ctx.quadraticCurveTo(x + width, y, x + width, y + radius);
+        this.ctx.lineTo(x + width, y + height - radius);
+        this.ctx.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
+        this.ctx.lineTo(x + radius, y + height);
+        this.ctx.quadraticCurveTo(x, y + height, x, y + height - radius);
+        this.ctx.lineTo(x, y + radius);
+        this.ctx.quadraticCurveTo(x, y, x + radius, y);
+        this.ctx.closePath();
+        this.ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
+        this.ctx.fill();
+    }
+
+    checkEndbossVisibility() {
+        if ((this.endboss.x - this.character.x) < this.sightrangeOfEnemy) {
+            // this.endboss.playEncounterEndbossSound();
+            this.healthBarEndboss.setPercentage(this.endboss.health);    //Statusbar des Endboss wird angezeigt (mit voller Energie!)
+            // this.endboss.initEndboss();
+        }
     }
 }

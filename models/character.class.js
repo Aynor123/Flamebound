@@ -165,7 +165,7 @@ class Character extends MoveableObject {
                 }
             }
             else {
-                if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
+                if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT || this.world.keyboard.UP || this.world.keyboard.DOWN) {
                     this.playAnimation(this.IMAGES_WALKING);
                 }
             }

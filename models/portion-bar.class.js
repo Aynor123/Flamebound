@@ -14,7 +14,7 @@ class PortionBar extends DrawableObject {
     constructor() {
         super().loadImage('../assets/Potions/BLUE/Sprites/my-image.png');
         this.loadImages(this.IMAGES_PORTION);
-        this.x = 30;
+        this.x = 40;
         this.y = 70;
         this.width = 30;
         this.height = 50;
