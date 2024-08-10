@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -14,7 +15,7 @@
     <script src="./models/mana-bar.class.js"></script>
     <script src="./models/portion-bar.class.js"></script>
     <script src="./models/mana-portion.class.js"></script>
-    <script src="./models/world.class.js"></script>    
+    <script src="./models/world.class.js"></script>
     <script src="./models/background-object.class.js"></script>
     <script src="./models/keyboard.class.js"></script>
     <script src="./models/level.class.js"></script>
@@ -24,13 +25,39 @@
     <script src="./levels/level1.js"></script>
     <script src="./js/game.js"></script>
 </head>
+
 <body onload="init()">
+
+    <div class="background-img overlay">
+        <h1 class="fire-text headline">INFERNO</h1>
+        <div class="menu-header-cont">
+            <span class="golden-text-40">
+                Menu
+            </span>
+        </div>
+        <div class="canvas-overlay d-flex fd-column j-center">
+            <div class="menu-corner">
+
+            </div>
+            <div class="d-flex j-center a-center fd-column">
+                <div class="menu-btn">
+                    <span class="golden-text-30">Play</span>
+                </div>
+                <div class="menu-btn">
+                    <span class="golden-text-30">Controls</span>
+                </div>
+                <div class="menu-btn">
+                    <span class="golden-text-30">About</span>
+                </div>
+            </div>
+        </div>
+
+    </div>
     <div class="background-img">
-    <h1 class="fire-text">INFERNO</h1>
 
-    <canvas id="canvas" width="720" height="480">
-
-    </canvas>
-</div>
+        <canvas id="canvas" width="720" height="480">
+        </canvas>
+    </div>
 </body>
+
 </html>
