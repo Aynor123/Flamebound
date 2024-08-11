@@ -28,7 +28,7 @@
 
 <body onload="init()">
 
-    <div class="background-img overlay">
+    <div class="background-img overlay" id="game-starting-page">
         <h1 class="fire-text headline">INFERNO</h1>
         <div class="menu-header-cont">
             <span class="golden-text-40">
@@ -40,23 +40,41 @@
 
             </div>
             <div class="d-flex j-center a-center fd-column">
-                <div class="menu-btn">
+                <div class="menu-btn" onclick="startGame()">
                     <span class="golden-text-30">Play</span>
                 </div>
-                <div class="menu-btn">
+                <div class="menu-btn" onclick="startControls()">
                     <span class="golden-text-30">Controls</span>
                 </div>
-                <div class="menu-btn">
+                <div class="menu-btn" onclick="startAbout()">
                     <span class="golden-text-30">About</span>
                 </div>
             </div>
         </div>
-
     </div>
     <div class="background-img">
-
         <canvas id="canvas" width="720" height="480">
         </canvas>
+    </div>
+    <div class="overlay d-flex j-center a-center fd-column">
+        <h1 class="fire-text headline">INFERNO</h1>
+        <div class="menu-header-cont">
+            <span class="golden-text-40">
+                Controls
+            </span>
+        </div>
+        <div class="canvas-overlay d-flex fd-column j-center z-index3">
+        </div>
+    </div>
+    <div class="overlay d-flex j-center a-center fd-column">
+        <h1 class="fire-text headline">INFERNO</h1>
+        <div class="menu-header-cont">
+            <span class="golden-text-40">
+                About
+            </span>
+        </div>
+        <div class="canvas-overlay d-flex fd-column j-center z-index3">
+        </div>
     </div>
 </body>
 
