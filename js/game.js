@@ -5,6 +5,8 @@ let start_game_sound = new Audio('../sounds/buttonstartclick.mp3');
 let start_controls_sound = new Audio('../sounds/buttonclick1.mp3');
 let start_about_sound = new Audio('../sounds/buttonclick.mp3');
 let menu_sound = new Audio('../sounds/menuambientemenace.mp3');
+let test;
+
 
 
 
@@ -14,7 +16,7 @@ function init() {
     canvas = document.getElementById('canvas');
     world = new World(canvas, keyboard);
     menu_sound.loop = true;
-    menu_sound.volume = 0.6;
+    menu_sound.volume = 0.5;
     menu_sound.play();
 }
 
@@ -93,8 +95,12 @@ function startGame() {
 
 function startControls() {
     start_controls_sound.play();
+    let controlMenuOverlay = document.getElementById("control-menu");
+    controlMenuOverlay.classList.remove("d-none");
 }
 
 function startAbout() {
     start_about_sound.play();
+    let aboutMenuOverlay = document.getElementById("about-menu");
+    aboutMenuOverlay.classList.remove("d-none");
 }

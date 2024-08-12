@@ -27,7 +27,7 @@
 </head>
 
 <body onload="init()">
-
+<!-- Menu Section -->
     <div class="background-img overlay" id="game-starting-page">
         <h1 class="fire-text headline">INFERNO</h1>
         <div class="menu-header-cont">
@@ -52,11 +52,13 @@
             </div>
         </div>
     </div>
+    <!-- Canvas Section -->
     <div class="background-img">
         <canvas id="canvas" width="720" height="480">
         </canvas>
     </div>
-    <div class="overlay d-flex j-center a-center fd-column">
+    <!-- Control Section -->
+    <div class="overlay d-flex j-center a-center fd-column d-none" id="control-menu">
         <h1 class="fire-text headline">INFERNO</h1>
         <div class="menu-header-cont">
             <span class="golden-text-40">
@@ -64,9 +66,43 @@
             </span>
         </div>
         <div class="canvas-overlay d-flex fd-column j-center z-index3">
+            <div class="row">
+                <div class="gif-container">
+                    <img src="../assets/Fire_Wizard/Walk/walk.gif">
+                </div>
+                <div class="control-sescription">
+                    <span>MOVE</span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="gif-container">
+                    <img src="../assets/Fire_Wizard/Jump/jump.gif">
+                </div>
+                <div class="control-sescription">
+                    <span>JUMP</span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="gif-container">
+                    <img src="../assets/Fire_Wizard/Charge_Fireball/charge_fireball.gif">
+                </div>
+                <div class="control-sescription">
+                    <span>FIREBALL</span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="gif-container">
+                    <img src="../assets/Fire_Wizard/Ekixir/mana_portion.gif">
+                </div>
+                <div class="control-sescription">
+                    <span>MANA ELIXIR</span>
+                </div>
+            </div>
+
         </div>
     </div>
-    <div class="overlay d-flex j-center a-center fd-column">
+    <!-- About Section -->
+    <div class="overlay d-flex j-center a-center fd-column d-none" id="about-menu">
         <h1 class="fire-text headline">INFERNO</h1>
         <div class="menu-header-cont">
             <span class="golden-text-40">
@@ -74,6 +110,7 @@
             </span>
         </div>
         <div class="canvas-overlay d-flex fd-column j-center z-index3">
+            <div class="row"></div>
         </div>
     </div>
 </body>
