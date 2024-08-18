@@ -412,7 +412,12 @@ canvas {
     align-items: center;
     justify-content: center;
     height: 50px;
+    width: 50px;
     top: -30px;
+    background-image: url('../assets/GUI/Button_Background.png');
+    background-size: 100% 100%;
+    background-position: center;
+    background-repeat: no-repeat;
 }
 
 .menu-icon-ingame {
