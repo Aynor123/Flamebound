@@ -5,20 +5,35 @@ let start_game_sound = new Audio('../sounds/buttonstartclick.mp3');
 let start_controls_sound = new Audio('../sounds/buttonclick1.mp3');
 let start_about_sound = new Audio('../sounds/buttonclick.mp3');
 let menu_sound = new Audio('../sounds/menuambientemenace.mp3');
-let test;
+let close_sound = new Audio('../sounds/close.mp3');
 
+function muteToggleSound() {
+    onOffHandler = document.getElementById('onoff-handler');
+    onOffHandlerHover = document.getElementById('onoff-handler-hover');
+    speaker = document.getElementById('speaker');
 
+    onOffHandler.classList.toggle('onoff-handler-active');
+    onOffHandlerHover.classList.toggle('onoff-handler-hover-active');
 
-
-
+    if (onOffHandler.classList.contains('onoff-handler-active')) {
+        speaker.src = '../assets/GUI/SpeakerIcon_On.webp';
+        menu_sound.muted = false;
+        menu_sound.loop = true;
+        menu_sound.volume = 0.3;
+        menu_sound.play();
+        
+    } else {
+        speaker.src = '../assets/GUI/SpeakerIcon_Off.webp';
+        menu_sound.muted = true;
+    }
+}
 
 function init() {
     canvas = document.getElementById('canvas');
     world = new World(canvas, keyboard);
-    menu_sound.loop = true;
-    menu_sound.volume = 0.5;
-    menu_sound.play();
 }
+
+
 
 window.addEventListener('keydown', (event) => {
     if (event.keyCode == 39) {
@@ -89,7 +104,7 @@ function startGame() {
     setTimeout(function () {
         gameStartingPage.classList.add("d-none");
     }, 5000);
-    menu_sound.pause();      
+    menu_sound.pause();
     menu_sound.currentTime = 0;
 }
 
@@ -103,4 +118,16 @@ function startAbout() {
     start_about_sound.play();
     let aboutMenuOverlay = document.getElementById("about-menu");
     aboutMenuOverlay.classList.remove("d-none");
+}
+
+function closeControlsMenu() {
+    close_sound.play();
+    let controlMenuOverlay = document.getElementById("control-menu");
+    controlMenuOverlay.classList.add("d-none");
+}
+
+function closeAboutMenu() {
+    close_sound.play();
+    let aboutMenuOverlay = document.getElementById("about-menu");
+    aboutMenuOverlay.classList.add("d-none");
 }

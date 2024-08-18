@@ -1,0 +1,143 @@
+@font-face {
+    font-family: 'Inferno';
+    src: url('../assets/Fonts/inferno.ttf');
+}
+
+@font-face {
+    font-family: 'Game-Over';
+    src: url('../assets/Fonts/game-over.ttf');
+}
+
+@font-face {
+    font-family: 'ConstantiaBold';
+    src: url('../assets/Fonts/Constantia Bold.ttf');
+}
+
+@font-face {
+    font-family: 'Constantia Regular';
+    src: url('../assets/Fonts/Constantia Regular.ttf');
+}
+
+@font-face {
+    font-family: 'Khmer';
+    src: url('../assets/Fonts/Khmer UI Regular.ttf');
+}
+
+@font-face {
+    font-family: 'Cambria Regular';
+    src: url('../assets/Fonts/Cambria Regular.ttf');
+}
+
+@font-face {
+    font-family: 'Palatino Regular';
+    src: url('../assets/Fonts/Palatino Linotype Regular.ttf');
+}
+
+@-webkit-keyframes stripes {
+    100% {
+      background-position: 0 -530px;
+    }
+  }
+  
+  @keyframes stripes {
+    100% {
+      background-position: 0 -400px;
+    }
+  }
+
+.fire-text {
+    background: url('../assets/Fonts/fire-texture.jpg');
+    background-repeat: repeat;
+    background-size: 100% 400px;
+    background-position: 0 0;
+    color: #fff;
+    -webkit-text-fill-color: transparent;
+    -webkit-background-clip: text;
+    -moz-background-clip: text; 
+    background-clip: text; 
+    font-family: Inferno;
+    font-size: clamp(50px, 6vw, 80px);
+    /* font-size: 80px; */
+    padding: 0;
+    margin-bottom: 15px;
+    margin-top: 15px;
+    text-align: center;
+    -webkit-text-stroke: 1px rgb(255,182,108);
+    -webkit-animation: stripes 2s linear infinite;
+    animation: stripes 8s linear infinite;
+}
+
+.golden-text-40 {
+    background: url('../assets/Fonts/yellow-wall-texture-with-scratches.jpg');
+    background-repeat: repeat;
+    background-size: 20% 100px;
+    background-position: 0 0;
+    color: #fff;
+    -webkit-text-fill-color: transparent;
+    -webkit-background-clip: text;
+    -moz-background-clip: text; 
+    background-clip: text; 
+    font-family: Palatino Regular;
+    font-size: 40px;
+    padding: 0;
+    margin-bottom: 15px;
+    margin-top: 15px;
+    text-align: center;
+    -webkit-text-stroke: 1px rgb(255,182,108);
+}
+
+.golden-text-30 {
+    background: url('../assets/Fonts/yellow-wall-texture-with-scratches.jpg');
+    background-repeat: repeat;
+    background-size: 20% 100px;
+    background-position: 0 0;
+    color: #fff;
+    -webkit-text-fill-color: transparent;
+    -webkit-background-clip: text;
+    -moz-background-clip: text; 
+    background-clip: text; 
+    font-family: Palatino Regular;
+    font-size: 30px;
+    padding: 0;
+    margin-bottom: 15px;
+    margin-top: 15px;
+    text-align: center;
+    -webkit-text-stroke: 1px rgb(255,182,108);
+}
+
+.golden-text-menu {
+    background: url('../assets/Fonts/yellow-wall-texture-with-scratches.jpg');
+    background-repeat: repeat;
+    background-size: 20% 100px;
+    background-position: 0 0;
+    color: #fff;
+    -webkit-text-fill-color: transparent;
+    -webkit-background-clip: text;
+    -moz-background-clip: text; 
+    background-clip: text; 
+    font-family: Palatino Regular;
+    font-size: 30px;
+    padding: 0;
+    margin-bottom: 15px;
+    margin-top: 15px;
+    text-align: center;
+    -webkit-text-stroke: 1px rgb(255,182,108);
+}
+
+.golden-text-16 {
+    background: url('../assets/Fonts/yellow-wall-texture-with-scratches.jpg');
+    background-repeat: repeat;
+    background-size: 20% 100px;
+    background-position: 0 0;
+    color: #fff;
+    -webkit-text-fill-color: transparent;
+    -webkit-background-clip: text;
+    -moz-background-clip: text; 
+    background-clip: text; 
+    font-family: Palatino Regular;
+    font-size: 16px;
+    padding: 0;
+    margin-top: 10px;
+    text-align: center;
+    -webkit-text-stroke: 1px rgb(255,182,108);
+}

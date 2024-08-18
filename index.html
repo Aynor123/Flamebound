@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="./style_fonts.css">
+    <link rel="stylesheet" href="./style_media_query.css">
     <script src="./models/drawable-object.class.js"></script>
     <script src="./models/moveable-object.class.js"></script>
     <script src="./models/character.class.js"></script>
@@ -27,6 +29,23 @@
 </head>
 
 <body onload="init()">
+    <!-- Speaker Toogle Button-->
+    <div class="music-menu" onclick="muteToggleSound()" id="music-menu">
+        <img src="../assets/GUI/SpeakerIcon_Off.webp" class="speaker" id="speaker">
+        <div class="onoff-container">
+            <img src="../assets/GUI/On or Off/onoff_c.png" class="onoff-bg" id="onoff-bg">
+            <img src="../assets/GUI/On or Off/onoff_handler.png" class="onoff-handler" id="onoff-handler">
+            <img src="../assets/GUI/On or Off/onoff_handler_hover.png" class="onoff-handler-hover"
+                id="onoff-handler-hover">
+        </div>
+    </div>
+
+    <!-- Imprint and Privacy-->
+    <div class="legal">
+        <a href="imprint.html" class="golden-text-16" target="_blank">Imprint</a>
+        <a href="privacy_policy.html" class="golden-text-16" target="_blank">Privacy Policy</a>
+    </div>
+
     <!-- Menu Section -->
     <div class="background-img overlay" id="game-starting-page">
         <h1 class="fire-text headline">INFERNO</h1>
@@ -39,21 +58,36 @@
             <div class="menu-corner">
 
             </div>
-            <div class="d-flex j-center a-center fd-column">
+            <div class="d-flex j-center a-center fd-column position-relative">
                 <div class="menu-btn" onclick="startGame()">
-                    <span class="golden-text-30">Play</span>
+                    <span class="golden-text-menu">Play</span>
                 </div>
                 <div class="menu-btn" onclick="startControls()">
-                    <span class="golden-text-30">Controls</span>
+                    <span class="golden-text-menu">Controls</span>
                 </div>
                 <div class="menu-btn" onclick="startAbout()">
-                    <span class="golden-text-30">About</span>
+                    <span class="golden-text-menu">About</span>
                 </div>
             </div>
         </div>
     </div>
     <!-- Canvas Section -->
     <div class="background-img">
+        <div class="in-game-menu">
+            <div class="music-menu-ingame" onclick="muteToggleSound()" id="music-menu-ingame">
+                <img src="../assets/GUI/SpeakerIcon_Off.webp" class="speaker" id="speaker-ingame">
+                <div class="onoff-container">
+                    <img src="../assets/GUI/On or Off/onoff_c.png" class="onoff-bg" id="onoff-bg-ingame">
+                    <img src="../assets/GUI/On or Off/onoff_handler.png" class="onoff-handler"
+                        id="onoff-handler-ingame">
+                    <img src="../assets/GUI/On or Off/onoff_handler_hover.png" class="onoff-handler-hover"
+                        id="onoff-handler-hover">
+                </div>
+            </div>
+            <div class="menu-icon-ingame-cont">
+                <img src="../assets/GUI/Icons/Button_S1_Icon_Menu.png" class="menu-icon-ingame">
+            </div>
+        </div>
         <canvas id="canvas" width="720" height="480">
         </canvas>
     </div>
@@ -67,14 +101,14 @@
         </div>
         <div class="canvas-overlay d-flex j-center z-index3">
             <div class="x-button">
-                <div class="x-button-background">
+                <div class="x-button-background" onclick="closeControlsMenu()">
                     <img class="x-image" src="../assets/GUI/Window/header_close_icon.png">
                 </div>
             </div>
             <div class="d-flex a-center row">
                 <div class="column">
                     <div class="gif-container">
-                        <img src="../assets/Fire_Wizard/Walk/walk.gif">
+                        <img src="../assets/Fire_Wizard/Walk/walk.gif" class="gif-adjust">
                     </div>
                     <div class="control-description">
                         <span class="golden-text-16">MOVE</span>
@@ -86,43 +120,43 @@
             </div>
             <div class="d-flex a-center row">
                 <div class="column">
-                <div class="gif-container">
-                    <img src="../assets/Fire_Wizard/Jump/jump.gif">
+                    <div class="gif-container">
+                        <img src="../assets/Fire_Wizard/Jump/jump.gif" class="gif-adjust">
+                    </div>
+                    <div class="control-description">
+                        <span class="golden-text-16">JUMP</span>
+                    </div>
                 </div>
-                <div class="control-description">
-                    <span class="golden-text-16">JUMP</span>
+                <div class="key-description">
+                    <span class="golden-text-30">Space</span>
                 </div>
             </div>
-            <div class="key-description">
-                <span class="golden-text-30">Space</span>
-            </div>
-        </div>
             <div class="d-flex a-center row">
                 <div class="column">
-                <div class="gif-container">
-                    <img src="../assets/Fire_Wizard/Charge_Fireball/charge_fireball.gif">
+                    <div class="gif-container">
+                        <img src="../assets/Fire_Wizard/Charge_Fireball/charge_fireball.gif" class="gif-adjust">
+                    </div>
+                    <div class="control-description">
+                        <span class="golden-text-16">FIREBALL</span>
+                    </div>
                 </div>
-                <div class="control-description">
-                    <span class="golden-text-16">FIREBALL</span>
+                <div class="key-description">
+                    <span class="golden-text-30">S</span>
                 </div>
             </div>
-            <div class="key-description">
-                <span class="golden-text-30">S</span>
-            </div>
-        </div>
             <div class="d-flex a-center row">
                 <div class="column">
-                <div class="gif-container">
-                    <img src="../assets/Fire_Wizard/Ekixir/mana_portion.gif">
+                    <div class="gif-container">
+                        <img src="../assets/Fire_Wizard/Ekixir/mana_portion.gif" class="gif-adjust">
+                    </div>
+                    <div class="control-description">
+                        <span class="golden-text-16">MANA ELIXIR</span>
+                    </div>
                 </div>
-                <div class="control-description">
-                    <span class="golden-text-16">MANA ELIXIR</span>
+                <div class="key-description">
+                    <span class="golden-text-30">D</span>
                 </div>
             </div>
-            <div class="key-description">
-                <span class="golden-text-30">D</span>
-            </div>
-        </div>
         </div>
     </div>
     <!-- About Section -->
@@ -133,8 +167,36 @@
                 About
             </span>
         </div>
-        <div class="canvas-overlay d-flex fd-column j-center z-index3">
-            <div class="row"></div>
+        <div class="canvas-overlay d-flex j-center z-index3">
+            <div class="x-button">
+                <div class="x-button-background" onclick="closeAboutMenu()">
+                    <img class="x-image" src="../assets/GUI/Window/header_close_icon.png">
+                </div>
+            </div>
+            <div class="about-container">
+                <span class="golden-text-16">
+                    This mini-game was created as a way for me to deepen my understanding of object-oriented
+                    programming, particularly focusing on JavaScript classes, objects, and intervals. In the game,
+                    you’ll step into the shoes of a fire wizard tasked with defeating a dark menace.
+                    <br><br>
+                    I hope you enjoy playing as much as I enjoyed creating it!
+                    <br><br>
+                    Before I sign off, I want to take a moment to express my gratitude:
+                    <br><br>
+                    A heartfelt thanks to the incredible mentors from the Developer Akademie. Your guidance has been
+                    invaluable.<br><br>
+                    A special shoutout to the creator "SilverIllusionist" for providing outstanding sounds that truly
+                    brought this game to life. The quality of his work made it difficult to choose just one sound! I
+                    highly recommend checking out his amazing collection at <a
+                        href="https://freesound.org/people/SilverIllusionist/">freesound.org</a>.<br><br>
+                    My gratitude also goes to the talented artists at <a href="https://craftpix.net">craftpix.net</a>
+                    for their wonderful sprites that helped shape the visual style of this game.<br><br>
+                    Lastly, a very personal thank you to my wife for her unwavering support and for keeping things
+                    running smoothly while I focused on this project.<br><br>
+                    <br>
+                    Thank you all, and enjoy the adventure!
+                </span>
+            </div>
         </div>
     </div>
 </body>
