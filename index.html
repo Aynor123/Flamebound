@@ -30,7 +30,7 @@
 
 <body onload="init()">
     <!-- Speaker Toogle Button-->
-    <div class="music-menu" onclick="muteToggleSound()" id="music-menu">
+    <div class="music-menu" onclick="toggleSoundMainMenu()" id="music-menu">
         <img src="../assets/GUI/SpeakerIcon_Off.webp" class="speaker" id="speaker">
         <div class="onoff-container">
             <img src="../assets/GUI/On or Off/onoff_c.png" class="onoff-bg" id="onoff-bg">
@@ -73,15 +73,15 @@
     </div>
     <!-- Canvas Section -->
     <div class="background-img">
-        <div class="in-game-menu">
-            <div class="music-menu-ingame" onclick="muteToggleSound()" id="music-menu-ingame">
+        <div class="in-game-menu d-none" id="in-game-menu">
+            <div class="music-menu-ingame" onclick="toggleSoundIngame()" id="music-menu-ingame">
                 <img src="../assets/GUI/SpeakerIcon_Off.webp" class="speaker" id="speaker-ingame">
                 <div class="onoff-container">
                     <img src="../assets/GUI/On or Off/onoff_c.png" class="onoff-bg" id="onoff-bg-ingame">
                     <img src="../assets/GUI/On or Off/onoff_handler.png" class="onoff-handler"
                         id="onoff-handler-ingame">
-                    <img src="../assets/GUI/On or Off/onoff_handler_hover.png" class="onoff-handler-hover"
-                        id="onoff-handler-hover">
+                    <img src="../assets/GUI/On or Off/onoff_handler_hover.png" class="onoff-handler-hover-ingame"
+                        id="onoff-handler-hover-ingame">
                 </div>
             </div>
             <div class="menu-icon-ingame-cont">
@@ -154,7 +154,7 @@
                     </div>
                 </div>
                 <div class="key-description">
-                    <span class="golden-text-30">D</span>
+                    <span class="golden-text-30">F</span>
                 </div>
             </div>
         </div>

@@ -15,12 +15,18 @@ class HealthBarEndboss extends DrawableObject {
         '../assets/Status-Bars/Health_Bar_0.png'
     ];
 
+    IMAGES_SKULL = [
+        '',
+        '../assets/Enemies/Skull.png'
+
+    ];
+
     percentage = 100;
 
     constructor() {
         super();
         this.loadImages(this.IMAGES_HEALTH);
-        this.x = 490;
+        this.x = 340;
         this.y = 20;
         this.width = 200;
         this.height = 30;

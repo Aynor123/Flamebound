@@ -1,5 +1,5 @@
 class Enemy extends MoveableObject {
-
+    world;
     speed;
     health = 20;
     isDead = false;

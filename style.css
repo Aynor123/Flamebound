@@ -163,10 +163,6 @@ canvas {
     opacity: 1;
 }
 
-.d-none {
-    display: none;
-}
-
 .fade-out {
     opacity: 0;
     transition: opacity 5s ease-in-out; 
@@ -366,6 +362,7 @@ canvas {
     width: 90%;
     max-width: 670px;
     justify-content: flex-end;
+    opacity: 1;
 }
 
 .music-menu-ingame {
@@ -404,6 +401,8 @@ canvas {
     width: 35px;
     opacity: 0;
     transition: right 0.3s ease, opacity 0.3s ease;
+    position: absolute;
+    right: 26px;
 }
 
 .menu-icon-ingame-cont {
@@ -414,6 +413,7 @@ canvas {
     height: 50px;
     width: 50px;
     top: -30px;
+    right: -15px;
     background-image: url('../assets/GUI/Button_Background.png');
     background-size: 100% 100%;
     background-position: center;
@@ -422,4 +422,20 @@ canvas {
 
 .menu-icon-ingame {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.8);
+}
+
+.onoff-handler-active-ingame {
+    right: 0px;
+}
+
+.onoff-handler-hover-active-ingame  {
+    right: 5px;
+}
+
+#music-menu-ingame:hover #onoff-handler-hover-ingame {
+    opacity: 1;
+}
+
+.d-none {
+    display: none;
 }

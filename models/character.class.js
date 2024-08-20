@@ -62,6 +62,7 @@ class Character extends MoveableObject {
     world;
     speed = 1.5;
     walking_sound = new Audio('../sounds/walking.mp3');
+    drink_sound = new Audio('../sounds/drinkportion.mp3');
 
 
 
@@ -106,6 +107,7 @@ class Character extends MoveableObject {
             if (this.world.keyboard.F) {
                 this.drinkingMana = true;
                 this.speed = 0;
+                this.drink_sound.play();
             }
        
             if (this.world.keyboard.UP && this.y > -50) { // Forbids to walk further up.

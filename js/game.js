@@ -6,8 +6,9 @@ let start_controls_sound = new Audio('../sounds/buttonclick1.mp3');
 let start_about_sound = new Audio('../sounds/buttonclick.mp3');
 let menu_sound = new Audio('../sounds/menuambientemenace.mp3');
 let close_sound = new Audio('../sounds/close.mp3');
+let graveyard_sound = new Audio('../sounds/graveyard ambiente.mp3')
 
-function muteToggleSound() {
+function toggleSoundMainMenu() {
     onOffHandler = document.getElementById('onoff-handler');
     onOffHandlerHover = document.getElementById('onoff-handler-hover');
     speaker = document.getElementById('speaker');
@@ -24,6 +25,27 @@ function muteToggleSound() {
         
     } else {
         speaker.src = '../assets/GUI/SpeakerIcon_Off.webp';
+        menu_sound.muted = true;
+    }
+}
+
+function toggleSoundIngame() {
+    onOffHandlerIngame = document.getElementById('onoff-handler-ingame');
+    onOffHandlerHoverIngame = document.getElementById('onoff-handler-hover-ingame');
+    speakerIngame = document.getElementById('speaker-ingame');
+
+    onOffHandlerIngame.classList.toggle('onoff-handler-active-ingame');
+    onOffHandlerHoverIngame.classList.toggle('onoff-handler-hover-active-ingame');
+
+    if (onOffHandlerIngame.classList.contains('onoff-handler-active-ingame')) {
+        speakerIngame.src = '../assets/GUI/SpeakerIcon_On.webp';
+        menu_sound.muted = false;
+        menu_sound.loop = true;
+        menu_sound.volume = 0.3;
+        menu_sound.play();
+        
+    } else {
+        speakerIngame.src = '../assets/GUI/SpeakerIcon_Off.webp';
         menu_sound.muted = true;
     }
 }
@@ -99,13 +121,21 @@ window.addEventListener('keyup', (event) => {
 
 function startGame() {
     let gameStartingPage = document.getElementById("game-starting-page");
+    let musicMenu = document.getElementById("music-menu");
+    let musicMenuIngame = document.getElementById("in-game-menu");
     gameStartingPage.classList.add("fade-out");
+    musicMenu.classList.add("d-none");
     start_game_sound.play();
     setTimeout(function () {
         gameStartingPage.classList.add("d-none");
+        musicMenuIngame.classList.remove("d-none"); 
     }, 5000);
     menu_sound.pause();
     menu_sound.currentTime = 0;
+    graveyard_sound.muted = false;
+    graveyard_sound.loop = true;
+    graveyard_sound.volume = 0.2;
+    graveyard_sound.play();
 }
 
 function startControls() {

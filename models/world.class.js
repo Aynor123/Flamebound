@@ -24,6 +24,8 @@ class World {
     fireball_hit_sound = new Audio('../sounds/fireballhitshortened.mp3');
     fireball_casting_sound = new Audio('../sounds/fireballcasting.mp3');
     fireball_failed_to_cast_sound = new Audio('../sounds/failedtocastfireball.mp3');
+    boss_encounter_sound = new Audio('../sounds/bossencounter.mp3');
+    bossEncountered = false;
 
 
     constructor(canvas, keyboard) {
@@ -222,9 +224,13 @@ class World {
 
     checkEndbossVisibility() {
         if ((this.endboss.x - this.character.x) < this.sightrangeOfEnemy) {
-            // this.endboss.playEncounterEndbossSound();
-            this.healthBarEndboss.setPercentage(this.endboss.health);    //Statusbar des Endboss wird angezeigt (mit voller Energie!)
+            this.healthBarEndboss.setPercentage(this.endboss.health);   
             // this.endboss.initEndboss();
+            if (!this.bossEncounter) {
+                this.bossEncounter = true;
+                this.boss_encounter_sound.play();
+                this.boss_encounter_sound.muted = false;
+            }
         }
     }
 }
