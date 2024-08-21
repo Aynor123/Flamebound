@@ -1,6 +1,7 @@
 let canvas;
 let world;
 let keyboard = new Keyboard();
+let allSoundsMuted = true;
 let start_game_sound = new Audio('../sounds/buttonstartclick.mp3');
 let start_controls_sound = new Audio('../sounds/buttonclick1.mp3');
 let start_about_sound = new Audio('../sounds/buttonclick.mp3');
@@ -16,43 +17,67 @@ function toggleSoundMainMenu() {
     onOffHandler.classList.toggle('onoff-handler-active');
     onOffHandlerHover.classList.toggle('onoff-handler-hover-active');
 
-    if (onOffHandler.classList.contains('onoff-handler-active')) {
+    if (allSoundsMuted) {
         speaker.src = '../assets/GUI/SpeakerIcon_On.webp';
         menu_sound.muted = false;
         menu_sound.loop = true;
         menu_sound.volume = 0.3;
         menu_sound.play();
-        
+        start_game_sound.muted = false;
+        start_controls_sound.muted = false;
+        start_about_sound.muted = false;
+        close_sound.muted = false;
+        world.character.walking_sound.muted = false;
+        world.character.drink_sound.muted = false;
+        allSoundsMuted = false;
     } else {
         speaker.src = '../assets/GUI/SpeakerIcon_Off.webp';
         menu_sound.muted = true;
+        start_game_sound.muted = true;
+        start_controls_sound.muted = true;
+        start_about_sound.muted = true;
+        close_sound.muted = true;
+        world.character.walking_sound.muted = true;
+        world.character.drink_sound.muted = true;
+        allSoundsMuted = true;
     }
 }
-
 function toggleSoundIngame() {
     onOffHandlerIngame = document.getElementById('onoff-handler-ingame');
     onOffHandlerHoverIngame = document.getElementById('onoff-handler-hover-ingame');
     speakerIngame = document.getElementById('speaker-ingame');
 
-    onOffHandlerIngame.classList.toggle('onoff-handler-active-ingame');
-    onOffHandlerHoverIngame.classList.toggle('onoff-handler-hover-active-ingame');
+    // onOffHandlerIngame.classList.toggle('onoff-handler-active-ingame');
+    // onOffHandlerHoverIngame.classList.toggle('onoff-handler-hover-active-ingame');
 
-    if (onOffHandlerIngame.classList.contains('onoff-handler-active-ingame')) {
+    if (allSoundsMuted) {
         speakerIngame.src = '../assets/GUI/SpeakerIcon_On.webp';
-        menu_sound.muted = false;
-        menu_sound.loop = true;
-        menu_sound.volume = 0.3;
-        menu_sound.play();
-        
+        onOffHandlerIngame.classList.add('onoff-handler-active-ingame');
+        onOffHandlerHoverIngame.classList.add('onoff-handler-hover-active-ingame');
+
+        graveyard_sound.muted = false;
+        world.character.walking_sound.muted = false;
+        world.character.drink_sound.muted = false;
+        allSoundsMuted = false; // Update the global sound state
     } else {
         speakerIngame.src = '../assets/GUI/SpeakerIcon_Off.webp';
-        menu_sound.muted = true;
+        onOffHandlerIngame.classList.remove('onoff-handler-active-ingame');
+        onOffHandlerHoverIngame.classList.remove('onoff-handler-hover-active-ingame');
+
+        graveyard_sound.muted = true;
+        world.character.walking_sound.muted = true;
+        world.character.drink_sound.muted = true;
+        allSoundsMuted = true; // Update the global sound state
     }
 }
 
 function init() {
     canvas = document.getElementById('canvas');
     world = new World(canvas, keyboard);
+    start_game_sound.muted = true;
+    start_controls_sound.muted = true;
+    start_about_sound.muted = true;
+    close_sound.muted = true;    
 }
 
 
@@ -132,10 +157,18 @@ function startGame() {
     }, 5000);
     menu_sound.pause();
     menu_sound.currentTime = 0;
-    graveyard_sound.muted = false;
+    graveyard_sound.play();
     graveyard_sound.loop = true;
     graveyard_sound.volume = 0.2;
-    graveyard_sound.play();
+    if (allSoundsMuted) {
+        graveyard_sound.muted = true;
+        world.character.walking_sound.muted = true;
+        world.character.drink_sound.muted = true;
+    } else {
+        graveyard_sound.muted = false;
+        world.character.walking_sound.muted = false;
+        world.character.drink_sound.muted = false;
+    }
 }
 
 function startControls() {

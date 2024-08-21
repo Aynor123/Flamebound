@@ -1,5 +1,4 @@
 class Enemy extends MoveableObject {
-    world;
     speed;
     health = 20;
     isDead = false;
@@ -60,19 +59,6 @@ class Enemy extends MoveableObject {
     }
 
     animate() {
-        // let moveLeftInterval = setInterval(() => {
-        //     this.moveLeft();
-        // }, 1000 / 60);
-
-        // let walkingInterval = setInterval(() => {
-        //     if (!this.world.character.isColliding(this)) {
-        //         this.playAnimation(this.IMAGES_WALKING);
-        //     }
-        //     if (this.world.character.isColliding(this)) {
-        //         this.playAnimation(this.IMAGES_ATTACK);
-        //     }
-        // }, 1000 / 9);
-
         let enemyDiesInterval = setInterval(() => {
             if (this.health <= 0) {
                 clearInterval(moveTowardsCharacter);
@@ -84,36 +70,29 @@ class Enemy extends MoveableObject {
 
         //Tolerances needed to prevent bouncing sprites of the enemy when aligning to chracter's y-coordinates
         let moveTowardsCharacter = setInterval(() => {
-            if (this.x - this.world.character.x < this.sightrangeOfEnemy) {
-                if (!this.world.character.isColliding(this)) {
+            if (this.x - world.character.x < this.sightrangeOfEnemy) {
+                if (!world.character.isColliding(this)) {
                     this.playAnimation(this.IMAGES_WALKING);
                 }
-                if (this.world.character.isColliding(this)) {
+                if (world.character.isColliding(this)) {
                     this.playAnimation(this.IMAGES_ATTACK);
                 }
-                if (this.world.character.x < this.x) {
+                if (world.character.x < this.x) {
                     this.otherDirection = false;
                     this.moveLeft();
                 } else {
                     this.otherDirection = true;
                     this.moveRight();
                 }
-                if (this.world.character.y > this.y + this.tolerance) {
+                if (world.character.y > this.y + this.tolerance) {
                     this.moveDownEnemy();
-                } else if (this.world.character.y < this.y - this.tolerance){
+                } else if (world.character.y < this.y - this.tolerance) {
                     this.moveUpEnemy();
                 }
             } else {
                 this.playAnimation(this.IMAGES_IDLE);
             }
         }, 1000 / 10);
-
-        // let enemyAttack = setInterval(() => {
-        //     if (this.world.character.isColliding(this)) {
-        //         clearInterval(walkingInterval);
-        //         this.playAnimation(this.IMAGES_ATTACK);
-        //     }
-        // }, 1000 / 10);
     }
 
     moveUpEnemy() {
