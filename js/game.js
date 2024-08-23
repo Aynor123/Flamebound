@@ -110,6 +110,7 @@ function startGame() {
         world.collect_portion_sound.muted = true;
         world.fireball_failed_to_cast_sound.muted = true;
         world.boss_encounter_sound.muted = true;
+        world.character_hit_sound.muted = true;
     } else {
         graveyard_sound.muted = false;
         world.character.walking_sound.muted = false;
@@ -119,6 +120,7 @@ function startGame() {
         world.collect_portion_sound.muted = false;
         world.fireball_failed_to_cast_sound.muted = false;
         world.boss_encounter_sound.muted = false;
+        world.character_hit_sound.muted = false;
     }
 }
 
@@ -175,6 +177,7 @@ function toggleSoundMainMenu() {
         world.fireball_failed_to_cast_sound.muted = false;
         world.boss_encounter_sound.muted = false;
         world.collect_portion_sound.muted = false;
+        world.character_hit_sound.muted = false;
         allSoundsMuted = false;
     } else {
         speaker.src = '../assets/GUI/SpeakerIcon_Off.webp';
@@ -190,6 +193,7 @@ function toggleSoundMainMenu() {
         world.fireball_failed_to_cast_sound.muted = true;
         world.boss_encounter_sound.muted = true;
         world.collect_portion_sound.muted = true;
+        world.character_hit_sound.muted = true;
         allSoundsMuted = true;
     }
     updateIngameMusicButtonState();
@@ -214,6 +218,7 @@ function toggleSoundIngame() {
         world.fireball_failed_to_cast_sound.muted = false;
         world.boss_encounter_sound.muted = false;
         world.collect_portion_sound.muted = false;
+        world.character_hit_sound.muted = false;
         allSoundsMuted = false;
     } else {
         speakerIngame.src = '../assets/GUI/SpeakerIcon_Off.webp';
@@ -228,6 +233,7 @@ function toggleSoundIngame() {
         world.fireball_failed_to_cast_sound.muted = true;
         world.boss_encounter_sound.muted = true;
         world.collect_portion_sound.muted = true;
+        world.character_hit_sound.muted = true;
         allSoundsMuted = true;
     }
     updateMainMenuMusicButtonState();

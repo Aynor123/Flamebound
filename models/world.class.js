@@ -25,6 +25,9 @@ class World {
     fireball_casting_sound = new Audio('../sounds/fireballcasting.mp3');
     fireball_failed_to_cast_sound = new Audio('../sounds/failedtocastfireball.mp3');
     boss_encounter_sound = new Audio('../sounds/bossencounter.mp3');
+    character_hit_sound = new Audio('../sounds/characterhit.mp3');
+    skeleton_dies_sound = new Audio('../sounds/skeletondies.mp3');
+    endboss_dies_sound = new Audio('../sounds/witchdies.mp3'); //Alternativ Scream verwenden
     bossEncountered = false;
 
 
@@ -71,7 +74,7 @@ class World {
         } else if (this.keyboard.S && (currentTime - this.lastThrowTime >= 1000) && this.character.mana <= 0) {
             this.fireball_failed_to_cast_sound.play();
         }
-        
+
     }
 
     // && (currentTime - this.lastDrinkTime >= 875) && !this.character.mana == 100
@@ -91,6 +94,9 @@ class World {
             if (enemy.collisionAllowed && this.character.isColliding(enemy)) {
                 this.character.isHit();
                 this.statusBar.setPercentage(this.character.health);
+                if (this.character.health > 0) {
+                    this.character_hit_sound.play();
+                }
             }
         });
 
@@ -104,6 +110,13 @@ class World {
                         enemy.health -= 20;
                         this.fireball_hit_sound.play();
                         enemy.updateHitDetection();
+                        if (enemy.health <= 0) {
+                            if (enemy instanceof Endboss) {
+                                this.endboss_dies_sound.play(); // Play endboss sound if enemy is an instance of Endboss
+                            } else {
+                                this.skeleton_dies_sound.play(); // Play skeleton sound for other enemies
+                            }
+                        }
                     }
                 }
             });
@@ -224,7 +237,7 @@ class World {
 
     checkEndbossVisibility() {
         if ((this.endboss.x - this.character.x) < this.sightrangeOfEnemy) {
-            this.healthBarEndboss.setPercentage(this.endboss.health);   
+            this.healthBarEndboss.setPercentage(this.endboss.health);
             // this.endboss.initEndboss();
             if (!this.bossEncounter) {
                 this.bossEncounter = true;

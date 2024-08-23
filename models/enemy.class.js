@@ -76,13 +76,16 @@ class Enemy extends MoveableObject {
                 }
                 if (world.character.isColliding(this)) {
                     this.playAnimation(this.IMAGES_ATTACK);
+                    this.speed = 0;
                 }
                 if (world.character.x < this.x) {
                     this.otherDirection = false;
                     this.moveLeft();
+                    this.speed = 3.5 + Math.random() * 1.0;
                 } else {
                     this.otherDirection = true;
                     this.moveRight();
+                    this.speed = 3.5 + Math.random() * 1.0;
                 }
                 if (world.character.y > this.y + this.tolerance) {
                     this.moveDownEnemy();
