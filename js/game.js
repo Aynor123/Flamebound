@@ -9,67 +9,6 @@ let menu_sound = new Audio('../sounds/menuambientemenace.mp3');
 let close_sound = new Audio('../sounds/close.mp3');
 let graveyard_sound = new Audio('../sounds/graveyard ambiente.mp3')
 
-function toggleSoundMainMenu() {
-    onOffHandler = document.getElementById('onoff-handler');
-    onOffHandlerHover = document.getElementById('onoff-handler-hover');
-    speaker = document.getElementById('speaker');
-
-    onOffHandler.classList.toggle('onoff-handler-active');
-    onOffHandlerHover.classList.toggle('onoff-handler-hover-active');
-
-    if (allSoundsMuted) {
-        speaker.src = '../assets/GUI/SpeakerIcon_On.webp';
-        menu_sound.muted = false;
-        menu_sound.loop = true;
-        menu_sound.volume = 0.3;
-        menu_sound.play();
-        start_game_sound.muted = false;
-        start_controls_sound.muted = false;
-        start_about_sound.muted = false;
-        close_sound.muted = false;
-        world.character.walking_sound.muted = false;
-        world.character.drink_sound.muted = false;
-        allSoundsMuted = false;
-    } else {
-        speaker.src = '../assets/GUI/SpeakerIcon_Off.webp';
-        menu_sound.muted = true;
-        start_game_sound.muted = true;
-        start_controls_sound.muted = true;
-        start_about_sound.muted = true;
-        close_sound.muted = true;
-        world.character.walking_sound.muted = true;
-        world.character.drink_sound.muted = true;
-        allSoundsMuted = true;
-    }
-}
-function toggleSoundIngame() {
-    onOffHandlerIngame = document.getElementById('onoff-handler-ingame');
-    onOffHandlerHoverIngame = document.getElementById('onoff-handler-hover-ingame');
-    speakerIngame = document.getElementById('speaker-ingame');
-
-    // onOffHandlerIngame.classList.toggle('onoff-handler-active-ingame');
-    // onOffHandlerHoverIngame.classList.toggle('onoff-handler-hover-active-ingame');
-
-    if (allSoundsMuted) {
-        speakerIngame.src = '../assets/GUI/SpeakerIcon_On.webp';
-        onOffHandlerIngame.classList.add('onoff-handler-active-ingame');
-        onOffHandlerHoverIngame.classList.add('onoff-handler-hover-active-ingame');
-
-        graveyard_sound.muted = false;
-        world.character.walking_sound.muted = false;
-        world.character.drink_sound.muted = false;
-        allSoundsMuted = false; // Update the global sound state
-    } else {
-        speakerIngame.src = '../assets/GUI/SpeakerIcon_Off.webp';
-        onOffHandlerIngame.classList.remove('onoff-handler-active-ingame');
-        onOffHandlerHoverIngame.classList.remove('onoff-handler-hover-active-ingame');
-
-        graveyard_sound.muted = true;
-        world.character.walking_sound.muted = true;
-        world.character.drink_sound.muted = true;
-        allSoundsMuted = true; // Update the global sound state
-    }
-}
 
 function init() {
     canvas = document.getElementById('canvas');
@@ -77,9 +16,8 @@ function init() {
     start_game_sound.muted = true;
     start_controls_sound.muted = true;
     start_about_sound.muted = true;
-    close_sound.muted = true;    
+    close_sound.muted = true;
 }
-
 
 
 window.addEventListener('keydown', (event) => {
@@ -113,6 +51,7 @@ window.addEventListener('keydown', (event) => {
     console.log(event);
 });
 
+
 window.addEventListener('keyup', (event) => {
     if (event.keyCode == 39) {
         keyboard.RIGHT = false;
@@ -144,6 +83,7 @@ window.addEventListener('keyup', (event) => {
     console.log(event);
 });
 
+
 function startGame() {
     let gameStartingPage = document.getElementById("game-starting-page");
     let musicMenu = document.getElementById("music-menu");
@@ -153,7 +93,8 @@ function startGame() {
     start_game_sound.play();
     setTimeout(function () {
         gameStartingPage.classList.add("d-none");
-        musicMenuIngame.classList.remove("d-none"); 
+        musicMenuIngame.classList.remove("d-none");
+        updateIngameMusicButtonState();
     }, 5000);
     menu_sound.pause();
     menu_sound.currentTime = 0;
@@ -164,12 +105,23 @@ function startGame() {
         graveyard_sound.muted = true;
         world.character.walking_sound.muted = true;
         world.character.drink_sound.muted = true;
+        world.fireball_hit_sound.muted = true;
+        world.fireball_casting_sound.muted = true;
+        world.collect_portion_sound.muted = true;
+        world.fireball_failed_to_cast_sound.muted = true;
+        world.boss_encounter_sound.muted = true;
     } else {
         graveyard_sound.muted = false;
         world.character.walking_sound.muted = false;
         world.character.drink_sound.muted = false;
+        world.fireball_hit_sound.muted = false;
+        world.fireball_casting_sound.muted = false;
+        world.collect_portion_sound.muted = false;
+        world.fireball_failed_to_cast_sound.muted = false;
+        world.boss_encounter_sound.muted = false;
     }
 }
+
 
 function startControls() {
     start_controls_sound.play();
@@ -177,11 +129,13 @@ function startControls() {
     controlMenuOverlay.classList.remove("d-none");
 }
 
+
 function startAbout() {
     start_about_sound.play();
     let aboutMenuOverlay = document.getElementById("about-menu");
     aboutMenuOverlay.classList.remove("d-none");
 }
+
 
 function closeControlsMenu() {
     close_sound.play();
@@ -189,8 +143,126 @@ function closeControlsMenu() {
     controlMenuOverlay.classList.add("d-none");
 }
 
+
 function closeAboutMenu() {
     close_sound.play();
     let aboutMenuOverlay = document.getElementById("about-menu");
     aboutMenuOverlay.classList.add("d-none");
+}
+
+
+function toggleSoundMainMenu() {
+    onOffHandler = document.getElementById('onoff-handler');
+    onOffHandlerHover = document.getElementById('onoff-handler-hover');
+    speaker = document.getElementById('speaker');
+    onOffHandler.classList.toggle('onoff-handler-active');
+    onOffHandlerHover.classList.toggle('onoff-handler-hover-active');
+
+    if (allSoundsMuted) {
+        speaker.src = '../assets/GUI/SpeakerIcon_On.webp';
+        menu_sound.muted = false;
+        menu_sound.loop = true;
+        menu_sound.volume = 0.3;
+        menu_sound.play();
+        start_game_sound.muted = false;
+        start_controls_sound.muted = false;
+        start_about_sound.muted = false;
+        close_sound.muted = false;
+        world.character.walking_sound.muted = false;
+        world.character.drink_sound.muted = false;
+        world.fireball_hit_sound.muted = false;
+        world.fireball_casting_sound.muted = false;
+        world.fireball_failed_to_cast_sound.muted = false;
+        world.boss_encounter_sound.muted = false;
+        world.collect_portion_sound.muted = false;
+        allSoundsMuted = false;
+    } else {
+        speaker.src = '../assets/GUI/SpeakerIcon_Off.webp';
+        menu_sound.muted = true;
+        start_game_sound.muted = true;
+        start_controls_sound.muted = true;
+        start_about_sound.muted = true;
+        close_sound.muted = true;
+        world.character.walking_sound.muted = true;
+        world.character.drink_sound.muted = true;
+        world.fireball_hit_sound.muted = true;
+        world.fireball_casting_sound.muted = true;
+        world.fireball_failed_to_cast_sound.muted = true;
+        world.boss_encounter_sound.muted = true;
+        world.collect_portion_sound.muted = true;
+        allSoundsMuted = true;
+    }
+    updateIngameMusicButtonState();
+}
+
+
+function toggleSoundIngame() {
+    onOffHandlerIngame = document.getElementById('onoff-handler-ingame');
+    onOffHandlerHoverIngame = document.getElementById('onoff-handler-hover-ingame');
+    speakerIngame = document.getElementById('speaker-ingame');
+
+    if (allSoundsMuted) {
+        speakerIngame.src = '../assets/GUI/SpeakerIcon_On.webp';
+        onOffHandlerIngame.classList.add('onoff-handler-active-ingame');
+        onOffHandlerHoverIngame.classList.add('onoff-handler-hover-active-ingame');
+
+        graveyard_sound.muted = false;
+        world.character.walking_sound.muted = false;
+        world.character.drink_sound.muted = false;
+        world.fireball_hit_sound.muted = false;
+        world.fireball_casting_sound.muted = false;
+        world.fireball_failed_to_cast_sound.muted = false;
+        world.boss_encounter_sound.muted = false;
+        world.collect_portion_sound.muted = false;
+        allSoundsMuted = false;
+    } else {
+        speakerIngame.src = '../assets/GUI/SpeakerIcon_Off.webp';
+        onOffHandlerIngame.classList.remove('onoff-handler-active-ingame');
+        onOffHandlerHoverIngame.classList.remove('onoff-handler-hover-active-ingame');
+
+        graveyard_sound.muted = true;
+        world.character.walking_sound.muted = true;
+        world.character.drink_sound.muted = true;
+        world.fireball_hit_sound.muted = true;
+        world.fireball_casting_sound.muted = true;
+        world.fireball_failed_to_cast_sound.muted = true;
+        world.boss_encounter_sound.muted = true;
+        world.collect_portion_sound.muted = true;
+        allSoundsMuted = true;
+    }
+    updateMainMenuMusicButtonState();
+}
+
+
+function updateIngameMusicButtonState() {
+    let speakerIngame = document.getElementById('speaker-ingame');
+    let onOffHandlerIngame = document.getElementById('onoff-handler-ingame');
+    let onOffHandlerHoverIngame = document.getElementById('onoff-handler-hover-ingame');
+
+    if (allSoundsMuted) {
+        speakerIngame.src = '../assets/GUI/SpeakerIcon_Off.webp';
+        onOffHandlerIngame.classList.remove('onoff-handler-active-ingame');
+        onOffHandlerHoverIngame.classList.remove('onoff-handler-hover-active-ingame');
+    } else {
+        speakerIngame.src = '../assets/GUI/SpeakerIcon_On.webp';
+        onOffHandlerIngame.classList.add('onoff-handler-active-ingame');
+        onOffHandlerHoverIngame.classList.add('onoff-handler-hover-active-ingame');
+    }
+}
+
+
+function updateMainMenuMusicButtonState() {
+    let speaker = document.getElementById('speaker');
+    let onOffHandler = document.getElementById('onoff-handler');
+    let onOffHandlerHover = document.getElementById('onoff-handler-hover');
+
+    if (allSoundsMuted) {
+        speaker.src = '../assets/GUI/SpeakerIcon_Off.webp';
+        onOffHandler.classList.remove('onoff-handler-active');
+        onOffHandlerHover.classList.remove('onoff-handler-hover-active');
+    } else {
+        speaker.src = '../assets/GUI/SpeakerIcon_On.webp';
+        onOffHandler.classList.add('onoff-handler-active');
+        onOffHandlerHover.classList.add('onoff-handler-hover-active');
+    }
 }

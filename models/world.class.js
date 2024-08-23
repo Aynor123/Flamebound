@@ -229,7 +229,6 @@ class World {
             if (!this.bossEncounter) {
                 this.bossEncounter = true;
                 this.boss_encounter_sound.play();
-                this.boss_encounter_sound.muted = false;
             }
         }
     }
