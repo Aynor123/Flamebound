@@ -97,12 +97,4 @@ class Enemy extends MoveableObject {
             }
         }, 1000 / 10);
     }
-
-    moveUpEnemy() {
-        this.y -= this.speed;
-    }
-
-    moveDownEnemy() {
-        this.y += this.speed;
-    }
 }

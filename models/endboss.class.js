@@ -7,6 +7,8 @@ class Endboss extends MoveableObject {
    health = 100;
    speed = 4;
    tolerance = 3;
+   castingTimeout = 0;
+   isCasting = false;
 
    IMAGES_IDLE = [
       '../assets/Enemies/witch/Witch_2/idle_2/tile000.png',
@@ -60,12 +62,24 @@ class Endboss extends MoveableObject {
       '../assets/Enemies/witch/Witch_2/walk/tile000.png'
    ];
 
+   IMAGES_CASTING = [
+      '../assets/Enemies/witch/Witch_2/cast/tile000.png',
+      '../assets/Enemies/witch/Witch_2/cast/tile001.png',
+      '../assets/Enemies/witch/Witch_2/cast/tile002.png',
+      '../assets/Enemies/witch/Witch_2/cast/tile003.png',
+      '../assets/Enemies/witch/Witch_2/cast/tile004.png',
+      '../assets/Enemies/witch/Witch_2/cast/tile005.png',
+      '../assets/Enemies/witch/Witch_2/cast/tile006.png',
+      '../assets/Enemies/witch/Witch_2/cast/tile007.png'
+   ];
+
    constructor() {
       super().loadImage('../assets/Enemies/witch/Witch_2/walk/tile000.png');
       this.loadImages(this.IMAGES_IDLE);
       this.loadImages(this.IMAGES_DEAD);
       this.loadImages(this.IMAGES_HURT);
       this.loadImages(this.IMAGES_WALKING);
+      this.loadImages(this.IMAGES_CASTING);
       this.x = 700;
       this.animate();
    }
@@ -102,12 +116,12 @@ class Endboss extends MoveableObject {
       }, 1000 / 10);
 
       let endbossAssuresDistance = setInterval(() => {
-         if (world.character.x + world.rangeToRightFireball - 20 < this.x) {
+         if (world.character.x + world.rangeToRightFireball - 20 < this.x - this.tolerance) {
             clearInterval(endbossIdleStormy);
             this.moveLeft();
             this.playAnimation(this.IMAGES_WALKING);
          }
-         if (world.character.x + world.rangeToRightFireball - 20 > this.x) {
+         if (world.character.x + world.rangeToRightFireball - 20 > this.x + this.tolerance) {
             clearInterval(endbossIdleStormy);
             this.moveRight();
             this.playAnimation(this.IMAGES_WALKING_REVERSE);
@@ -119,6 +133,27 @@ class Endboss extends MoveableObject {
             this.moveUpEnemy();
          }
       }, 1000 / 10);
+
+      let castPoison = setInterval(() => {
+         let currentTime = Date.now(); // Get the current time in milliseconds
+     
+         // Calculate the time difference in seconds since the last cast
+         let timeSinceLastCast = (currentTime - this.castingTimeout) / 1000;
+     
+         // Check if the witch is in range and if 2 seconds have passed since the last cast
+         if (this.x - world.character.x <= world.rangeToRightFireball && timeSinceLastCast >= 2 && !this.isCasting) {
+            //  this.isCasting = true;
+             this.castingTimeout = currentTime; // Update castingTimeout to the current time
+             
+             // Start the animation
+             this.playAnimation(this.IMAGES_CASTING); 
+     
+             // Set a timeout to reset isCasting after the animation duration (0.5 seconds)
+             setTimeout(() => {
+                 this.isCasting = false;
+             }, 500); // 500ms for 0.5 seconds
+         }
+     }, 100);
    }
 }
 
