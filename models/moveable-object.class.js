@@ -92,6 +92,14 @@ class MoveableObject extends DrawableObject {
         this.groundLevel = this.y;
     }
 
+    moveUpEnemy() {
+        this.y -= this.speed;
+    }
+
+    moveDownEnemy() {
+        this.y += this.speed;
+    }
+    
     isColliding(moveableObject) {
         return this.x + 120 + this.width - 250 > moveableObject.x + 120 &&
         this.x + 120 < moveableObject.x + 120 + moveableObject.width - 250 &&
