@@ -10,6 +10,7 @@ class World {
     healthBarEndboss = new HealthBarEndboss;
     portionBar = new PortionBar();
     throwableObjects = [];
+    poisonClouds = [];
     lastThrowTime = 0;
     lastDrinkTime = 0;
     lastFireballImpactTime = 0;
@@ -150,6 +151,7 @@ class World {
         this.addObjectsToMap(this.level.enemies);
         this.addToMap(this.character);
         this.addObjectsToMap(this.throwableObjects);
+        this.addObjectsToMap(this.poisonClouds);
         this.ctx.translate(-this.camera_x, 0); // Back. Nächste Funktion umschließen, um Objekt an Position zu halten.
         this.addToMap(this.statusBar);
         this.addToMap(this.manaBar);

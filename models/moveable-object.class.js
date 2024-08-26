@@ -18,6 +18,8 @@ class MoveableObject extends DrawableObject {
     manaBar = new ManaBar();
     isJumping = false;
     groundLevel = 100; //Initialisiere Groundlevel. Muss mit this Y im drawable Class übereinstimmen!
+    frame = 0;
+    isReset = true;
 
     jump() {
         this.speedY = 23 //Sets jump height

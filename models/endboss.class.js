@@ -125,7 +125,8 @@ class Endboss extends MoveableObject {
          if (!this.hitDetection && this.health <= 0) {
             clearInterval(endbossIdleStormy);
             clearInterval(enemyHurtInterval);
-            clearInterval(endbossAssuresDistance);
+            clearInterval(this.endbossAssuresDistance);
+            clearInterval(castPoison);
             this.playOneTimeAnimationRevB(this.IMAGES_DEAD, enemyDiesInterval);
             this.collisionAllowed = false;
          }
@@ -175,6 +176,8 @@ class Endboss extends MoveableObject {
                   this.inRangeToCast = false; // Reset after completing the casting
                   this.speed = 5;
                   this.endbossAssuresDistance;
+                  let poisonCloud = new PoisonCloud(this.x, this.y);
+                  this.world.poisonClouds.push(poisonCloud);
                }
             }
          }
