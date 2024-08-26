@@ -63,5 +63,15 @@ class DrawableObject {
             ctx.stroke();
         }
     }
+
+    drawFramePoisonCloud(ctx) {
+        if (this instanceof PoisonCloud) {
+            ctx.beginPath();
+            ctx.lineWidth = '3';
+            ctx.strokeStyle = 'red';
+            ctx.rect(this.x + 80, this.y + 75, this.width - 100, this.height - 145);
+            ctx.stroke();
+        }
+    }
 }
 

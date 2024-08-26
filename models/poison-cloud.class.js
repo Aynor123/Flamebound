@@ -29,34 +29,33 @@ class PoisonCloud extends MoveableObject {
         this.y = y - 25;
         this.height = 375;
         this.width = 375;
-        this.speedY = 8;
+        this.speedY = 15;
         // this.otherDirection = direction;
         this.accelerationX = 2.5;
-        this.accelerationY = 1.5;
+        this.accelerationY = 2.75;
         this.speedX = 1;
         this.throw();
         this.hitFrame = 0;
         this.isReset = true;
+        // this.checkPoisonHit();
     }
 
     throw() {
         setInterval(() => {
-            if (this.speedX < 30) {
-                // Accelerating phase (moving left)
-                this.x -= this.speedX; // Move to the left
-                this.speedX += this.accelerationX; // Increase speed
-            } 
-    
-            // Apply gravity or upward motion effect on the y-axis
-            this.y -= this.speedY; // Move up or down
-            this.speedY -= this.accelerationY; // Adjust vertical speed
-            
-            // Ensure speedX does not become negative (reverse direction) after deceleration
-            if (this.speedX < 0) {
-                this.speedX = 0;
+            if (this.speedX <= 20) {
+                this.x -= this.speedX;
+                this.speedX += this.accelerationX;
+                this.y -= this.speedY;
+                this.speedY -= this.accelerationY;
+            } else {
+                this.x -=this.speedX;
+                this.y -= this.speedY;
+                this.speedY -= this.accelerationY;
             }
-        }, 1000 / 20);
+            
+        }, 1000 / 30);
         this.animatePoisonCloud();
+        // this.checkPoisionHit();
     }
 
     animatePoisonCloud() {
@@ -69,24 +68,10 @@ class PoisonCloud extends MoveableObject {
         }, 1000 / 10);
     }
 
-    // animateFireballHit(i, j, fireballs, enemies) {    
-    //     let interval = setInterval(() => {
-    //         if (this.hitFrame < this.IMAGES_FLAMES_HIT.length) {
-    //             this.speedX = 0;
-    //             this.playOneTimeAnimation(this.IMAGES_FLAMES_HIT, this.isReset);
-    //             this.isReset = false;
-    //             this.hitFrame++;
-
-    //           if (this.hitFrame === this.IMAGES_FLAMES_HIT.length) {
-    //             this.isReset = true;
-    //             this.hitFrame = 0;           
-    //             fireballs.splice(i, 1);
-    //             clearInterval(interval);
-    //         }
-    //     }
-    //     }, 1000 / 60);
+    // checkPoisionHit() {
 
     // }
+
 }
 
 

@@ -185,6 +185,7 @@ class World {
         moveableObject.drawFrameFireball(this.ctx);
         moveableObject.drawFrameEnboss(this.ctx);
         moveableObject.drawFrameManaPortion(this.ctx);
+        moveableObject.drawFramePoisonCloud(this.ctx);
 
 
         if (moveableObject.otherDirection) {
