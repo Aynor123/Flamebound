@@ -101,13 +101,12 @@ class MoveableObject extends DrawableObject {
     moveDownEnemy() {
         this.y += this.speed;
     }
-    
+
     isColliding(moveableObject) {
         return this.x + 120 + this.width - 250 > moveableObject.x + 120 &&
-        this.x + 120 < moveableObject.x + 120 + moveableObject.width - 250 &&
-        this.y + 145 + this.height - 145 > moveableObject.y + 145 &&
-        this.y + 145 < this.y + 145 + this.height - 145;
-
+            this.x + 120 < moveableObject.x + 120 + moveableObject.width - 250 &&
+            this.y + 145 + this.height - 145 > moveableObject.y + 145 &&
+            this.y + 145 < this.y + 145 + this.height - 145;
     }
 
     isCollidingFireball(moveableObject) {
@@ -122,6 +121,13 @@ class MoveableObject extends DrawableObject {
             this.y + 145 + this.height - 145 > moveableObject.y + 60 &&
             this.x + 120 < moveableObject.x + 40 &&
             this.y + 145 < moveableObject.y + 60 + moveableObject.height - 115;
+    }
+
+    isCollidingPoisonCloud(moveableObject) {
+        return this.x + 165 < moveableObject.x + 120 + moveableObject.width -250 &&
+        this.x + 165 + this.width - 340 > moveableObject.x + 120 &&
+        this.y + 175 < moveableObject.y + 145 + moveableObject.height - 145 &&
+        this.y + 175 + this.height - 355 > moveableObject.y + 145;
     }
 
     isHit() {

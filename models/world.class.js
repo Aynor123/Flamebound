@@ -15,6 +15,7 @@ class World {
     lastDrinkTime = 0;
     lastFireballImpactTime = 0;
     fireballImpact = false;
+    poisonCloudHitsCharacter = false;
     collectedPortions = 0;
     totalPortions = 3;
     endboss = this.level.enemies[3];
@@ -58,6 +59,7 @@ class World {
             this.checkThrowObjects();
             this.checkDrinkingManaPortions();
             this.checkEndbossVisibility();
+            this.checkPoisonHitAnimation();
         }, 1000 / 60);
     }
 
@@ -113,9 +115,9 @@ class World {
                         enemy.updateHitDetection();
                         if (enemy.health <= 0) {
                             if (enemy instanceof Endboss) {
-                                this.endboss_dies_sound.play(); // Play endboss sound if enemy is an instance of Endboss
+                                this.endboss_dies_sound.play();
                             } else {
-                                this.skeleton_dies_sound.play(); // Play skeleton sound for other enemies
+                                this.skeleton_dies_sound.play();
                             }
                         }
                     }
@@ -140,6 +142,28 @@ class World {
                 this.level.manaPortions.splice(i, 1);
             }
         });
+
+        this.poisonClouds.forEach((poisonCloud) => {
+            if (poisonCloud.isCollidingPoisonCloud(this.character)) {
+                console.log('hit');
+                this.poisonCloudHitsCharacter = true;
+                setTimeout(() => {
+                    this.poisonCloudHitsCharacter = false;
+                }, 1000);
+            }
+        });
+
+    }
+
+    checkPoisonHitAnimation() {
+        let poisonCloudHit = setInterval(() => {
+            if (this.poisonCloudHitsCharacter) {
+                let lastPoisonCloudInArray = this.poisonClouds[this.poisonClouds.length - 1];
+                if (lastPoisonCloudInArray) {
+                    lastPoisonCloudInArray.poisonCloudHit(this.poisonClouds);
+                }
+            }
+        }, 1000 / 220);
     }
 
     draw() {

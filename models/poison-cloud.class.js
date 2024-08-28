@@ -1,5 +1,6 @@
 class PoisonCloud extends MoveableObject {
 
+
     IMAGES_POISON = [
         '../assets/Enemies/witch/Witch_2/poison_flying/tile000.png',
         '../assets/Enemies/witch/Witch_2/poison_flying/tile001.png',
@@ -23,6 +24,7 @@ class PoisonCloud extends MoveableObject {
 
     constructor(x, y) {
         super().loadImage('../assets/Enemies/witch/Witch_2/poison_flying/tile000.png');
+        this.world = world;
         this.loadImages(this.IMAGES_POISON);
         this.loadImages(this.IMAGES_POISON_HIT);
         this.x = x - 100;
@@ -37,7 +39,8 @@ class PoisonCloud extends MoveableObject {
         this.throw();
         this.hitFrame = 0;
         this.isReset = true;
-        // this.checkPoisonHit();
+        this.framePoisonCloudHit = 0;
+        this.isResetPoisonCloudHit = true;
     }
 
     throw() {
@@ -48,18 +51,18 @@ class PoisonCloud extends MoveableObject {
                 this.y -= this.speedY;
                 this.speedY -= this.accelerationY;
             } else {
-                this.x -=this.speedX;
+                this.x -= this.speedX;
                 this.y -= this.speedY;
                 this.speedY -= this.accelerationY;
             }
-            
+
         }, 1000 / 30);
         this.animatePoisonCloud();
-        // this.checkPoisionHit();
+        // this.poisonCloudHit();
     }
 
     animatePoisonCloud() {
-        setInterval(() => {
+        let poisonCloudAnimation = setInterval(() => {
             if (this.frame < this.IMAGES_POISON.length) {
                 this.playOneTimeAnimation(this.IMAGES_POISON, this.isReset);
                 this.isReset = false;
@@ -68,10 +71,18 @@ class PoisonCloud extends MoveableObject {
         }, 1000 / 10);
     }
 
-    // checkPoisionHit() {
-
-    // }
-
+    poisonCloudHit(poisonClouds) {
+        if (this.framePoisonCloudHit < this.IMAGES_POISON_HIT.length) {
+            this.playOneTimeAnimation(this.IMAGES_POISON_HIT, this.isResetPoisonCloudHit);
+            this.isResetPoisonCloudHit = false;
+            this.framePoisonCloudHit++;
+            if (this.framePoisonCloudHit === this.IMAGES_POISON_HIT.length) {
+                this.isResetPoisonCloudHit = true;
+                this.framePoisonCloudHit = 0;
+                poisonClouds.splice(0, 1);
+            }
+        }
+    }
 }
 
 
