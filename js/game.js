@@ -18,6 +18,11 @@ function init() {
     start_about_sound.muted = true;
     close_sound.muted = true;
 }
+//???
+// function init2() {
+//     world = new World(canvas, keyboard); 
+//     initLevel();
+// }
 
 
 window.addEventListener('keydown', (event) => {
@@ -111,6 +116,9 @@ function startGame() {
         world.fireball_failed_to_cast_sound.muted = true;
         world.boss_encounter_sound.muted = true;
         world.character_hit_sound.muted = true;
+        world.skeleton_dies_sound.muted = true;
+        world.endboss_dies_sound.muted = true;
+        world.endboss.endbossCastsPoison.muted = true;
     } else {
         graveyard_sound.muted = false;
         world.character.walking_sound.muted = false;
@@ -121,6 +129,9 @@ function startGame() {
         world.fireball_failed_to_cast_sound.muted = false;
         world.boss_encounter_sound.muted = false;
         world.character_hit_sound.muted = false;
+        world.skeleton_dies_sound.muted = false;
+        world.endboss_dies_sound.muted = false;
+        world.endboss.endbossCastsPoison.muted = false;
     }
 }
 
@@ -178,6 +189,9 @@ function toggleSoundMainMenu() {
         world.boss_encounter_sound.muted = false;
         world.collect_portion_sound.muted = false;
         world.character_hit_sound.muted = false;
+        world.skeleton_dies_sound.muted = false;
+        world.endboss_dies_sound.muted = false;
+        world.endboss.endbossCastsPoison.muted = false;
         allSoundsMuted = false;
     } else {
         speaker.src = '../assets/GUI/SpeakerIcon_Off.webp';
@@ -194,6 +208,9 @@ function toggleSoundMainMenu() {
         world.boss_encounter_sound.muted = true;
         world.collect_portion_sound.muted = true;
         world.character_hit_sound.muted = true;
+        world.skeleton_dies_sound.muted = true;
+        world.endboss_dies_sound.muted = true;
+        world.endboss.endbossCastsPoison.muted = true;
         allSoundsMuted = true;
     }
     updateIngameMusicButtonState();
@@ -219,6 +236,9 @@ function toggleSoundIngame() {
         world.boss_encounter_sound.muted = false;
         world.collect_portion_sound.muted = false;
         world.character_hit_sound.muted = false;
+        world.skeleton_dies_sound.muted = false;
+        world.endboss_dies_sound.muted = false;
+        world.endboss.endbossCastsPoison.muted = false;
         allSoundsMuted = false;
     } else {
         speakerIngame.src = '../assets/GUI/SpeakerIcon_Off.webp';
@@ -234,6 +254,9 @@ function toggleSoundIngame() {
         world.boss_encounter_sound.muted = true;
         world.collect_portion_sound.muted = true;
         world.character_hit_sound.muted = true;
+        world.skeleton_dies_sound.muted = true;
+        world.endboss_dies_sound.muted = true;
+        world.endboss.endbossCastsPoison.muted = true;
         allSoundsMuted = true;
     }
     updateMainMenuMusicButtonState();

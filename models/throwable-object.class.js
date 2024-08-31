@@ -32,6 +32,7 @@ class ThrowableObject extends MoveableObject {
         this.throw();
         this.hitFrame = 0;
         this.isReset = true;
+        
     }
 
     throw() {

@@ -52,7 +52,7 @@ class Enemy extends MoveableObject {
         this.loadImages(this.IMAGES_DEAD);
         this.loadImages(this.IMAGES_ATTACK);
         this.loadImages(this.IMAGES_IDLE);
-        this.x = 420 + Math.random() * 500;
+        this.x = 420 + Math.random() * 700;
         this.y = -50 + Math.random() * 200;
         this.speed = 3.5 + Math.random() * 1.0;
         this.animate();
@@ -70,30 +70,32 @@ class Enemy extends MoveableObject {
 
         //Tolerances needed to prevent bouncing sprites of the enemy when aligning to chracter's y-coordinates
         let moveTowardsCharacter = setInterval(() => {
-            if (this.x - world.character.x < this.sightrangeOfEnemy) {
-                if (!world.character.isColliding(this)) {
-                    this.playAnimation(this.IMAGES_WALKING);
-                }
-                if (world.character.isColliding(this)) {
-                    this.playAnimation(this.IMAGES_ATTACK);
-                    this.speed = 0;
-                }
-                if (world.character.x < this.x) {
-                    this.otherDirection = false;
-                    this.moveLeft();
-                    this.speed = 3.5 + Math.random() * 1.0;
+            if (world && world.character !== null) { //PREVENT UNDEFINED ERROR
+                if (this.x - world.character.x < this.sightrangeOfEnemy) {
+                    if (!world.character.isColliding(this)) {
+                        this.playAnimation(this.IMAGES_WALKING);
+                    }
+                    if (world.character.isColliding(this)) {
+                        this.playAnimation(this.IMAGES_ATTACK);
+                        this.speed = 0;
+                    }
+                    if (world.character.x < this.x) {
+                        this.otherDirection = false;
+                        this.moveLeft();
+                        this.speed = 5.5 + Math.random() * 1.0;
+                    } else {
+                        this.otherDirection = true;
+                        this.moveRight();
+                        this.speed = 5.5 + Math.random() * 1.0;
+                    }
+                    if (world.character.y > this.y + this.tolerance) {
+                        this.moveDownEnemy();
+                    } else if (world.character.y < this.y - this.tolerance) {
+                        this.moveUpEnemy();
+                    }
                 } else {
-                    this.otherDirection = true;
-                    this.moveRight();
-                    this.speed = 3.5 + Math.random() * 1.0;
+                    this.playAnimation(this.IMAGES_IDLE);
                 }
-                if (world.character.y > this.y + this.tolerance) {
-                    this.moveDownEnemy();
-                } else if (world.character.y < this.y - this.tolerance) {
-                    this.moveUpEnemy();
-                }
-            } else {
-                this.playAnimation(this.IMAGES_IDLE);
             }
         }, 1000 / 10);
     }

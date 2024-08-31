@@ -1,32 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
+<html translate="no">
+
+</html>
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Inferno</title>
+    <link rel="icon" sizes="64x64" href="./assets/Favicon/favicon64.png" type="image/png">
+    <!-- <link rel="apple-touch-icon" href="./assets/Favicon/favicon16.png">
+    <link rel="icon" sizes="32x32" href="./assets/Favicon/favicon32.png" type="image/png">
+    <link rel="icon" sizes="16x16" href="./assets/Favicon/favicon16.png" type="image/png"> -->
+    <link rel="manifest" href="/manifest.json">
     <link rel="stylesheet" href="./style.css">
     <link rel="stylesheet" href="./style_fonts.css">
     <link rel="stylesheet" href="./style_media_query.css">
+    <!-- Load scripts in the correct order based on dependencies -->
     <script src="./models/drawable-object.class.js"></script>
     <script src="./models/moveable-object.class.js"></script>
     <script src="./models/character.class.js"></script>
     <script src="./models/enemy.class.js"></script>
+    <script src="./models/endboss.class.js"></script> <!-- Load endboss before world -->
     <script src="./models/sky.class.js"></script>
     <script src="./models/status-bar.class.js"></script>
     <script src="./models/mana-bar.class.js"></script>
     <script src="./models/portion-bar.class.js"></script>
     <script src="./models/mana-portion.class.js"></script>
-    <script src="./models/world.class.js"></script>
     <script src="./models/background-object.class.js"></script>
     <script src="./models/keyboard.class.js"></script>
     <script src="./models/level.class.js"></script>
     <script src="./models/throwable-object.class.js"></script>
     <script src="./models/poison-cloud.class.js"></script>
-    <script src="./models/endboss.class.js"></script>
     <script src="./models/health-bar-endboss.class.js"></script>
     <script src="./levels/level1.js"></script>
+    <!-- Load world last to ensure all dependencies are available -->
     <script src="./js/game.js"></script>
+    <script src="./models/world.class.js"></script>
 </head>
 
 <body onload="init()">

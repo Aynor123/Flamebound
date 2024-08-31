@@ -71,19 +71,38 @@ class PoisonCloud extends MoveableObject {
         }, 1000 / 10);
     }
 
-    poisonCloudHit(poisonClouds) {
+    poisonCloudHitsCharacter(poisonClouds, character, statusBar) {
         if (this.framePoisonCloudHit < this.IMAGES_POISON_HIT.length) {
             this.playOneTimeAnimation(this.IMAGES_POISON_HIT, this.isResetPoisonCloudHit);
             this.isResetPoisonCloudHit = false;
             this.framePoisonCloudHit++;
-            if (this.framePoisonCloudHit === this.IMAGES_POISON_HIT.length) {
-                this.isResetPoisonCloudHit = true;
-                this.framePoisonCloudHit = 0;
-                poisonClouds.splice(0, 1);
+        }
+        if (this.framePoisonCloudHit === this.IMAGES_POISON_HIT.length) {
+            this.isResetPoisonCloudHit = true;
+            this.framePoisonCloudHit = 0;
+            poisonClouds.splice(0, 1);
+            character.health -= 34;
+            if (character.health < 0) {
+                character.health = 0;
             }
+            statusBar.setPercentage(character.health);
+        }
+    }
+
+    poisonCloudHitsGround(poisonClouds, character, statusBar) {
+        if (this.framePoisonCloudHit < this.IMAGES_POISON_HIT.length) {
+            this.playOneTimeAnimation(this.IMAGES_POISON_HIT, this.isResetPoisonCloudHit);
+            this.isResetPoisonCloudHit = false;
+            this.framePoisonCloudHit++;
+        }
+        if (this.framePoisonCloudHit === this.IMAGES_POISON_HIT.length) {
+            this.isResetPoisonCloudHit = true;
+            this.framePoisonCloudHit = 0;
+            poisonClouds.splice(0, 1);
         }
     }
 }
+
 
 
 

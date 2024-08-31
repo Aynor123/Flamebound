@@ -2,10 +2,7 @@ class Endboss extends MoveableObject {
 
    height = 280;
    width = 280;
-   x = 0;
-   y = 120;
    health = 100;
-   speed = 10;
    tolerance = 3;
    castingTimeout = 0;
    isCasting = false;
@@ -15,6 +12,7 @@ class Endboss extends MoveableObject {
    inRangeToCast = false;
    endbossAssuresDistance;
    endbossAttackSpeed = 3000;
+   endbossCastsPoison = new Audio('../sounds/necromancercasting_sound_short.mp3');
 
    IMAGES_IDLE = [
       '../assets/Enemies/witch/Witch_2/idle_2/tile000.png',
@@ -96,7 +94,8 @@ class Endboss extends MoveableObject {
       this.loadImages(this.IMAGES_WALKING);
       this.loadImages(this.IMAGES_CASTING);
       this.loadImages(this.IMAGES_IDLE_STANDING);
-      this.x = 700;
+      this.x = 1500;
+      this.y = 100;
       this.animate();
    }
 
@@ -133,32 +132,36 @@ class Endboss extends MoveableObject {
       }, 1000 / 10);
 
       this.endbossAssuresDistance = setInterval(() => {
-         if (world.character.x + world.rangeToRightFireball - 20 < this.x - this.tolerance && !this.inRangeToCast) {
-            clearInterval(endbossIdleStormy);
-            this.moveLeft();
-            this.playAnimation(this.IMAGES_WALKING);
-         }
-         if (world.character.x + world.rangeToRightFireball - 20 > this.x + this.tolerance && !this.inRangeToCast) {
-            clearInterval(endbossIdleStormy);
-            this.moveRight();
-            this.playAnimation(this.IMAGES_WALKING_REVERSE);
-         }
-         if (world.character.y > this.y + this.tolerance && !this.inRangeToCast) {
-            this.moveDownEnemy();
-         }
-         if (world.character.y < this.y - this.tolerance && !this.inRangeToCast) {
-            this.moveUpEnemy();
+         if (world && world.character !== null) { //PREVENT UNDEFINED ERROR
+            if (world.character.x + world.rangeToRightFireball - 20 < this.x - this.tolerance && !this.inRangeToCast && world.endbossIsActive) {
+               clearInterval(endbossIdleStormy);
+               this.moveLeftEndboss();
+               this.playAnimation(this.IMAGES_WALKING);
+            }
+            if (world.character.x + world.rangeToRightFireball - 20 > this.x + this.tolerance && !this.inRangeToCast && world.endbossIsActive) {
+               clearInterval(endbossIdleStormy);
+               this.moveRightEndboss();
+               this.playAnimation(this.IMAGES_WALKING_REVERSE);
+            }
+            if (world.character.y > this.y + this.tolerance && !this.inRangeToCast && world.endbossIsActive) {
+               this.moveDownEnemy();
+               this.playAnimation(this.IMAGES_WALKING_REVERSE);
+            }
+            if (world.character.y < this.y - this.tolerance && this.y > -50 && !this.inRangeToCast && world.endbossIsActive) {
+               this.moveUpEnemy();
+               this.playAnimation(this.IMAGES_WALKING_REVERSE);
+            }
          }
       }, 1000 / 10);
 
       let checkRangeToCast = setInterval(() => {
-         let currentTime = Date.now(); 
-
+         let currentTime = Date.now();
          let timeSinceLastCast = (currentTime - this.castingTimeout);
-
-         if (this.x - world.character.x <= world.rangeToRightFireball && timeSinceLastCast >= this.endbossAttackSpeed) {
-            this.castingTimeout = currentTime; // Update the casting timeout to the current time
-            this.inRangeToCast = true; // Start the casting animation
+         if (world && world.character !== null) { //PREVENT UNDEFINED ERROR
+            if (this.x - world.character.x <= world.rangeToRightFireball && timeSinceLastCast >= this.endbossAttackSpeed) {
+               this.castingTimeout = currentTime; // Update the casting timeout to the current time
+               this.inRangeToCast = true; // Start the casting animation
+            }
          }
       }, 1000 / 10);
 
@@ -178,14 +181,23 @@ class Endboss extends MoveableObject {
                   this.endbossAssuresDistance;
                   let poisonCloud = new PoisonCloud(this.x, this.y);
                   this.world.poisonClouds.push(poisonCloud);
+                  this.endbossCastsPoison.play();
                }
             }
          }
       }, 1000 / 20);
    }
 
+   moveRightEndboss() {
+      this.x += 8;
+   }
 
-   
+   moveLeftEndboss() {
+      this.x -= 8;
+   }
+
+
+
 
 }
 

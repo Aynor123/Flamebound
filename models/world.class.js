@@ -21,7 +21,7 @@ class World {
     endboss = this.level.enemies[3];
     rangeToRightFireball = 300;
     rangeToLeftFireball = 165;
-    sightrangeOfEnemy = 350;
+    sightrangeOfEnemy = 300;
     collect_portion_sound = new Audio('../sounds/collectportion.mp3');
     fireball_hit_sound = new Audio('../sounds/fireballhitshortened.mp3');
     fireball_casting_sound = new Audio('../sounds/fireballcasting.mp3');
@@ -30,7 +30,9 @@ class World {
     character_hit_sound = new Audio('../sounds/characterhit.mp3');
     skeleton_dies_sound = new Audio('../sounds/skeletondies.mp3');
     endboss_dies_sound = new Audio('../sounds/witchdies.mp3'); //Alternativ Scream verwenden
-    bossEncountered = false;
+    
+    endbossIsActive = false;
+
 
 
     constructor(canvas, keyboard) {
@@ -79,8 +81,6 @@ class World {
         }
 
     }
-
-    // && (currentTime - this.lastDrinkTime >= 875) && !this.character.mana == 100
 
     checkDrinkingManaPortions() {
         let currentTime = Date.now();
@@ -145,7 +145,6 @@ class World {
 
         this.poisonClouds.forEach((poisonCloud) => {
             if (poisonCloud.isCollidingPoisonCloud(this.character)) {
-                console.log('hit');
                 this.poisonCloudHitsCharacter = true;
                 setTimeout(() => {
                     this.poisonCloudHitsCharacter = false;
@@ -156,14 +155,17 @@ class World {
     }
 
     checkPoisonHitAnimation() {
-        let poisonCloudHit = setInterval(() => {
-            if (this.poisonCloudHitsCharacter) {
-                let lastPoisonCloudInArray = this.poisonClouds[this.poisonClouds.length - 1];
-                if (lastPoisonCloudInArray) {
-                    lastPoisonCloudInArray.poisonCloudHit(this.poisonClouds);
-                }
+        let lastPoisonCloudInArray = this.poisonClouds[this.poisonClouds.length - 1];
+        if (this.poisonCloudHitsCharacter) {
+            if (lastPoisonCloudInArray) {
+                lastPoisonCloudInArray.poisonCloudHitsCharacter(this.poisonClouds, this.character, this.statusBar);
             }
-        }, 1000 / 220);
+        }
+        if (lastPoisonCloudInArray) {
+            if (lastPoisonCloudInArray.y > this.endboss.y + 100) {
+                lastPoisonCloudInArray.poisonCloudHitsGround(this.poisonClouds);
+            }
+        }
     }
 
     draw() {
@@ -265,7 +267,7 @@ class World {
     checkEndbossVisibility() {
         if ((this.endboss.x - this.character.x) < this.sightrangeOfEnemy) {
             this.healthBarEndboss.setPercentage(this.endboss.health);
-            // this.endboss.initEndboss();
+            this.endbossIsActive = true;
             if (!this.bossEncounter) {
                 this.bossEncounter = true;
                 this.boss_encounter_sound.play();

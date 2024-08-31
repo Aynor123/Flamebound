@@ -117,10 +117,14 @@ class MoveableObject extends DrawableObject {
     }
 
     isCollidingManaPortion(moveableObject) {
-        return this.x + 120 + this.width - 250 > moveableObject.x + 40 &&
-            this.y + 145 + this.height - 145 > moveableObject.y + 60 &&
-            this.x + 120 < moveableObject.x + 40 &&
-            this.y + 145 < moveableObject.y + 60 + moveableObject.height - 115;
+        return this.x + 120 < moveableObject.x + 40 + moveableObject.width - 80 &&
+        this.x + 120 + this.width - 250 > moveableObject.x + 40 &&
+        this.y + 145 < moveableObject.y + 60 + moveableObject.height - 115 &&
+        this.y + 145 + this.height - 145 > moveableObject.y + 60;
+        // return this.x + 120 + this.width - 250 > moveableObject.x + 40 &&
+        //     this.y + 145 + this.height - 145 > moveableObject.y + 60 &&
+        //     this.x + 120 < moveableObject.x + 40 &&
+        //     this.y + 145 < moveableObject.y + 60 + moveableObject.height - 115;
     }
 
     isCollidingPoisonCloud(moveableObject) {
