@@ -8,11 +8,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Inferno</title>
-    <link rel="icon" sizes="64x64" href="./assets/Favicon/favicon64.png" type="image/png">
-    <!-- <link rel="apple-touch-icon" href="./assets/Favicon/favicon16.png">
-    <link rel="icon" sizes="32x32" href="./assets/Favicon/favicon32.png" type="image/png">
-    <link rel="icon" sizes="16x16" href="./assets/Favicon/favicon16.png" type="image/png"> -->
-    <link rel="manifest" href="/manifest.json">
+    <!-- <link rel="shortcut icon" href="./assets/Favicon/favicon1.ico"> -->
     <link rel="stylesheet" href="./style.css">
     <link rel="stylesheet" href="./style_fonts.css">
     <link rel="stylesheet" href="./style_media_query.css">
@@ -101,6 +97,24 @@
         </div>
         <canvas id="canvas" width="720" height="480">
         </canvas>
+    </div>
+    <!-- Game Over Section -->
+    <div class="game-over-defeat-cont d-none" id="defeat-screen">
+        <div class="defeat-cont">
+            <h1 class="fire-text-defeat headline">Defeated</h1>
+            <div class="menu-btn">
+                <span class="golden-text-menu">Play Again</span>
+            </div>
+        </div>
+    </div>
+    <!-- Game Over Section -->
+    <div class="game-over-defeat-cont d-none" id="victory-screen">
+        <div class="defeat-cont">
+            <h1 class="fire-text-defeat headline">Victory</h1>
+            <div class="menu-btn">
+                <span class="golden-text-menu">Play Again</span>
+            </div>
+        </div>
     </div>
     <!-- Control Section -->
     <div class="overlay d-flex j-center a-center fd-column d-none" id="control-menu">

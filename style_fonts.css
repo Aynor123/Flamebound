@@ -141,3 +141,25 @@
     text-align: center;
     -webkit-text-stroke: 1px rgb(255,182,108);
 }
+
+.fire-text-defeat {
+    background: url(../assets/Fonts/fire-texture.jpg);
+    background-repeat: repeat;
+    background-size: 100% 400px;
+    background-position: 0 0;
+    color: #fff;
+    -webkit-text-fill-color: transparent;
+    -webkit-background-clip: text;
+    -moz-background-clip: text;
+    background-clip: text;
+    font-family: Inferno;
+    font-size: clamp(44px, 6vw, 80px);
+    /* font-size: 80px; */
+    padding: 0;
+    margin-bottom: 15px;
+    margin-top: 15px;
+    text-align: center;
+    -webkit-text-stroke: 1px rgb(255, 182, 108);
+    -webkit-animation: stripes 2s linear infinite;
+    animation: stripes 8s linear infinite;
+}

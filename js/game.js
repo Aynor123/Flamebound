@@ -100,7 +100,7 @@ function startGame() {
         gameStartingPage.classList.add("d-none");
         musicMenuIngame.classList.remove("d-none");
         updateIngameMusicButtonState();
-    }, 5000);
+    }, 375);
     menu_sound.pause();
     menu_sound.currentTime = 0;
     graveyard_sound.play();

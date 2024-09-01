@@ -42,6 +42,32 @@ canvas {
     align-items: center;
 }
 
+.game-over-defeat-cont {
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 98;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.defeat-cont {
+    background-color: black;
+    border-radius: 5px;
+    width: 720px;
+    height: 480px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(10px);
+}
+
 .menu-header-cont {
     background-image: url('../assets/GUI/Menu/menu_bar.png');
     background-size: 100% 100%;
@@ -165,7 +191,7 @@ canvas {
 
 .fade-out {
     opacity: 0;
-    transition: opacity 5s ease-in-out; 
+    transition: opacity 375ms ease-in-out; 
 }
 
 .z.index3 {
