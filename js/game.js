@@ -20,12 +20,16 @@ function init() {
 }
 //???
 // function init2() {
+//     world = null;
 //     world = new World(canvas, keyboard); 
-//     initLevel();
 // }
 
 
 window.addEventListener('keydown', (event) => {
+    if (world.gameIsOver) {
+        return;
+    }
+
     if (event.keyCode == 39) {
         keyboard.RIGHT = true;
     }
@@ -119,6 +123,7 @@ function startGame() {
         world.skeleton_dies_sound.muted = true;
         world.endboss_dies_sound.muted = true;
         world.endboss.endbossCastsPoison.muted = true;
+        world.defeat_sound.muted = true;
     } else {
         graveyard_sound.muted = false;
         world.character.walking_sound.muted = false;
@@ -132,6 +137,7 @@ function startGame() {
         world.skeleton_dies_sound.muted = false;
         world.endboss_dies_sound.muted = false;
         world.endboss.endbossCastsPoison.muted = false;
+        world.defeat_sound.muted = false;
     }
 }
 
@@ -192,6 +198,7 @@ function toggleSoundMainMenu() {
         world.skeleton_dies_sound.muted = false;
         world.endboss_dies_sound.muted = false;
         world.endboss.endbossCastsPoison.muted = false;
+        world.defeat_sound.muted = false;
         allSoundsMuted = false;
     } else {
         speaker.src = '../assets/GUI/SpeakerIcon_Off.webp';
@@ -211,6 +218,7 @@ function toggleSoundMainMenu() {
         world.skeleton_dies_sound.muted = true;
         world.endboss_dies_sound.muted = true;
         world.endboss.endbossCastsPoison.muted = true;
+        world.defeat_sound.muted = true;
         allSoundsMuted = true;
     }
     updateIngameMusicButtonState();
@@ -239,6 +247,7 @@ function toggleSoundIngame() {
         world.skeleton_dies_sound.muted = false;
         world.endboss_dies_sound.muted = false;
         world.endboss.endbossCastsPoison.muted = false;
+        world.defeat_sound.muted = false;
         allSoundsMuted = false;
     } else {
         speakerIngame.src = '../assets/GUI/SpeakerIcon_Off.webp';
@@ -257,6 +266,7 @@ function toggleSoundIngame() {
         world.skeleton_dies_sound.muted = true;
         world.endboss_dies_sound.muted = true;
         world.endboss.endbossCastsPoison.muted = true;
+        world.defeat_sound.muted = true;
         allSoundsMuted = true;
     }
     updateMainMenuMusicButtonState();
@@ -294,4 +304,10 @@ function updateMainMenuMusicButtonState() {
         onOffHandler.classList.add('onoff-handler-active');
         onOffHandlerHover.classList.add('onoff-handler-hover-active');
     }
+}
+
+function setTrackedInterval(callback, delay) {
+    let intervalId = setInterval(callback, delay);
+    this.intervals.push(intervalId);
+    return intervalId;
 }

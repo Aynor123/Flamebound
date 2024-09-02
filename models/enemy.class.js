@@ -68,9 +68,8 @@ class Enemy extends MoveableObject {
             }
         }, 1000 / 10);
 
-        //Tolerances needed to prevent bouncing sprites of the enemy when aligning to chracter's y-coordinates
         let moveTowardsCharacter = setInterval(() => {
-            if (world && world.character !== null) { //PREVENT UNDEFINED ERROR
+            if (world && world.character !== null) { 
                 if (this.x - world.character.x < this.sightrangeOfEnemy) {
                     if (!world.character.isColliding(this)) {
                         this.playAnimation(this.IMAGES_WALKING);

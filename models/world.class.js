@@ -29,9 +29,13 @@ class World {
     boss_encounter_sound = new Audio('../sounds/bossencounter.mp3');
     character_hit_sound = new Audio('../sounds/characterhit.mp3');
     skeleton_dies_sound = new Audio('../sounds/skeletondies.mp3');
-    endboss_dies_sound = new Audio('../sounds/witchdies.mp3'); //Alternativ Scream verwenden
-    
+    endboss_dies_sound = new Audio('../sounds/witchdies.mp3');
+    defeat_sound = new Audio('../sounds/defeat.mp3');
+    victory_sound = new Audio('../sounds/victory.mp3');
     endbossIsActive = false;
+    gameIsOver = false;
+    intervals = [];
+
 
 
 
@@ -56,12 +60,13 @@ class World {
     }
 
     run() {
-        setInterval(() => {
+        let gameInterval = setInterval(() => {
             this.checkCollisions();
             this.checkThrowObjects();
             this.checkDrinkingManaPortions();
             this.checkEndbossVisibility();
             this.checkPoisonHitAnimation();
+            this.checkGameEnd(gameInterval);
         }, 1000 / 60);
     }
 
@@ -274,4 +279,44 @@ class World {
             }
         }
     }
+
+    checkGameEnd(gameInterval) {
+        if (this.endboss.health <= 0) {
+            this.showVictoryScreen();
+            clearInterval(gameInterval);
+        }
+        if (this.character.health <= 0) {
+            this.showDefeatScreen();
+            clearInterval(gameInterval);
+        }
+    }
+
+    showDefeatScreen() {
+        let defeatScreen = document.getElementById('defeat-screen');
+        this.gameIsOver = true;
+        setTimeout(() => {
+            defeatScreen.classList.remove('d-none');
+            this.defeat_sound.play();
+        }, 1000);
+    }
+
+    showVictoryScreen() {
+        let victoryScreen = document.getElementById('victory-screen');
+        this.gameIsOver = true;
+        setTimeout(() => {
+            victoryScreen.classList.remove('d-none');
+            this.victory_sound.play();
+        }, 1000);
+    }
+
+    // setTrackedInterval(callback, delay) {
+    //     let intervalId = setInterval(callback, delay);
+    //     this.intervals.push(intervalId);
+    //     return intervalId;
+    // }
+
+    // clearAllIntervals() {
+    //     this.intervals.forEach(intervalId => clearInterval(intervalId));
+    //     this.intervals = []; // Optionally clear the array to reset
+    // }
 }
