@@ -1,9 +1,13 @@
+
+let enemyIntervals = [];
+
 class Enemy extends MoveableObject {
     speed;
     health = 20;
     isDead = false;
     tolerance = 3;
     sightrangeOfEnemy = 350;
+  
 
     IMAGES_WALKING = [
         '../assets/Enemies/Skeleton_Warrior/Walk_Mirrored/tile000.png',
@@ -59,7 +63,7 @@ class Enemy extends MoveableObject {
     }
 
     animate() {
-        let enemyDiesInterval = setInterval(() => {
+        let enemyDiesInterval = createInterval(enemyIntervals, () => {
             if (this.health <= 0) {
                 clearInterval(moveTowardsCharacter);
                 // clearInterval(walkingInterval);
@@ -68,7 +72,7 @@ class Enemy extends MoveableObject {
             }
         }, 1000 / 10);
 
-        let moveTowardsCharacter = setInterval(() => {
+        let moveTowardsCharacter = createInterval(enemyIntervals, () => {
             if (world && world.character !== null) { 
                 if (this.x - world.character.x < this.sightrangeOfEnemy) {
                     if (!world.character.isColliding(this)) {
@@ -97,5 +101,8 @@ class Enemy extends MoveableObject {
                 }
             }
         }, 1000 / 10);
+
+        // enemyIntervals.push(enemyDiesInterval);
+        // enemyIntervals.push(moveTowardsCharacter);
     }
 }

@@ -1,3 +1,5 @@
+let endbossIntervals = [];
+
 class Endboss extends MoveableObject {
 
    height = 280;
@@ -10,7 +12,7 @@ class Endboss extends MoveableObject {
    isReset = true;
    frame = 0;
    inRangeToCast = false;
-   endbossAssuresDistance;
+   // endbossAssuresDistance;
    endbossAttackSpeed = 3000;
    endbossCastsPoison = new Audio('../sounds/necromancercasting_sound_short.mp3');
 
@@ -101,7 +103,7 @@ class Endboss extends MoveableObject {
 
    animate() {
       /** IDLE STORMY */
-      let endbossIdleStormy = setInterval(() => {
+      let endbossIdleStormy = createInterval(endbossIntervals, () => {
          let i;
          if (this.currentImage < 7) {
             i = this.currentImage;
@@ -113,25 +115,25 @@ class Endboss extends MoveableObject {
          this.currentImage++;
       }, 1000 / 9);
 
-      let enemyHurtInterval = setInterval(() => {
+      let enemyHurtInterval = createInterval(endbossIntervals, () => {
          if (this.hitDetection && this.health > 0) {
             clearInterval(endbossIdleStormy);
             this.playOneTimeAnimationRevB(this.IMAGES_HURT, enemyHurtInterval);
          }
       }, 1000 / 30);
 
-      let enemyDiesInterval = setInterval(() => {
+      let enemyDiesInterval = createInterval(endbossIntervals, () => {
          if (!this.hitDetection && this.health <= 0) {
             clearInterval(endbossIdleStormy);
             clearInterval(enemyHurtInterval);
-            clearInterval(this.endbossAssuresDistance);
+            clearInterval(endbossAssuresDistance);
             clearInterval(castPoison);
             this.playOneTimeAnimationRevB(this.IMAGES_DEAD, enemyDiesInterval);
             this.collisionAllowed = false;
          }
       }, 1000 / 10);
 
-      this.endbossAssuresDistance = setInterval(() => {
+      let endbossAssuresDistance = createInterval(endbossIntervals, () => {
          if (world && world.character !== null) { //PREVENT UNDEFINED ERROR
             if (world.character.x + world.rangeToRightFireball - 20 < this.x - this.tolerance && !this.inRangeToCast && world.endbossIsActive) {
                clearInterval(endbossIdleStormy);
@@ -154,7 +156,7 @@ class Endboss extends MoveableObject {
          }
       }, 1000 / 10);
 
-      let checkRangeToCast = setInterval(() => {
+      let checkRangeToCast = createInterval(endbossIntervals, () => {
          let currentTime = Date.now();
          let timeSinceLastCast = (currentTime - this.castingTimeout);
          if (world && world.character !== null) { //PREVENT UNDEFINED ERROR
@@ -165,7 +167,7 @@ class Endboss extends MoveableObject {
          }
       }, 1000 / 10);
 
-      let castPoison = setInterval(() => {
+      let castPoison = createInterval(endbossIntervals, () => {
          if (this.inRangeToCast) {
             if (this.frame < this.IMAGES_CASTING.length) {
                // clearInterval(endbossAssuresDistance);
@@ -186,6 +188,13 @@ class Endboss extends MoveableObject {
             }
          }
       }, 1000 / 20);
+
+      // endbossIntervals.push(castPoison);
+      // endbossIntervals.push(checkRangeToCast);
+      // endbossIntervals.push(this.endbossAssuresDistance);
+      // endbossIntervals.push(enemyDiesInterval);
+      // endbossIntervals.push(enemyHurtInterval);
+      // endbossIntervals.push(endbossIdleStormy);
    }
 
    moveRightEndboss() {

@@ -1,3 +1,5 @@
+let characterIntervals = [];
+
 class Character extends MoveableObject {
     mana = 100;
 
@@ -79,7 +81,7 @@ class Character extends MoveableObject {
     }
 
     animate() {
-        setInterval(() => {
+        let characterControlsInterval = createInterval(characterIntervals,() => {
             this.walking_sound.pause();
             if (this.world.keyboard.LEFT && this.x > 0) { // Forbids to walk further left at xxx pixel.
                 this.moveLeft();
@@ -126,13 +128,13 @@ class Character extends MoveableObject {
 
         let frame = 0;
         let isReset = true;
-        let charInterval = setInterval(() => {
+        let characterAnimationsInterval = createInterval(characterIntervals,() => {
             if (this.isDead() && frame < this.IMAGES_DEAD.length) {
                 this.playOneTimeAnimation(this.IMAGES_DEAD, isReset);
                 isReset = false;
                 frame++;
                 if (frame === this.IMAGES_DEAD.length) {
-                    clearInterval(charInterval);
+                    clearInterval(characterAnimationsInterval);
                 }
             } else if (this.isCasting() && frame < this.IMAGES_CHARGE_FIREBALL.length) {
                 this.playOneTimeAnimation(this.IMAGES_CHARGE_FIREBALL, isReset);
@@ -172,6 +174,9 @@ class Character extends MoveableObject {
                 }
             }
         }, 1000 / 9);
+
+        // characterIntervals.push(characterControlsInterval);
+        // characterIntervals.push(characterAnimationsInterval);
     }
 
 }

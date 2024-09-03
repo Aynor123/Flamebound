@@ -1,3 +1,5 @@
+let worldIntervals = [];
+
 class World {
     character = new Character();
     level = level1;
@@ -34,7 +36,6 @@ class World {
     victory_sound = new Audio('../sounds/victory.mp3');
     endbossIsActive = false;
     gameIsOver = false;
-    intervals = [];
 
 
 
@@ -60,7 +61,7 @@ class World {
     }
 
     run() {
-        let gameInterval = setInterval(() => {
+        let gameInterval = createInterval(worldIntervals,() => {
             this.checkCollisions();
             this.checkThrowObjects();
             this.checkDrinkingManaPortions();
@@ -68,6 +69,7 @@ class World {
             this.checkPoisonHitAnimation();
             this.checkGameEnd(gameInterval);
         }, 1000 / 60);
+        // worldIntervals.push(gameInterval);
     }
 
     checkThrowObjects() {

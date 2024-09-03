@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="./style_fonts.css">
     <link rel="stylesheet" href="./style_media_query.css">
     <!-- Load scripts in the correct order based on dependencies -->
+    <script src="./js/interval-control.js"></script>
     <script src="./models/drawable-object.class.js"></script>
     <script src="./models/moveable-object.class.js"></script>
     <script src="./models/character.class.js"></script>
@@ -31,8 +32,8 @@
     <script src="./models/health-bar-endboss.class.js"></script>
     <script src="./levels/level1.js"></script>
     <!-- Load world last to ensure all dependencies are available -->
-    <script src="./js/game.js"></script>
     <script src="./models/world.class.js"></script>
+    <script src="./js/game.js"></script>
 </head>
 
 <body onload="init()">

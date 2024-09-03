@@ -8,6 +8,7 @@ let start_about_sound = new Audio('../sounds/buttonclick.mp3');
 let menu_sound = new Audio('../sounds/menuambientemenace.mp3');
 let close_sound = new Audio('../sounds/close.mp3');
 let graveyard_sound = new Audio('../sounds/graveyard ambiente.mp3')
+// let allIntervals = [...enemyIntervals, ...characterIntervals, ...endbossIntervals, ...worldIntervals];
 
 
 function init() {
@@ -311,3 +312,14 @@ function setTrackedInterval(callback, delay) {
     this.intervals.push(intervalId);
     return intervalId;
 }
+
+// function clearAllIntervals() {
+//     for (let i = 1; i < 9999; i++) window.clearInterval(i);
+//   }
+
+// function stopAllIntervals() {
+//     allIntervals.forEach(interval => {
+//         clearInterval(interval);
+//     });
+// }
+
