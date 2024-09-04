@@ -125,6 +125,7 @@ function startGame() {
         world.endboss_dies_sound.muted = true;
         world.endboss.endbossCastsPoison.muted = true;
         world.defeat_sound.muted = true;
+        world.victory_sound.muted = true;
     } else {
         graveyard_sound.muted = false;
         world.character.walking_sound.muted = false;
@@ -139,6 +140,7 @@ function startGame() {
         world.endboss_dies_sound.muted = false;
         world.endboss.endbossCastsPoison.muted = false;
         world.defeat_sound.muted = false;
+        world.victory_sound.muted = false;
     }
 }
 
@@ -200,6 +202,7 @@ function toggleSoundMainMenu() {
         world.endboss_dies_sound.muted = false;
         world.endboss.endbossCastsPoison.muted = false;
         world.defeat_sound.muted = false;
+        world.victory_sound.muted = false;
         allSoundsMuted = false;
     } else {
         speaker.src = '../assets/GUI/SpeakerIcon_Off.webp';
@@ -220,6 +223,7 @@ function toggleSoundMainMenu() {
         world.endboss_dies_sound.muted = true;
         world.endboss.endbossCastsPoison.muted = true;
         world.defeat_sound.muted = true;
+        world.victory_sound.muted = true;
         allSoundsMuted = true;
     }
     updateIngameMusicButtonState();
@@ -249,6 +253,7 @@ function toggleSoundIngame() {
         world.endboss_dies_sound.muted = false;
         world.endboss.endbossCastsPoison.muted = false;
         world.defeat_sound.muted = false;
+        world.victory_sound.muted = false;
         allSoundsMuted = false;
     } else {
         speakerIngame.src = '../assets/GUI/SpeakerIcon_Off.webp';
@@ -268,6 +273,7 @@ function toggleSoundIngame() {
         world.endboss_dies_sound.muted = true;
         world.endboss.endbossCastsPoison.muted = true;
         world.defeat_sound.muted = true;
+        world.victory_sound.muted = true;
         allSoundsMuted = true;
     }
     updateMainMenuMusicButtonState();

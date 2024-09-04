@@ -1,4 +1,4 @@
-let characterIntervals = [];
+// let characterIntervals = [];
 
 class Character extends MoveableObject {
     mana = 100;
@@ -81,7 +81,7 @@ class Character extends MoveableObject {
     }
 
     animate() {
-        let characterControlsInterval = createInterval(characterIntervals,() => {
+        let characterControlsInterval = createInterval(allIntervals,() => {
             this.walking_sound.pause();
             if (this.world.keyboard.LEFT && this.x > 0) { // Forbids to walk further left at xxx pixel.
                 this.moveLeft();
@@ -128,7 +128,7 @@ class Character extends MoveableObject {
 
         let frame = 0;
         let isReset = true;
-        let characterAnimationsInterval = createInterval(characterIntervals,() => {
+        let characterAnimationsInterval = createInterval(allIntervals,() => {
             if (this.isDead() && frame < this.IMAGES_DEAD.length) {
                 this.playOneTimeAnimation(this.IMAGES_DEAD, isReset);
                 isReset = false;

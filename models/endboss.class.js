@@ -1,4 +1,4 @@
-let endbossIntervals = [];
+// let endbossIntervals = [];
 
 class Endboss extends MoveableObject {
 
@@ -103,7 +103,7 @@ class Endboss extends MoveableObject {
 
    animate() {
       /** IDLE STORMY */
-      let endbossIdleStormy = createInterval(endbossIntervals, () => {
+      let endbossIdleStormy = setInterval (() => {
          let i;
          if (this.currentImage < 7) {
             i = this.currentImage;
@@ -115,14 +115,14 @@ class Endboss extends MoveableObject {
          this.currentImage++;
       }, 1000 / 9);
 
-      let enemyHurtInterval = createInterval(endbossIntervals, () => {
+      let enemyHurtInterval = createInterval(allIntervals, () => {
          if (this.hitDetection && this.health > 0) {
             clearInterval(endbossIdleStormy);
             this.playOneTimeAnimationRevB(this.IMAGES_HURT, enemyHurtInterval);
          }
       }, 1000 / 30);
 
-      let enemyDiesInterval = createInterval(endbossIntervals, () => {
+      let enemyDiesInterval = createInterval(allIntervals, () => {
          if (!this.hitDetection && this.health <= 0) {
             clearInterval(endbossIdleStormy);
             clearInterval(enemyHurtInterval);
@@ -133,7 +133,7 @@ class Endboss extends MoveableObject {
          }
       }, 1000 / 10);
 
-      let endbossAssuresDistance = createInterval(endbossIntervals, () => {
+      let endbossAssuresDistance = createInterval(allIntervals, () => {
          if (world && world.character !== null) { //PREVENT UNDEFINED ERROR
             if (world.character.x + world.rangeToRightFireball - 20 < this.x - this.tolerance && !this.inRangeToCast && world.endbossIsActive) {
                clearInterval(endbossIdleStormy);
@@ -156,7 +156,7 @@ class Endboss extends MoveableObject {
          }
       }, 1000 / 10);
 
-      let checkRangeToCast = createInterval(endbossIntervals, () => {
+      let checkRangeToCast = createInterval(allIntervals, () => {
          let currentTime = Date.now();
          let timeSinceLastCast = (currentTime - this.castingTimeout);
          if (world && world.character !== null) { //PREVENT UNDEFINED ERROR
@@ -167,7 +167,7 @@ class Endboss extends MoveableObject {
          }
       }, 1000 / 10);
 
-      let castPoison = createInterval(endbossIntervals, () => {
+      let castPoison = createInterval(allIntervals, () => {
          if (this.inRangeToCast) {
             if (this.frame < this.IMAGES_CASTING.length) {
                // clearInterval(endbossAssuresDistance);

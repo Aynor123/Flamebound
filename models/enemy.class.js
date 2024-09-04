@@ -1,10 +1,9 @@
 
-let enemyIntervals = [];
+// let enemyIntervals = [];
 
 class Enemy extends MoveableObject {
     speed;
     health = 20;
-    isDead = false;
     tolerance = 3;
     sightrangeOfEnemy = 350;
   
@@ -23,6 +22,10 @@ class Enemy extends MoveableObject {
         '../assets/Enemies/Skeleton_Warrior/Dead/tile000.png',
         '../assets/Enemies/Skeleton_Warrior/Dead/tile001.png',
         '../assets/Enemies/Skeleton_Warrior/Dead/tile002.png',
+        '../assets/Enemies/Skeleton_Warrior/Dead/tile003.png'
+    ];
+
+    IMAGES_DEAD_ON_GROUND = [
         '../assets/Enemies/Skeleton_Warrior/Dead/tile003.png'
     ];
 
@@ -56,24 +59,35 @@ class Enemy extends MoveableObject {
         this.loadImages(this.IMAGES_DEAD);
         this.loadImages(this.IMAGES_ATTACK);
         this.loadImages(this.IMAGES_IDLE);
+        this.loadImages(this.IMAGES_DEAD_ON_GROUND);
         this.x = 420 + Math.random() * 700;
         this.y = -50 + Math.random() * 200;
         this.speed = 3.5 + Math.random() * 1.0;
+        this.isDead = false;
         this.animate();
     }
 
     animate() {
-        let enemyDiesInterval = createInterval(enemyIntervals, () => {
-            if (this.health <= 0) {
+        let enemyDiesInterval = createInterval(allIntervals, () => {
+            if (this.health <= 0 && !this.isDead) {
                 clearInterval(moveTowardsCharacter);
-                // clearInterval(walkingInterval);
                 this.playOneTimeAnimationRevB(this.IMAGES_DEAD, enemyDiesInterval);
                 this.collisionAllowed = false;
+                setTimeout(() => {
+                    this.isDead = true;
+                }, 1000);
             }
         }, 1000 / 10);
 
-        let moveTowardsCharacter = createInterval(enemyIntervals, () => {
-            if (world && world.character !== null) { 
+        let enemyIsDead = createInterval(allIntervals, () => {
+            if (this.isDead) {
+                clearInterval(enemyDiesInterval);
+                this.playOneTimeAnimationRevB(this.IMAGES_DEAD_ON_GROUND, enemyIsDead);
+            }
+        }, 1000 / 10);
+
+        let moveTowardsCharacter = createInterval(allIntervals, () => {
+            if (world && world.character !== null && !this.isDead) { 
                 if (this.x - world.character.x < this.sightrangeOfEnemy) {
                     if (!world.character.isColliding(this)) {
                         this.playAnimation(this.IMAGES_WALKING);

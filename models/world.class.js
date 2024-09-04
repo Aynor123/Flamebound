@@ -61,7 +61,7 @@ class World {
     }
 
     run() {
-        let gameInterval = createInterval(worldIntervals,() => {
+        let gameInterval = createInterval(allIntervals,() => {
             this.checkCollisions();
             this.checkThrowObjects();
             this.checkDrinkingManaPortions();
@@ -299,6 +299,7 @@ class World {
         setTimeout(() => {
             defeatScreen.classList.remove('d-none');
             this.defeat_sound.play();
+            stopAllIntervals();
         }, 1000);
     }
 
@@ -308,6 +309,7 @@ class World {
         setTimeout(() => {
             victoryScreen.classList.remove('d-none');
             this.victory_sound.play();
+            stopAllIntervals();
         }, 1000);
     }
 

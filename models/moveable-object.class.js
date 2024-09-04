@@ -51,6 +51,7 @@ class MoveableObject extends DrawableObject {
             let path = images[this.imageIndex];
             this.img = this.imageCache[path];
             this.imageIndex++;
+            console.log("Enemy should die now");
         } else {
             this.imageIndex = 0;
             clearInterval(intervalID);
