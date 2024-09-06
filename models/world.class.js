@@ -69,7 +69,6 @@ class World {
             this.checkPoisonHitAnimation();
             this.checkGameEnd(gameInterval);
         }, 1000 / 60);
-        // worldIntervals.push(gameInterval);
     }
 
     checkThrowObjects() {

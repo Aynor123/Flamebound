@@ -44,7 +44,7 @@ class PoisonCloud extends MoveableObject {
     }
 
     throw() {
-        setInterval(() => {
+        let throwPoison = createInterval(allIntervals, () => {
             if (this.speedX <= 20) {
                 this.x -= this.speedX;
                 this.speedX += this.accelerationX;
@@ -62,7 +62,7 @@ class PoisonCloud extends MoveableObject {
     }
 
     animatePoisonCloud() {
-        let poisonCloudAnimation = setInterval(() => {
+        let poisonCloudAnimation = createInterval(allIntervals,() => {
             if (this.frame < this.IMAGES_POISON.length) {
                 this.playOneTimeAnimation(this.IMAGES_POISON, this.isReset);
                 this.isReset = false;

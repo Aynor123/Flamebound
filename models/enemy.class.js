@@ -6,7 +6,8 @@ class Enemy extends MoveableObject {
     health = 20;
     tolerance = 3;
     sightrangeOfEnemy = 350;
-  
+    isDead = false;
+
 
     IMAGES_WALKING = [
         '../assets/Enemies/Skeleton_Warrior/Walk_Mirrored/tile000.png',
@@ -63,22 +64,12 @@ class Enemy extends MoveableObject {
         this.x = 420 + Math.random() * 700;
         this.y = -50 + Math.random() * 200;
         this.speed = 3.5 + Math.random() * 1.0;
-        this.isDead = false;
+        this.isDead;
+        this.health;
         this.animate();
     }
 
     animate() {
-        let enemyDiesInterval = createInterval(allIntervals, () => {
-            if (this.health <= 0 && !this.isDead) {
-                clearInterval(moveTowardsCharacter);
-                this.playOneTimeAnimationRevB(this.IMAGES_DEAD, enemyDiesInterval);
-                this.collisionAllowed = false;
-                setTimeout(() => {
-                    this.isDead = true;
-                }, 1000);
-            }
-        }, 1000 / 10);
-
         let enemyIsDead = createInterval(allIntervals, () => {
             if (this.isDead) {
                 clearInterval(enemyDiesInterval);
@@ -86,8 +77,8 @@ class Enemy extends MoveableObject {
             }
         }, 1000 / 10);
 
-        let moveTowardsCharacter = createInterval(allIntervals, () => {
-            if (world && world.character !== null && !this.isDead) { 
+        let moveTowardsCharacterAfterPaused = setInterval(() => {
+            if (world && world.character !== null && !this.isDead && !gamePaused == true) {
                 if (this.x - world.character.x < this.sightrangeOfEnemy) {
                     if (!world.character.isColliding(this)) {
                         this.playAnimation(this.IMAGES_WALKING);
@@ -116,7 +107,18 @@ class Enemy extends MoveableObject {
             }
         }, 1000 / 10);
 
-        // enemyIntervals.push(enemyDiesInterval);
-        // enemyIntervals.push(moveTowardsCharacter);
+        let enemyDiesIntervalAfterPaused = setInterval(() => {
+            if (this.health <= 0 && !this.isDead && !gamePaused == true) {
+                clearInterval(moveTowardsCharacterAfterPaused);
+                this.playOneTimeAnimationRevB(this.IMAGES_DEAD, enemyDiesIntervalAfterPaused);
+                this.collisionAllowed = false;
+            }
+        }, 1000 / 10);
+    }
+
+    enemySetIsDead() {
+        setTimeout(() => {
+            this.isDead = true;
+        }, 1000);
     }
 }

@@ -20,6 +20,7 @@ class MoveableObject extends DrawableObject {
     groundLevel = 100; //Initialisiere Groundlevel. Muss mit this Y im drawable Class übereinstimmen!
     frame = 0;
     isReset = true;
+    
 
     jump() {
         this.speedY = 23 //Sets jump height
@@ -59,7 +60,7 @@ class MoveableObject extends DrawableObject {
     }
 
     applyGravity() {
-        setInterval(() => {
+        let gravityInterval = createInterval(allIntervals, () => {
             if (this.isAboveGround() || this.speedY > 0) {
                 this.y -= this.speedY;
                 this.speedY -= this.acceleration;

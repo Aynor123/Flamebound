@@ -103,17 +103,21 @@ class Endboss extends MoveableObject {
 
    animate() {
       /** IDLE STORMY */
-      let endbossIdleStormy = setInterval (() => {
-         let i;
-         if (this.currentImage < 7) {
-            i = this.currentImage;
-         } else {
-            i = 2 + ((this.currentImage - 7) % (this.IMAGES_IDLE.length - 3));
+      let endbossIdleStormy = setInterval(() => {
+         if (!gamePaused) {
+            let i;
+            if (this.currentImage < 7) {
+               i = this.currentImage;
+            } else {
+               i = 2 + ((this.currentImage - 7) % (this.IMAGES_IDLE.length - 3));
+            }
+            let path = this.IMAGES_IDLE[i];
+            this.img = this.imageCache[path];
+            this.currentImage++;
          }
-         let path = this.IMAGES_IDLE[i];
-         this.img = this.imageCache[path];
-         this.currentImage++;
       }, 1000 / 9);
+
+
 
       let enemyHurtInterval = createInterval(allIntervals, () => {
          if (this.hitDetection && this.health > 0) {
@@ -122,8 +126,8 @@ class Endboss extends MoveableObject {
          }
       }, 1000 / 30);
 
-      let enemyDiesInterval = createInterval(allIntervals, () => {
-         if (!this.hitDetection && this.health <= 0) {
+      let enemyDiesInterval = setInterval(() => {
+         if (!this.hitDetection && this.health <= 0 && !gamePaused) {
             clearInterval(endbossIdleStormy);
             clearInterval(enemyHurtInterval);
             clearInterval(endbossAssuresDistance);
@@ -133,25 +137,27 @@ class Endboss extends MoveableObject {
          }
       }, 1000 / 10);
 
-      let endbossAssuresDistance = createInterval(allIntervals, () => {
-         if (world && world.character !== null) { //PREVENT UNDEFINED ERROR
+      let endbossAssuresDistance = setInterval(() => {
+         if (world && world.character !== null && !gamePaused) { //PREVENT UNDEFINED ERROR
+            if (!this.inRangeToCast && world.endbossIsActive && world.character.x + world.rangeToRightFireball - 20 < this.x - this.tolerance) {
+               this.playAnimation(this.IMAGES_WALKING);
+            } else if (!this.inRangeToCast && world.endbossIsActive && world.character.x + world.rangeToRightFireball - 20 > this.x - this.tolerance) {
+               this.playAnimation(this.IMAGES_WALKING_REVERSE);
+            }
+
             if (world.character.x + world.rangeToRightFireball - 20 < this.x - this.tolerance && !this.inRangeToCast && world.endbossIsActive) {
                clearInterval(endbossIdleStormy);
                this.moveLeftEndboss();
-               this.playAnimation(this.IMAGES_WALKING);
             }
             if (world.character.x + world.rangeToRightFireball - 20 > this.x + this.tolerance && !this.inRangeToCast && world.endbossIsActive) {
                clearInterval(endbossIdleStormy);
                this.moveRightEndboss();
-               this.playAnimation(this.IMAGES_WALKING_REVERSE);
             }
             if (world.character.y > this.y + this.tolerance && !this.inRangeToCast && world.endbossIsActive) {
                this.moveDownEnemy();
-               this.playAnimation(this.IMAGES_WALKING_REVERSE);
             }
             if (world.character.y < this.y - this.tolerance && this.y > -50 && !this.inRangeToCast && world.endbossIsActive) {
                this.moveUpEnemy();
-               this.playAnimation(this.IMAGES_WALKING_REVERSE);
             }
          }
       }, 1000 / 10);
@@ -188,13 +194,6 @@ class Endboss extends MoveableObject {
             }
          }
       }, 1000 / 20);
-
-      // endbossIntervals.push(castPoison);
-      // endbossIntervals.push(checkRangeToCast);
-      // endbossIntervals.push(this.endbossAssuresDistance);
-      // endbossIntervals.push(enemyDiesInterval);
-      // endbossIntervals.push(enemyHurtInterval);
-      // endbossIntervals.push(endbossIdleStormy);
    }
 
    moveRightEndboss() {

@@ -313,11 +313,11 @@ function updateMainMenuMusicButtonState() {
     }
 }
 
-function setTrackedInterval(callback, delay) {
-    let intervalId = setInterval(callback, delay);
-    this.intervals.push(intervalId);
-    return intervalId;
-}
+// function setTrackedInterval(callback, delay) {
+//     let intervalId = setInterval(callback, delay);
+//     this.intervals.push(intervalId);
+//     return intervalId;
+// }
 
 // function clearAllIntervals() {
 //     for (let i = 1; i < 9999; i++) window.clearInterval(i);
