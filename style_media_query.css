@@ -3,7 +3,8 @@
         width: 100%;
     }
 
-    .defeat-cont {
+    .defeat-cont,
+    .mobile-canvas-wrapper {
         width: 100%;
         height: auto;
         aspect-ratio: 3 / 2;
@@ -45,7 +46,8 @@
         height: 100vh;
     }
 
-    .defeat-cont {
+    .defeat-cont,
+    .mobile-canvas-wrapper {
         /* width: 100%; */
         height: 100vh;
         width: auto;
@@ -74,7 +76,8 @@
 }
 
 @media only screen and (max-width: 720px) {
-    .defeat-cont {
+    .defeat-cont,
+    .mobile-canvas-wrapper {
         width: 100%;
         max-width: 100vw;
         max-height: 100vh;

@@ -49,7 +49,7 @@
     </div>
 
     <!-- Imprint and Privacy-->
-    <div class="legal">
+    <div id="legal" class="legal">
         <a href="imprint.html" class="golden-text-16" target="_blank">Imprint</a>
         <a href="privacy_policy.html" class="golden-text-16" target="_blank">Privacy Policy</a>
     </div>
@@ -81,7 +81,7 @@
     </div>
     <!-- Canvas Section -->
     <div class="background-img">
-        <div class="in-game-menu d-none" id="in-game-menu">
+        <!-- <div class="in-game-menu d-none" id="in-game-menu">
             <div class="music-menu-ingame" onclick="toggleSoundIngame()" id="music-menu-ingame">
                 <img src="../assets/GUI/SpeakerIcon_Off.webp" class="speaker" id="speaker-ingame">
                 <div class="onoff-container">
@@ -95,7 +95,7 @@
             <div class="menu-icon-ingame-cont">
                 <img src="../assets/GUI/Icons/Button_S1_Icon_Menu.png" class="menu-icon-ingame">
             </div>
-        </div>
+        </div> -->
         <canvas id="canvas" width="720" height="480">
         </canvas>
     </div>
@@ -104,7 +104,7 @@
         <div class="defeat-cont">
             <h1 class="fire-text-defeat headline">Defeated</h1>
             <div class="menu-btn">
-                <span class="golden-text-menu">Play Again</span>
+                <span class="golden-text-menu">Back to title</span>
             </div>
         </div>
     </div>
@@ -113,27 +113,67 @@
         <div class="defeat-cont">
             <h1 class="fire-text-defeat headline">Victory</h1>
             <div class="menu-btn">
-                <span class="golden-text-menu">Play Again</span>
+                <span class="golden-text-menu">Back to title</span>
             </div>
         </div>
     </div>
     <!-- Mobile-Section -->
-    <div class="mobile-cont" id="mobile-overlay">
+    <div class="mobile-cont d-none" id="mobile-overlay">
         <div class="mobile-canvas-wrapper">
             <div class="mobile-music-cont">
                 <div class="speaker-slider-menu-wrapper">
-
+                    <div class="in-game-menu d-none" id="in-game-menu">
+                        <div class="music-menu-ingame" onclick="toggleSoundIngame()" id="music-menu-ingame">
+                            <img src="../assets/GUI/SpeakerIcon_Off.webp" class="speaker" id="speaker-ingame">
+                            <div class="onoff-container">
+                                <img src="../assets/GUI/On or Off/onoff_c.png" class="onoff-bg" id="onoff-bg-ingame">
+                                <img src="../assets/GUI/On or Off/onoff_handler.png" class="onoff-handler"
+                                    id="onoff-handler-ingame">
+                                <img src="../assets/GUI/On or Off/onoff_handler_hover.png" class="onoff-handler-hover-ingame"
+                                    id="onoff-handler-hover-ingame">
+                            </div>
+                        </div>
+                        <div class="menu-icon-ingame-cont">
+                            <img src="../assets/GUI/Icons/Button_S1_Icon_Menu.png" class="menu-icon-ingame">
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="mobile-controls-cont">
+            <div id="mobile-controls" class="mobile-controls-cont d-none">
                 <div class="mobile-controls-wrapper">
                     <div class="joystick">
-
+                        <table>
+                            <tr>
+                                <td id="top-left"></td>
+                                <td id="top"></td>
+                                <td id="top-right"></td>
+                            </tr>
+                            <tr>
+                                <td id="left"></td>
+                                <td id="no-movement" class="control-stick"></td>
+                                <td id="right"></td> 
+                            </tr>
+                            <tr>
+                                <td id="bottom-left"></td>
+                                <td id="bottom"></td>
+                                <td id="bottom-right"></td>
+                            </tr>
+                        </table>
                     </div>
                     <div class="action-btns">
-                        <div class="firbeall-btn"></div>
-                        <div class="jump-btn"></div>
-                        <div class="drink-btn"></div>
+                        <div class="action-row">
+                            <div id="jump-btn" class="action-btn">
+                                <img src="../assets/Mobile/Jump/capslock-svgrepo-com.png" class="action-image">
+                            </div>
+                        </div>
+                        <div class="action-row">
+                            <div id="fireball-btn" class="action-btn">
+                                <img src="../assets/Mobile/Fireball/flame_icon.png" class="action-image">
+                            </div>
+                            <div id="mana-portion-btn" class="action-btn">
+                                <img src="../assets/Mobile/flask-svgrepo-com.png" class="action-image">
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

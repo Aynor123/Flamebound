@@ -98,12 +98,18 @@ function startGame() {
     let gameStartingPage = document.getElementById("game-starting-page");
     let musicMenu = document.getElementById("music-menu");
     let musicMenuIngame = document.getElementById("in-game-menu");
+    let mobileControls = document.getElementById("mobile-controls");
+    let mobileOverlay = document.getElementById("mobile-overlay");
+    let legal = document.getElementById("legal");
     gameStartingPage.classList.add("fade-out");
     musicMenu.classList.add("d-none");
     start_game_sound.play();
     setTimeout(function () {
         gameStartingPage.classList.add("d-none");
+        legal.classList.add("d-none");
         musicMenuIngame.classList.remove("d-none");
+        mobileControls.classList.remove("d-none");
+        mobileOverlay.classList.remove("d-none");
         updateIngameMusicButtonState();
     }, 375);
     menu_sound.pause();
