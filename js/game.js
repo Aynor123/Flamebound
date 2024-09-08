@@ -93,7 +93,6 @@ window.addEventListener('keyup', (event) => {
     console.log(event);
 });
 
-
 function startGame() {
     let gameStartingPage = document.getElementById("game-starting-page");
     let musicMenu = document.getElementById("music-menu");
@@ -335,3 +334,113 @@ function updateMainMenuMusicButtonState() {
 //     });
 // }
 
+document.addEventListener('DOMContentLoaded', () => {
+    let currentKey = null;
+
+    function handleMovement(x, y) {
+        let element = document.elementFromPoint(x, y);  // Get the element under the touch point
+        if (element) {
+            switch (element.id) {
+                case 'top-left':
+                    keyboard.LEFT = true;
+                    keyboard.UP = true;
+                    break;
+                case 'top-right':
+                    keyboard.RIGHT = true;
+                    keyboard.UP = true;
+                    break;
+                case 'bottom-left':
+                    keyboard.LEFT = true;
+                    keyboard.DOWN = true;
+                    break;
+                case 'bottom-right':
+                    keyboard.RIGHT = true;
+                    keyboard.DOWN = true;
+                    break;
+                case 'top':
+                    keyboard.UP = true;
+                    break;
+                case 'bottom':
+                    keyboard.DOWN = true;
+                    break;
+                case 'left':
+                    keyboard.LEFT = true;
+                    break;
+                case 'right':
+                    keyboard.RIGHT = true;
+                    break;
+            }
+        }
+    }
+
+    function resetMovement() {
+        // Reset all keys on touch end
+        keyboard.LEFT = false;
+        keyboard.RIGHT = false;
+        keyboard.UP = false;
+        keyboard.DOWN = false;
+    }
+
+    // Start touch
+    document.querySelectorAll('td').forEach(cell => {
+        cell.addEventListener('touchstart', (event) => {
+            // event.preventDefault();
+            let touch = event.touches[0];
+            let element = document.elementFromPoint(touch.clientX, touch.clientY);
+            if (element) {
+                let direction = element.id;
+                handleMovement(touch.clientX, touch.clientY);
+            }
+        });
+    });
+
+    // Detect touch movement
+    document.addEventListener('touchmove', (event) => {
+        // event.preventDefault();
+        let touch = event.touches[0];
+        let element = document.elementFromPoint(touch.clientX, touch.clientY);
+        if (element && element.id !== currentKey) {
+            resetMovement();
+            currentKey = element.id;
+            handleMovement(touch.clientX, touch.clientY);
+        }
+    });
+
+    // End touch
+    document.addEventListener('touchend', (event) => {
+        resetMovement();
+        currentKey = null;
+    });
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+    document.getElementById('jump-btn').addEventListener('touchstart', (event) => {
+        event.preventDefault();
+        keyboard.SPACE = true;
+    });
+
+    document.getElementById('jump-btn').addEventListener('touchend', (event) => {
+        event.preventDefault();
+        keyboard.SPACE = false;
+    });
+
+    document.getElementById('fireball-btn').addEventListener('touchstart', (event) => {
+        event.preventDefault();
+        keyboard.S = true;
+    });
+
+    document.getElementById('fireball-btn').addEventListener('touchend', (event) => {
+        event.preventDefault();
+        keyboard.S = false;
+    });
+
+    document.getElementById('mana-portion-btn').addEventListener('touchstart', (event) => {
+        event.preventDefault();
+        keyboard.F = true;
+    });
+
+    document.getElementById('mana-portion-btn').addEventListener('touchend', (event) => {
+        event.preventDefault();
+        keyboard.F = false;
+    });
+});
