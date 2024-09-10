@@ -13,7 +13,6 @@
     }
 
     .canvas-overlay {
-        width: 80%;
         height: 320px;
         padding-bottom: 30px;
     }
@@ -21,11 +20,6 @@
     .menu-corner {
         top: -13px;
         left: -8px;
-    }
-
-    .position-relative {
-        position: relative;
-        top: 15px;
     }
 
     .x-button {
@@ -48,7 +42,6 @@
 
     .defeat-cont,
     .mobile-canvas-wrapper {
-        /* width: 100%; */
         height: 100vh;
         width: auto;
         aspect-ratio: 3 / 2;
@@ -60,7 +53,7 @@
     }
 }
 
-@media (max-width: 550px) {
+@media (max-width: 720px) {
     .gif-adjust {
         height: 56px;
     }
@@ -81,5 +74,66 @@
         width: 100%;
         max-width: 100vw;
         max-height: 100vh;
+    }
+}
+
+@media only screen and (max-height: 780px) {
+    .canvas-overlay {
+        /* height: auto; */
+        padding: 15px 0 15px 0;
+    }
+
+    .menu-corner {
+        top: -25px;
+    }
+}
+
+@media only screen and (max-height: 600px) {
+    .menu-btn {
+        height: 60px;
+        width: 200px;
+    }
+
+    .menu-header-cont {
+        width: 37%;
+    } 
+
+    .menu-corner {
+        display: none;
+    }
+
+    .background-img {
+        justify-content: flex-start;
+    }
+
+    .golden-text-menu {
+        font-size: 24px;
+    }
+
+    .control-section-responsive,
+    .about-section-responsive,
+    .mobile-cont {
+        justify-content: flex-start;
+    }
+}
+
+@media only screen and (max-height: 440px) {
+    .fire-text {
+        font-size: 32px;
+        margin-bottom: 5px;
+    }
+
+    .menu-header-cont {
+        height: 40px;
+    }
+
+    .golden-text-40 {
+        font-size: 32px;
+    }
+}
+
+@media only screen and (max-height: 360px) {
+    .legal {
+        display: none;
     }
 }

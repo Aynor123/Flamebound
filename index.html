@@ -14,6 +14,8 @@
     <link rel="stylesheet" href="./style_media_query.css">
     <!-- Load scripts in the correct order based on dependencies -->
     <script src="./js/interval-control.js"></script>
+    <script src="./js/screen-control.js"></script>
+    <script src="./js/sound-control.js"></script>
     <script src="./models/drawable-object.class.js"></script>
     <script src="./models/moveable-object.class.js"></script>
     <script src="./models/character.class.js"></script>
@@ -114,8 +116,8 @@
                                 <img src="../assets/GUI/On or Off/onoff_c.png" class="onoff-bg" id="onoff-bg-ingame">
                                 <img src="../assets/GUI/On or Off/onoff_handler.png" class="onoff-handler"
                                     id="onoff-handler-ingame">
-                                <img src="../assets/GUI/On or Off/onoff_handler_hover.png" class="onoff-handler-hover-ingame"
-                                    id="onoff-handler-hover-ingame">
+                                <img src="../assets/GUI/On or Off/onoff_handler_hover.png"
+                                    class="onoff-handler-hover-ingame" id="onoff-handler-hover-ingame">
                             </div>
                         </div>
                         <div class="menu-icon-ingame-cont">
@@ -136,7 +138,7 @@
                             <tr>
                                 <td id="left"></td>
                                 <td id="no-movement" class="control-stick"></td>
-                                <td id="right"></td> 
+                                <td id="right"></td>
                             </tr>
                             <tr>
                                 <td id="bottom-left"></td>
@@ -164,9 +166,16 @@
             </div>
         </div>
     </div>
+    <!-- Screen Rotation -->
+    <div class="portrait-screen d-none" id="portrait-screen">
+        <!-- <img src="../assets/Mobile/Rotate_150px.gif"> -->
+        <video autoplay muted loop playsinline width="100%" height="auto">
+            <source src="../assets/Mobile/phone_rotation.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
     </div>
     <!-- Control Section -->
-    <div class="overlay d-flex j-center a-center fd-column d-none" id="control-menu">
+    <div class="overlay d-flex j-center a-center fd-column d-none control-section-responsive" id="control-menu">
         <h1 class="fire-text headline">INFERNO</h1>
         <div class="menu-header-cont">
             <span class="golden-text-40">
@@ -234,7 +243,7 @@
         </div>
     </div>
     <!-- About Section -->
-    <div class="overlay d-flex j-center a-center fd-column d-none" id="about-menu">
+    <div class="overlay d-flex j-center a-center fd-column d-none about-section-responsive" id="about-menu">
         <h1 class="fire-text headline">INFERNO</h1>
         <div class="menu-header-cont">
             <span class="golden-text-40">
