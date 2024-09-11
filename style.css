@@ -546,7 +546,6 @@ td {
     background-image: url('../assets/Mobile/Joystic/middle_handler_crystal.png');
     background-size: contain;
     background-size: 140%;
-    /* background-size: cover; */
     background-position: 3px 3px;
     background-repeat: no-repeat;
 }
