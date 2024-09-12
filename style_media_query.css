@@ -13,18 +13,18 @@
     }
 
     .canvas-overlay {
-        height: 320px;
-        padding-bottom: 30px;
-        padding-top: 30px;
+        /* height: 320px; */
+        /* padding-bottom: 15px;
+        padding-top: 15px; */
     }
 
     .menu-corner {
-        top: -42px;
-        left: -8px;
+        /* top: -30px;
+        left: -8px; */
     }
 
     .x-button {
-        padding: 15px 13px 0 0;
+        /* padding: 15px 13px 0 0; */
     }
 
     /* .about-container {
@@ -70,6 +70,7 @@
 }
 
 @media only screen and (max-width: 720px) {
+
     .defeat-cont,
     .mobile-canvas-wrapper {
         width: 100%;
@@ -78,26 +79,43 @@
     }
 }
 
-@media only screen and (max-height: 780px) {
-    .canvas-overlay {
-        /* height: auto; */
-        padding: 15px 0 15px 0;
-    }
-
-    .menu-corner {
-        top: -25px;
+@media only screen and (max-width: 720px) {
+    .menu-header-cont {
+        width: 320px;
     }
 }
 
-@media only screen and (max-height: 600px) {
+@media only screen and (max-height: 780px) and (max-width: 720px) {
+    /* .canvas-overlay {
+        height: auto;
+        padding: 15px 0 15px 0;
+    } */
+
+    .menu-section-overlay,
+    .about-section-overlay,
+    .control-section-overlay {
+        height: 320px;
+    }
+
+    .menu-corner {
+        top: -12px;
+    }
+
+    .control-description {
+        display: none;
+    }
+
+}
+
+@media only screen and (max-height: 600px) and (max-width: 720px) {
     .menu-btn {
         height: 60px;
         width: 200px;
     }
 
     .menu-header-cont {
-        width: 37%;
-    } 
+        width: 320px;
+    }
 
     .menu-corner {
         display: none;
@@ -129,14 +147,14 @@
     }
 }
 
-@media only screen and (max-height: 440px)  {
+@media only screen and (max-height: 440px) and (max-width: 720px) {
     .fire-text {
         font-size: 32px;
         margin-bottom: 5px;
     }
 
     .menu-header-cont {
-        height: 40px;
+        height: 60px;
     }
 
     .golden-text-40 {
@@ -144,7 +162,107 @@
     }
 }
 
-@media only screen and (max-height: 360px) {
+@media only screen and (max-height: 380px) and (max-width: 720px) {
+    .legal {
+        display: none;
+    }
+}
+
+@media only screen and (max-height: 780px) and (min-width: 720px) {
+    .menu-section-overlay,
+    .about-section-overlay,
+    .control-section-overlay {
+        height: 320px;
+    }
+
+    .menu-corner {
+        top: -12px;
+    }
+
+    .x-button-background {
+        top: -11px;
+        right: -8px;
+    }
+
+    .control-description {
+        display: none;
+    }
+
+    .row {
+        padding-top: 0px;
+    }
+}
+
+
+@media only screen and (max-height: 600px) and (min-width: 720px) {
+    .menu-btn {
+        height: 60px;
+        width: 200px;
+    }
+
+    .menu-header-cont {
+        width: 37%;
+    }
+
+    .menu-corner {
+        display: none;
+    }
+
+    .background-img {
+        justify-content: flex-start;
+    }
+
+    .golden-text-menu {
+        font-size: 24px;
+    }
+
+    .control-section-responsive,
+    .about-section-responsive,
+    .mobile-cont {
+        justify-content: flex-start;
+    }
+
+    .control-section-overlay,
+    .about-section-overlay,
+    .menu-section-overlay {
+        height: 205px;
+    }
+
+    .control-section-overlay,
+    .about-section-overlay {
+        width: 80%;
+    }
+
+    .x-button-background {
+        top: -12px;
+        right: -1px;
+    }
+
+    .control-description {
+        display: block;
+    }
+
+    .row {
+        padding-top: 0px;
+    }
+}
+
+@media only screen and (max-height: 440px) and (min-width: 720px) {
+    .fire-text {
+        font-size: 32px;
+        margin-bottom: 5px;
+    }
+
+    .menu-header-cont {
+        height: 50px;
+    }
+
+    .golden-text-40 {
+        font-size: 32px;
+    }
+}
+
+@media only screen and (max-height: 380px) and (min-width: 720px) {
     .legal {
         display: none;
     }

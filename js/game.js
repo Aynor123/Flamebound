@@ -102,6 +102,7 @@ function startGame() {
     gameStartingPage.classList.add("fade-out");
     musicMenu.classList.add("d-none");
     start_game_sound.play();
+    checkScreenOrientation();
     setTimeout(function () {
         gameStartingPage.classList.add("d-none");
         legal.classList.add("d-none");
@@ -109,7 +110,6 @@ function startGame() {
         mobileControls.classList.remove("d-none");
         mobileOverlay.classList.remove("d-none");
         updateIngameMusicButtonState();
-        checkScreenOrientation();
     }, 375);
     menu_sound.pause();
     menu_sound.currentTime = 0;
