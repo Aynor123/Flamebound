@@ -6,6 +6,7 @@ class DrawableObject {
     img;
     imageCache = {}; 
     currentImage = 0;
+    frameMode = false;
 
     loadImage(path) {
         this.img = new Image(); // this.img= document.getElementbyId('image')
@@ -25,7 +26,7 @@ class DrawableObject {
     }
 
     drawFrame(ctx) {
-        if (this instanceof Character || this instanceof Enemy) {
+        if (this instanceof Character && this.frameMode || this instanceof Enemy && this.frameMode) {
             ctx.beginPath();
             ctx.lineWidth = '3';
             ctx.strokeStyle = 'red';
@@ -35,7 +36,7 @@ class DrawableObject {
     }
 
     drawFrameEnboss(ctx) {
-        if (this instanceof Endboss) { 
+        if (this instanceof Endboss && this.frameMode) { 
             ctx.beginPath();
             ctx.lineWidth = '3';
             ctx.strokeStyle = 'red';
@@ -45,7 +46,7 @@ class DrawableObject {
     }
 
     drawFrameFireball(ctx) {
-        if (this instanceof ThrowableObject) {
+        if (this instanceof ThrowableObject && this.frameMode) {
             ctx.beginPath();
             ctx.lineWidth = '3';
             ctx.strokeStyle = 'red';
@@ -55,7 +56,7 @@ class DrawableObject {
     }
 
     drawFrameManaPortion(ctx) {
-        if (this instanceof ManaPortion) {
+        if (this instanceof ManaPortion && this.frameMode) {
             ctx.beginPath();
             ctx.lineWidth = '3';
             ctx.strokeStyle = 'red';
@@ -65,7 +66,7 @@ class DrawableObject {
     }
 
     drawFramePoisonCloud(ctx) {
-        if (this instanceof PoisonCloud) {
+        if (this instanceof PoisonCloud && this.frameMode) {
             ctx.beginPath();
             ctx.lineWidth = '3';
             ctx.strokeStyle = 'red';
