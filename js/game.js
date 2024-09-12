@@ -373,7 +373,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (element) {
                 handleMovement(touch.clientX, touch.clientY);
             }
-        }, {passive: false});  // Set passive: false to allow preventDefault
+        }, { passive: false });  // Set passive: false to allow preventDefault
     });
 
     // Detect touch movement
@@ -386,43 +386,47 @@ document.addEventListener('DOMContentLoaded', () => {
             currentKey = element.id;
             handleMovement(touch.clientX, touch.clientY);
         }
-    }, {passive: false});  // Set passive: false
+    }, { passive: false });  // Set passive: false
 
     // End touch
     document.addEventListener('touchend', (event) => {
         resetMovement();
         currentKey = null;
-    }, {passive: false });
+    }, { passive: false });
 });
 
 document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('jump-btn').addEventListener('touchstart', (event) => {
         event.preventDefault();
+        console.log("Jump button touched");
         keyboard.SPACE = true;
-    }, {passive: false});
+    }, { passive: false });
 
     document.getElementById('jump-btn').addEventListener('touchend', (event) => {
         event.preventDefault();
         keyboard.SPACE = false;
-    }, {passive: false});
+    }, { passive: false });
 
     document.getElementById('fireball-btn').addEventListener('touchstart', (event) => {
         event.preventDefault();
         keyboard.S = true;
-    }, {passive: false});
+    }, { passive: false });
 
     document.getElementById('fireball-btn').addEventListener('touchend', (event) => {
         event.preventDefault();
         keyboard.S = false;
-    }, {passive: false});
+    }, { passive: false });
 
     document.getElementById('mana-portion-btn').addEventListener('touchstart', (event) => {
         event.preventDefault();
         keyboard.F = true;
-    }, {passive: false});
+    }, { passive: false });
 
     document.getElementById('mana-portion-btn').addEventListener('touchend', (event) => {
         event.preventDefault();
         keyboard.F = false;
-    }, {passive: false});
+    }, { passive: false });
 });
+
+
+
