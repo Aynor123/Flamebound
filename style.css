@@ -133,7 +133,6 @@ canvas {
     background-repeat: no-repeat;
     opacity: 0;
     transition: opacity 0.3s ease-in-out;
-    /* Smooth transition */
     z-index: 0;
     border-radius: 5px;
 }
@@ -598,6 +597,56 @@ td {
     left: 0;
     background-color: rgba(0, 0, 0, 1);
 }
+
+#loading-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: #000000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    z-index: 9999; /* Make sure it covers everything */
+}
+
+#loading-bar-container {
+    width: 80%;
+    max-width: 600px;
+    height: 40px;
+    background: url(../assets/LoadingBar/loading_bar_empty.png) no-repeat center;
+    background-size: 100% 100%;
+    padding: 0px;
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+
+}
+
+#loading-bar {
+    width: 100%;
+    opacity: 0;
+    height: 70%;
+    background: url(../assets/LoadingBar/loading_fill.png) no-repeat;
+    background-size: 0% 80%;
+    background-position: center center; /* Start revealing from the left */
+    transition: width 0.1s ease, background-position 0.1s ease, opacity 1.0s ease;
+    position: absolute;
+    top: 6px;
+    left: 0;
+}
+
+#loading-percentage {
+    margin-top: 20px;
+    /* font-size: 18px;
+    color: #000; */
+}
+
 
 .d-none {
     display: none;

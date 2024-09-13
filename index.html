@@ -39,6 +39,14 @@
 </head>
 
 <body onload="init()">
+    <!-- Loading Screen -->
+    <div id="loading-screen">
+        <div id="loading-bar-container">
+            <div id="loading-bar"></div>
+        </div>
+        <p class="golden-text-30" id="loading-percentage">0%</p>
+    </div>
+
     <!-- Speaker Toogle Button-->
     <div class="music-menu" onclick="toggleSoundMainMenu()" id="music-menu">
         <img src="../assets/GUI/SpeakerIcon_Off.webp" class="speaker" id="speaker">
@@ -81,11 +89,13 @@
             </div>
         </div>
     </div>
+
     <!-- Canvas Section -->
     <div class="background-img">
         <canvas id="canvas" width="720" height="480">
         </canvas>
     </div>
+
     <!-- Game Over Section -->
     <div class="game-over-defeat-cont d-none" id="defeat-screen">
         <div class="defeat-cont">
@@ -95,6 +105,7 @@
             </div>
         </div>
     </div>
+
     <!-- Game Over Section -->
     <div class="game-over-defeat-cont d-none" id="victory-screen">
         <div class="defeat-cont">
@@ -104,6 +115,7 @@
             </div>
         </div>
     </div>
+
     <!-- Mobile-Section -->
     <div class="mobile-cont d-none" id="mobile-overlay">
         <div class="mobile-canvas-wrapper">
@@ -128,7 +140,7 @@
             </div>
             <div id="mobile-controls" class="mobile-controls-cont d-none">
                 <div class="mobile-controls-wrapper">
-                    <div class="joystick">
+                    <div class="joystick d-none" id="joystick">
                         <table>
                             <tr>
                                 <td id="top-left"></td>
@@ -147,7 +159,7 @@
                             </tr>
                         </table>
                     </div>
-                    <div class="action-btns">
+                    <div class="action-btns d-none" id="action-btns">
                         <div class="action-row">
                             <div id="jump-btn" class="action-btn">
                                 <img src="../assets/Mobile/Jump/capslock-svgrepo-com.png" class="action-image">
@@ -166,6 +178,7 @@
             </div>
         </div>
     </div>
+
     <!-- Screen Rotation -->
     <div class="portrait-screen d-none" id="portrait-screen">
         <!-- <img src="../assets/Mobile/Rotate_150px.gif"> -->
@@ -174,6 +187,7 @@
             Your browser does not support the video tag.
         </video>
     </div>
+
     <!-- Control Section -->
     <div class="overlay d-flex j-center a-center fd-column d-none control-section-responsive" id="control-menu">
         <h1 class="fire-text headline">INFERNO</h1>
@@ -242,6 +256,7 @@
             </div>
         </div>
     </div>
+
     <!-- About Section -->
     <div class="overlay d-flex j-center a-center fd-column d-none about-section-responsive" id="about-menu">
         <h1 class="fire-text headline">INFERNO</h1>
