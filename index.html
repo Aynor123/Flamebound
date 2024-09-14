@@ -10,9 +10,9 @@
     <title>Inferno</title>
     <!-- <link rel="shortcut icon" href="./assets/Favicon/favicon1.ico"> -->
     <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="./style_ingame_overlay.css">
     <link rel="stylesheet" href="./style_fonts.css">
     <link rel="stylesheet" href="./style_media_query.css">
-    <!-- Load scripts in the correct order based on dependencies -->
     <script src="./js/interval-control.js"></script>
     <script src="./js/screen-control.js"></script>
     <script src="./js/sound-control.js"></script>
@@ -20,7 +20,7 @@
     <script src="./models/moveable-object.class.js"></script>
     <script src="./models/character.class.js"></script>
     <script src="./models/enemy.class.js"></script>
-    <script src="./models/endboss.class.js"></script> <!-- Load endboss before world -->
+    <script src="./models/endboss.class.js"></script>
     <script src="./models/sky.class.js"></script>
     <script src="./models/status-bar.class.js"></script>
     <script src="./models/mana-bar.class.js"></script>
@@ -33,12 +33,12 @@
     <script src="./models/poison-cloud.class.js"></script>
     <script src="./models/health-bar-endboss.class.js"></script>
     <script src="./levels/level1.js"></script>
-    <!-- Load world last to ensure all dependencies are available -->
     <script src="./models/world.class.js"></script>
     <script src="./js/game.js"></script>
 </head>
 
 <body onload="init()">
+
     <!-- Loading Screen -->
     <div id="loading-screen">
         <div id="loading-bar-container">
@@ -60,8 +60,7 @@
 
     <!-- Imprint and Privacy-->
     <div id="legal" class="legal">
-        <a href="imprint.html" class="golden-text-16" target="_blank">Imprint</a>
-        <a href="privacy_policy.html" class="golden-text-16" target="_blank">Privacy Policy</a>
+        <a href="imprint.html" class="golden-text-16" target="_blank">Imprint | Privacy Policy</a>
     </div>
 
     <!-- Menu Section -->
@@ -96,7 +95,7 @@
         </canvas>
     </div>
 
-    <!-- Game Over Section -->
+    <!-- Game Over Section Defeat -->
     <div class="game-over-defeat-cont d-none" id="defeat-screen">
         <div class="defeat-cont">
             <h1 class="fire-text-defeat headline">Defeated</h1>
@@ -106,7 +105,7 @@
         </div>
     </div>
 
-    <!-- Game Over Section -->
+    <!-- Game Over Section Victory -->
     <div class="game-over-defeat-cont d-none" id="victory-screen">
         <div class="defeat-cont">
             <h1 class="fire-text-defeat headline">Victory</h1>
@@ -134,6 +133,8 @@
                         </div>
                         <div class="menu-icon-ingame-cont">
                             <img src="../assets/GUI/Icons/Button_S1_Icon_Menu.png" class="menu-icon-ingame">
+                            <img src="../assets/GUI/On or Off/onoff_handler_hover.png" class="menu-ingame-hover-effect"
+                                id="ingame-menu-btn" onclick="openIngameMenu()">
                         </div>
                     </div>
                 </div>
@@ -294,6 +295,31 @@
                     <br>
                     Thank you all, and enjoy the adventure!
                 </span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Ingame Menu Section -->
+    <div class="game-over-defeat-cont" id="victory-screen">
+        <div class="menu-header-cont">
+            <span class="golden-text-40">
+                Pause
+            </span>
+        </div>
+        <div class="canvas-overlay d-flex fd-column j-center menu-section-overlay">
+            <div class="menu-corner">
+
+            </div>
+            <div class="d-flex j-center a-center fd-column position-relative">
+                <div class="menu-btn" onclick="startGame()">
+                    <span class="golden-text-menu">Resume</span>
+                </div>
+                <div class="menu-btn" onclick="startControls()">
+                    <span class="golden-text-menu">Controls</span>
+                </div>
+                <div class="menu-btn" onclick="startAbout()">
+                    <span class="golden-text-menu">Back to title</span>
+                </div>
             </div>
         </div>
     </div>

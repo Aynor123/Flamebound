@@ -1,0 +1,273 @@
+.in-game-menu {
+    position: relative;
+    top: 40px;
+    display: flex;
+    align-items: center;
+    width: 90%;
+    max-width: 670px;
+    justify-content: flex-end;
+    opacity: 1;
+    z-index: 97;
+}
+
+.music-menu-ingame {
+    position: absolute;
+    top: -30px;
+    right: 35px;
+    width: 100px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+}
+
+.speaker-ingame {
+    height: 32px;
+    width: auto;
+}
+
+.onoff-container-ingame {
+    display: flex;
+    align-items: center;
+    height: 56px;
+}
+
+.onoff-bg-ingame {
+    height: 32px;
+    width: 100%;
+}
+
+.onoff-handler-ingame {
+    height: 32px;
+    transition: right 0.3s ease;
+}
+
+.onoff-handler-hover-ingame {
+    height: 22px;
+    width: 35px;
+    opacity: 0;
+    transition: right 0.3s ease, opacity 0.3s ease;
+    position: absolute;
+    right: 26px;
+}
+
+.menu-icon-ingame-cont {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 50px;
+    width: 50px;
+    top: -30px;
+    right: -15px;
+    background-image: url('../assets/GUI/Button_Background.png');
+    background-size: 100% 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.menu-icon-ingame {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.8);
+}
+
+.onoff-handler-active-ingame {
+    right: 0px;
+}
+
+.onoff-handler-hover-active-ingame {
+    right: 5px;
+}
+
+#music-menu-ingame:hover #onoff-handler-hover-ingame {
+    opacity: 1;
+}
+
+.mobile-canvas-wrapper {
+    border-radius: 5px;
+    width: 720px;
+    height: 480px;
+}
+
+.mobile-music-cont {
+    width: 100%;
+    height: 50%;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.speaker-slider-menu-wrapper {
+    height: 60px;
+    width: 220px;
+    padding: 15px 15px 0 0;
+}
+
+.mobile-cont {
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 97;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.mobile-controls-cont {
+    width: 100%;
+    height: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+}
+
+.mobile-controls-wrapper {
+    width: 100%;
+    height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    gap: 50px;
+    padding-bottom: 25px;
+}
+
+.joystick {
+    height: 120px;
+    width: 120px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-image: url('../assets/Mobile/Joystic/joystick_empty.png');
+    background-size: cover;
+    background-position: center;
+}
+
+table {
+    width: 100%;
+    height: 100%;
+    border-collapse: collapse;
+    border: none;
+}
+
+td {
+    text-align: center;
+    width: 33.33%;
+    height: 33.33%;
+}
+
+.control-stick {
+    background-image: url('../assets/Mobile/Joystic/middle_handler_crystal.png');
+    background-size: contain;
+    background-size: 140%;
+    background-position: 3px 3px;
+    background-repeat: no-repeat;
+}
+
+.action-btns {
+    height: 120px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.action-row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+}
+
+.action-btn {
+    background-image: url('../assets/Mobile/Fireball/ability_frame.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    ;
+}
+
+.action-image {
+    width: 80%;
+    height: auto;
+}
+
+.portrait-screen {
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 98;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 1);
+}
+
+#loading-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: #000000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    z-index: 9999;
+}
+
+#loading-bar-container {
+    width: 80%;
+    max-width: 600px;
+    height: 40px;
+    background: url(../assets/LoadingBar/loading_bar_empty.png) no-repeat center;
+    background-size: 100% 100%;
+    padding: 0px;
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#loading-bar {
+    width: 100%;
+    opacity: 0;
+    height: 70%;
+    background: url(../assets/LoadingBar/loading_fill.png) no-repeat;
+    background-size: 0% 80%;
+    background-position: center center;
+    transition: width 0.1s ease, background-position 0.1s ease, opacity 1.0s ease;
+    position: absolute;
+    top: 6px;
+    left: 0;
+}
+
+#loading-percentage {
+    margin-top: 20px;
+}
+
+.menu-ingame-hover-effect {
+    height: 33px;
+    width: 30px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    position: absolute;
+    right: 10px;
+}
+
+.menu-ingame-hover-effect:hover {
+    opacity: 1;
+}
+
+.d-none {
+    display: none;
+}
