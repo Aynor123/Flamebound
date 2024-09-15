@@ -8,7 +8,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Inferno</title>
-    <!-- <link rel="shortcut icon" href="./assets/Favicon/favicon1.ico"> -->
     <link rel="stylesheet" href="./style.css">
     <link rel="stylesheet" href="./style_ingame_overlay.css">
     <link rel="stylesheet" href="./style_fonts.css">
@@ -99,7 +98,7 @@
     <div class="game-over-defeat-cont d-none" id="defeat-screen">
         <div class="defeat-cont">
             <h1 class="fire-text-defeat headline">Defeated</h1>
-            <div class="menu-btn">
+            <div class="menu-btn" onclick="backToTitleScreen()">
                 <span class="golden-text-menu">Back to title</span>
             </div>
         </div>
@@ -109,7 +108,7 @@
     <div class="game-over-defeat-cont d-none" id="victory-screen">
         <div class="defeat-cont">
             <h1 class="fire-text-defeat headline">Victory</h1>
-            <div class="menu-btn">
+            <div class="menu-btn" onclick="backToTitleScreen()">
                 <span class="golden-text-menu">Back to title</span>
             </div>
         </div>
@@ -300,28 +299,81 @@
     </div>
 
     <!-- Ingame Menu Section -->
-    <div class="game-over-defeat-cont" id="victory-screen">
-        <div class="menu-header-cont">
+    <div class="game-over-defeat-cont d-none" id="pause-menu">
+        <div class="menu-header-cont-ingame">
             <span class="golden-text-40">
                 Pause
             </span>
         </div>
-        <div class="canvas-overlay d-flex fd-column j-center menu-section-overlay">
-            <div class="menu-corner">
+        <div class="canvas-overlay d-flex fd-column j-center menu-section-overlay ingame-menu" id="ingame-menu">
+            <div class="menu-corner-ingame-menu">
 
             </div>
             <div class="d-flex j-center a-center fd-column position-relative">
-                <div class="menu-btn" onclick="startGame()">
+                <div class="menu-btn" onclick="resumeGame()">
                     <span class="golden-text-menu">Resume</span>
                 </div>
-                <div class="menu-btn" onclick="startControls()">
+                <div class="menu-btn" onclick="showIngameControls()">
                     <span class="golden-text-menu">Controls</span>
                 </div>
-                <div class="menu-btn" onclick="startAbout()">
+                <div class="menu-btn" onclick="backToTitleScreen()">
                     <span class="golden-text-menu">Back to title</span>
                 </div>
             </div>
         </div>
+
+
+
+        <div class="canvas-overlay d-flex j-center z-index3 control-section-ingame d-none" id="ingame-controls">
+            <div class="x-button">
+                <div class="x-button-background" onclick="closeIngameControls()">
+                    <img class="x-image" src="../assets/GUI/Window/header_close_icon.png">
+                </div>
+            </div>
+            <div class="d-flex a-center row ingame-row">
+                <div class="column">
+                    <div class="gif-container">
+                        <img src="../assets/Fire_Wizard/Walk/walk.gif" class="gif-adjust">
+                    </div>
+                </div>
+                <div class="key-description">
+                    <span class="golden-text-30">Arrow Keys</span>
+                </div>
+            </div>
+            <div class="d-flex a-center row ingame-row">
+                <div class="column">
+                    <div class="gif-container">
+                        <img src="../assets/Fire_Wizard/Jump/jump.gif" class="gif-adjust">
+                    </div>
+                </div>
+                <div class="key-description">
+                    <span class="golden-text-30">Space</span>
+                </div>
+            </div>
+            <div class="d-flex a-center row ingame-row">
+                <div class="column">
+                    <div class="gif-container">
+                        <img src="../assets/Fire_Wizard/Charge_Fireball/charge_fireball.gif" class="gif-adjust">
+                    </div>
+                </div>
+                <div class="key-description">
+                    <span class="golden-text-30">S</span>
+                </div>
+            </div>
+            <div class="d-flex a-center row ingame-row">
+                <div class="column">
+                    <div class="gif-container">
+                        <img src="../assets/Fire_Wizard/Ekixir/mana_portion.gif" class="gif-adjust">
+                    </div>
+                </div>
+                <div class="key-description">
+                    <span class="golden-text-30">F</span>
+                </div>
+            </div>
+        </div>
+
+
+
     </div>
 </body>
 

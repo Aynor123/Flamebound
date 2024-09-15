@@ -104,8 +104,8 @@ function initLevel() {
     ],
     [
         new ManaPortion('../assets/Potions/BLUE/Sprites/Big Vial - BLUE - 0000.png', -225 + 620, 330),
-        new ManaPortion('../assets/Potions/BLUE/Sprites/Big Vial - BLUE - 0000.png', -225 + (720 * 1.2), 330),
-        new ManaPortion('../assets/Potions/BLUE/Sprites/Big Vial - BLUE - 0000.png', -225 + (720 * 2.0), 330)
+        new ManaPortion('../assets/Potions/BLUE/Sprites/Big Vial - BLUE - 0000.png', -225 + (720 * 1.2), 230),
+        new ManaPortion('../assets/Potions/BLUE/Sprites/Big Vial - BLUE - 0000.png', -225 + (720 * 2.0), 300)
     ]
 
 );

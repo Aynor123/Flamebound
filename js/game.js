@@ -18,9 +18,7 @@ function init() {
     start_about_sound.muted = true;
     close_sound.muted = true;
 }
-//???
 // function init2() {
-//     world = null;
 //     world = new World(canvas, keyboard); 
 // }
 
@@ -428,5 +426,48 @@ document.addEventListener('DOMContentLoaded', () => {
     }, { passive: false });
 });
 
+function openIngameMenu() {
+    let pauseMenu = document.getElementById('pause-menu');
+
+    stopAllIntervals();
+    pauseMenu.classList.remove("d-none");
+}
+
+function resumeGame() {
+    let pauseMenu = document.getElementById('pause-menu');
+    
+    resumeAllIntervals();
+    pauseMenu.classList.add("d-none");
+}
+
+function showIngameControls() {
+    let ingameControls = document.getElementById('ingame-controls');
+    let ingameMenu = document.getElementById('ingame-menu');
+
+    ingameControls.classList.remove("d-none");
+    ingameMenu.classList.add("d-none");
+}
+
+function closeIngameControls() {
+    let ingameControls = document.getElementById('ingame-controls');
+    let ingameMenu = document.getElementById('ingame-menu');
+
+    ingameControls.classList.add("d-none");
+    ingameMenu.classList.remove("d-none");
+}
+
+function backToTitleScreen() {
+    location.reload();
+}
+
+function resetGame() {
+    // Clear existing game state, timers, or intervals
+    if (world) {
+        world.clear();  // Make sure World class has a clear method to stop ongoing processes.
+    }
+
+    // Re-initialize the game
+    init();
+}
 
 
