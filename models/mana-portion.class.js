@@ -20,6 +20,8 @@ class ManaPortion extends MoveableObject {
         this.y = y;
         this.animate();
     }
+
+
     animate() {
        let animateFlasks = createInterval(allIntervals, () => {
             this.playAnimation(this.IMAGES_PORTION);

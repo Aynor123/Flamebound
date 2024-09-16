@@ -1,7 +1,9 @@
-// let characterIntervals = [];
-
 class Character extends MoveableObject {
     mana = 100;
+    world;
+    speed = 1.5;
+    walking_sound = new Audio('../sounds/walking.mp3');
+    drink_sound = new Audio('../sounds/drinkportion.mp3');
 
     IMAGES_WALKING = [
         '../assets/Fire_Wizard/Walk/tile000.png',
@@ -13,15 +15,11 @@ class Character extends MoveableObject {
     ];
 
     IMAGES_JUMPING = [
-        // '../assets/Fire_Wizard/Jump/tile000.png',
-        // '../assets/Fire_Wizard/Jump/tile001.png',
-        // '../assets/Fire_Wizard/Jump/tile002.png',
         '../assets/Fire_Wizard/Jump/tile003.png',
         '../assets/Fire_Wizard/Jump/tile004.png',
         '../assets/Fire_Wizard/Jump/tile005.png',
         '../assets/Fire_Wizard/Jump/tile006.png',
         '../assets/Fire_Wizard/Jump/tile007.png'
-        // '../assets/Fire_Wizard/Jump/tile008.png'
     ];
 
     IMAGES_DEAD = [
@@ -61,13 +59,6 @@ class Character extends MoveableObject {
         '../assets/Fire_Wizard/Ekixir/tile007.png'
     ];
 
-    world;
-    speed = 1.5;
-    walking_sound = new Audio('../sounds/walking.mp3');
-    drink_sound = new Audio('../sounds/drinkportion.mp3');
-
-
-
     constructor() {
         super().loadImage('../assets/Fire_Wizard/Walk/tile000.png');
         this.loadImages(this.IMAGES_WALKING);
@@ -80,10 +71,14 @@ class Character extends MoveableObject {
         this.animate();
     }
 
+
     animate() {
+        let frame = 0;
+        let isReset = true;
+
         let characterControlsInterval = createInterval(allIntervals,() => {
             this.walking_sound.pause();
-            if (this.world.keyboard.LEFT && this.x > 0) { // Forbids to walk further left at xxx pixel.
+            if (this.world.keyboard.LEFT && this.x > 0) {
                 this.moveLeft();
                 this.otherDirection = true;
                 this.walking_sound.play();
@@ -112,7 +107,7 @@ class Character extends MoveableObject {
                 this.drink_sound.play();
             }
        
-            if (this.world.keyboard.UP && this.y > -50) { // Forbids to walk further up.
+            if (this.world.keyboard.UP && this.y > -50) { 
                 this.moveUp();
                 this.walking_sound.play();
             }
@@ -121,13 +116,11 @@ class Character extends MoveableObject {
                 this.moveDown();
                 this.walking_sound.play();
             }
-
-
-            this.world.camera_x = -this.x + 200; //Sets Character more to the right.
+            this.world.camera_x = -this.x + 200; 
         }, 1000 / 60);
 
-        let frame = 0;
-        let isReset = true;
+        
+
         let characterAnimationsInterval = createInterval(allIntervals,() => {
             if (this.isDead() && frame < this.IMAGES_DEAD.length) {
                 this.playOneTimeAnimation(this.IMAGES_DEAD, isReset);
@@ -174,10 +167,6 @@ class Character extends MoveableObject {
                 }
             }
         }, 1000 / 9);
-
-        // characterIntervals.push(characterControlsInterval);
-        // characterIntervals.push(characterAnimationsInterval);
     }
-
 }
 

@@ -1,4 +1,5 @@
 class HealthBarEndboss extends DrawableObject {
+    percentage = 100;
 
     IMAGES_HEALTH = [
         '',
@@ -21,8 +22,6 @@ class HealthBarEndboss extends DrawableObject {
 
     ];
 
-    percentage = 100;
-
     constructor() {
         super();
         this.loadImages(this.IMAGES_HEALTH);
@@ -33,12 +32,14 @@ class HealthBarEndboss extends DrawableObject {
         this.setPercentage(-1);
     }
 
+
     setPercentage(percentage) {
         this.percentage = percentage;
         let path = this.IMAGES_HEALTH[this.resolveImageIndex()];
         this.img = this.imageCache[path];
     }
 
+    
     resolveImageIndex() {
         if (this.percentage == -1) {
             return 0;

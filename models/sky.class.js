@@ -12,14 +12,15 @@ class Sky extends MoveableObject {
         this.animate();
     }
 
+
     animate() {
         this.moveRight();
     }
 
+
     moveRight() {
         let moveSky = createInterval(allIntervals, () => {
             this.x += this.speed;
-        }, 1000 / 60); // 60 FPS
+        }, 1000 / 60); 
     }
-
 }

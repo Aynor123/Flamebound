@@ -1,7 +1,4 @@
-// let endbossIntervals = [];
-
 class Endboss extends MoveableObject {
-
    height = 280;
    width = 280;
    health = 100;
@@ -12,7 +9,6 @@ class Endboss extends MoveableObject {
    isReset = true;
    frame = 0;
    inRangeToCast = false;
-   // endbossAssuresDistance;
    endbossAttackSpeed = 3000;
    endbossCastsPoison = new Audio('../sounds/necromancercasting_sound_short.mp3');
 
@@ -101,8 +97,8 @@ class Endboss extends MoveableObject {
       this.animate();
    }
 
+
    animate() {
-      /** IDLE STORMY */
       let endbossIdleStormy = setInterval(() => {
          if (!gamePaused) {
             let i;
@@ -118,13 +114,13 @@ class Endboss extends MoveableObject {
       }, 1000 / 9);
 
 
-
       let enemyHurtInterval = createInterval(allIntervals, () => {
          if (this.hitDetection && this.health > 0) {
             clearInterval(endbossIdleStormy);
             this.playOneTimeAnimationRevB(this.IMAGES_HURT, enemyHurtInterval);
          }
       }, 1000 / 30);
+
 
       let enemyDiesInterval = setInterval(() => {
          if (!this.hitDetection && this.health <= 0 && !gamePaused) {
@@ -137,14 +133,14 @@ class Endboss extends MoveableObject {
          }
       }, 1000 / 10);
 
+
       let endbossAssuresDistance = setInterval(() => {
-         if (world && world.character !== null && !gamePaused) { //PREVENT UNDEFINED ERROR
+         if (world && world.character !== null && !gamePaused) {
             if (!this.inRangeToCast && world.endbossIsActive && world.character.x + world.rangeToRightFireball - 20 < this.x - this.tolerance) {
                this.playAnimation(this.IMAGES_WALKING);
             } else if (!this.inRangeToCast && world.endbossIsActive && world.character.x + world.rangeToRightFireball - 20 > this.x - this.tolerance) {
                this.playAnimation(this.IMAGES_WALKING_REVERSE);
             }
-
             if (world.character.x + world.rangeToRightFireball - 20 < this.x - this.tolerance && !this.inRangeToCast && world.endbossIsActive) {
                clearInterval(endbossIdleStormy);
                this.moveLeftEndboss();
@@ -162,6 +158,7 @@ class Endboss extends MoveableObject {
          }
       }, 1000 / 10);
 
+
       let checkRangeToCast = createInterval(allIntervals, () => {
          let currentTime = Date.now();
          let timeSinceLastCast = (currentTime - this.castingTimeout);
@@ -172,6 +169,7 @@ class Endboss extends MoveableObject {
             }
          }
       }, 1000 / 10);
+
 
       let castPoison = createInterval(allIntervals, () => {
          if (this.inRangeToCast) {
@@ -196,16 +194,14 @@ class Endboss extends MoveableObject {
       }, 1000 / 20);
    }
 
+
    moveRightEndboss() {
       this.x += 8;
    }
 
+
    moveLeftEndboss() {
       this.x -= 8;
    }
-
-
-
-
 }
 

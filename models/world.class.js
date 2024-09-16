@@ -6,11 +6,13 @@ class World {
     canvas;
     keyboard;
     ctx;
-    camera_x = 0; //Nach links schieben nicht nach rechts. Value irrelevant für meinen Code?
+    camera_x = 0;
     statusBar = new StatusBar();
     manaBar = new ManaBar();
-    healthBarEndboss = new HealthBarEndboss;
     portionBar = new PortionBar();
+    healthBarEndboss = new HealthBarEndboss;
+    endboss = this.level.enemies[3];
+    endbossIsActive = false;
     throwableObjects = [];
     poisonClouds = [];
     lastThrowTime = 0;
@@ -20,7 +22,6 @@ class World {
     poisonCloudHitsCharacter = false;
     collectedPortions = 0;
     totalPortions = 3;
-    endboss = this.level.enemies[3];
     rangeToRightFireball = 300;
     rangeToLeftFireball = 165;
     sightrangeOfEnemy = 300;
@@ -34,11 +35,7 @@ class World {
     endboss_dies_sound = new Audio('../sounds/witchdies.mp3');
     defeat_sound = new Audio('../sounds/defeat.mp3');
     victory_sound = new Audio('../sounds/victory.mp3');
-    endbossIsActive = false;
     gameIsOver = false;
-
-
-
 
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
@@ -49,8 +46,12 @@ class World {
         this.run();
     }
 
+
+    /**
+     * Forwards the parameter of class World to certain instances e.g. Character and Enemy.
+     */
     setWorld() {
-        this.character.world = this; //Alle Parameter aus Klasse World werden in Klasse Character übergeben.
+        this.character.world = this;
         this.level.enemies.forEach(enemy => {
             enemy.world = this;
         });
@@ -59,6 +60,7 @@ class World {
         });
         this.portionBar.world = this;
     }
+
 
     run() {
         let gameInterval = createInterval(allIntervals,() => {
@@ -71,8 +73,10 @@ class World {
         }, 1000 / 60);
     }
 
+
     checkThrowObjects() {
         let currentTime = Date.now();
+
         if (this.keyboard.S && (currentTime - this.lastThrowTime >= 1000) && this.character.mana > 0) {
             this.character.isCastingFireball();
             this.fireball_casting_sound.play();
@@ -85,8 +89,8 @@ class World {
         } else if (this.keyboard.S && (currentTime - this.lastThrowTime >= 1000) && this.character.mana <= 0) {
             this.fireball_failed_to_cast_sound.play();
         }
-
     }
+
 
     checkDrinkingManaPortions() {
         let currentTime = Date.now();
@@ -98,7 +102,16 @@ class World {
         }
     }
 
+
     checkCollisions() {
+        this.checkEnemyCollisions();
+        this.checkFireballCollisions();
+        this.checkManaPortionCollisions();
+        this.checkPoisonCloudCollisions();
+    }
+    
+
+    checkEnemyCollisions() {
         this.level.enemies.forEach((enemy) => {
             if (enemy.collisionAllowed && this.character.isColliding(enemy)) {
                 this.character.isHit();
@@ -108,47 +121,74 @@ class World {
                 }
             }
         });
+    }
+    
 
+    checkFireballCollisions() {
         this.throwableObjects.forEach((throwableObject, i) => {
             this.level.enemies.forEach((enemy, j) => {
                 if (enemy.collisionAllowed && throwableObject.isCollidingFireball(enemy)) {
-                    let currentTime = Date.now();
-                    if (currentTime - this.lastFireballImpactTime >= 875) {
-                        throwableObject.animateFireballHit(i, j, this.throwableObjects, this.level.enemies);
-                        this.lastFireballImpactTime = currentTime;
-                        enemy.health -= 20;
-                        this.fireball_hit_sound.play();
-                        enemy.updateHitDetection();
-                        if (enemy.health <= 0) {
-                            if (enemy instanceof Endboss) {
-                                this.endboss_dies_sound.play();
-                            } else {
-                                this.skeleton_dies_sound.play();
-                            }
-                        }
-                    }
+                    this.handleFireballImpact(throwableObject, enemy, i, j);
                 }
             });
-            if ((throwableObject.x - this.character.x) > this.rangeToRightFireball) {
-                this.throwableObjects.splice(i, 1);
-            }
-            if ((this.character.x - throwableObject.x) > this.rangeToLeftFireball) {
-                this.throwableObjects.splice(i, 1);
-            }
+    
+            this.removeOffScreenFireballs(throwableObject, i);
         });
+    }
+    
 
+    handleFireballImpact(throwableObject, enemy, i, j) {
+        let currentTime = Date.now();
+        if (currentTime - this.lastFireballImpactTime >= 875) {
+            throwableObject.animateFireballHit(i, j, this.throwableObjects, this.level.enemies);
+            this.lastFireballImpactTime = currentTime;
+            enemy.health -= 20;
+            this.fireball_hit_sound.play();
+            enemy.updateHitDetection();
+    
+            if (enemy.health <= 0) {
+                this.playEnemyDeathSound(enemy);
+            }
+        }
+    }
+    
+
+    playEnemyDeathSound(enemy) {
+        if (enemy instanceof Endboss) {
+            this.endboss_dies_sound.play();
+        } else {
+            this.skeleton_dies_sound.play();
+        }
+    }
+    
+
+    removeOffScreenFireballs(throwableObject, index) {
+        if ((throwableObject.x - this.character.x) > this.rangeToRightFireball || 
+            (this.character.x - throwableObject.x) > this.rangeToLeftFireball) {
+            this.throwableObjects.splice(index, 1);
+        }
+    }
+    
+
+    checkManaPortionCollisions() {
         this.level.manaPortions.forEach((manaPortion, i) => {
             if (this.character.isCollidingManaPortion(manaPortion)) {
-                if (this.collectedPortions >= 3) {
-                    this.collectedPortions = 3;
-                } else {
-                    this.collectedPortions++;
-                    this.collect_portion_sound.play();
-                }
-                this.level.manaPortions.splice(i, 1);
+                this.collectManaPortion(i);
             }
         });
+    }
+    
 
+    collectManaPortion(index) {
+        if (this.collectedPortions < 3) {
+            this.collectedPortions++;
+            this.collect_portion_sound.play();
+        }
+        this.level.manaPortions.splice(index, 1);
+    }
+    
+
+    checkPoisonCloudCollisions() {
         this.poisonClouds.forEach((poisonCloud) => {
             if (poisonCloud.isCollidingPoisonCloud(this.character)) {
                 this.poisonCloudHitsCharacter = true;
@@ -157,8 +197,8 @@ class World {
                 }, 1000);
             }
         });
-
     }
+
 
     checkPoisonHitAnimation() {
         let lastPoisonCloudInArray = this.poisonClouds[this.poisonClouds.length - 1];
@@ -174,6 +214,7 @@ class World {
         }
     }
 
+
     draw() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         this.ctx.translate(this.camera_x, 0);
@@ -184,14 +225,14 @@ class World {
         this.addToMap(this.character);
         this.addObjectsToMap(this.throwableObjects);
         this.addObjectsToMap(this.poisonClouds);
-        this.ctx.translate(-this.camera_x, 0); // Back. Nächste Funktion umschließen, um Objekt an Position zu halten.
+        this.ctx.translate(-this.camera_x, 0); 
         this.addToMap(this.statusBar);
         this.addToMap(this.manaBar);
         this.addToMap(this.healthBarEndboss);
         this.drawBlackRoundedRect(35, 70, 105, 50, 5);
         this.addToMap(this.portionBar);
         this.drawCollectedPortions();
-        this.ctx.translate(this.camera_x, 0); // Forward
+        this.ctx.translate(this.camera_x, 0); 
         this.ctx.translate(-this.camera_x, 0);
 
         let self = this;
@@ -200,11 +241,13 @@ class World {
         });
     }
 
+
     addObjectsToMap(objects) {
         objects.forEach(object => {
             this.addToMap(object);
         })
     }
+
 
     addToMap(moveableObject) {
         if (moveableObject.otherDirection) {
@@ -212,18 +255,17 @@ class World {
         }
 
         moveableObject.draw(this.ctx);
-
         moveableObject.drawFrame(this.ctx);
         moveableObject.drawFrameFireball(this.ctx);
         moveableObject.drawFrameEnboss(this.ctx);
         moveableObject.drawFrameManaPortion(this.ctx);
         moveableObject.drawFramePoisonCloud(this.ctx);
 
-
         if (moveableObject.otherDirection) {
             this.flipImageBack(moveableObject);
         }
     }
+
 
     flipImage(moveableObject) {
         this.ctx.save();
@@ -232,10 +274,12 @@ class World {
         moveableObject.x = moveableObject.x * -1;
     }
 
+
     flipImageBack(moveableObject) {
         this.ctx.restore();
         moveableObject.x = moveableObject.x * -1;
     }
+
 
     drawCollectedPortions() {
         this.ctx.font = '32px Inferno';
@@ -254,6 +298,7 @@ class World {
         this.ctx.shadowOffsetY = 0;
     }
 
+
     drawBlackRoundedRect(x, y, width, height, radius) {
         this.ctx.beginPath();
         this.ctx.moveTo(x + radius, y);
@@ -270,6 +315,7 @@ class World {
         this.ctx.fill();
     }
 
+
     checkEndbossVisibility() {
         if ((this.endboss.x - this.character.x) < this.sightrangeOfEnemy) {
             this.healthBarEndboss.setPercentage(this.endboss.health);
@@ -280,6 +326,7 @@ class World {
             }
         }
     }
+
 
     checkGameEnd(gameInterval) {
         if (this.endboss.health <= 0) {
@@ -292,6 +339,7 @@ class World {
         }
     }
 
+
     showDefeatScreen() {
         let defeatScreen = document.getElementById('defeat-screen');
         this.gameIsOver = true;
@@ -302,6 +350,7 @@ class World {
         }, 1000);
     }
 
+    
     showVictoryScreen() {
         let victoryScreen = document.getElementById('victory-screen');
         this.gameIsOver = true;
@@ -311,15 +360,4 @@ class World {
             stopAllIntervals();
         }, 1000);
     }
-
-    // setTrackedInterval(callback, delay) {
-    //     let intervalId = setInterval(callback, delay);
-    //     this.intervals.push(intervalId);
-    //     return intervalId;
-    // }
-
-    // clearAllIntervals() {
-    //     this.intervals.forEach(intervalId => clearInterval(intervalId));
-    //     this.intervals = []; // Optionally clear the array to reset
-    // }
 }

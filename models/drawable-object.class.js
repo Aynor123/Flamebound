@@ -8,14 +8,17 @@ class DrawableObject {
     currentImage = 0;
     frameMode = false;
 
+
     loadImage(path) {
-        this.img = new Image(); // this.img= document.getElementbyId('image')
+        this.img = new Image(); 
         this.img.src = path;
     }
+
 
     draw(ctx) {
         ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
     }
+
 
     loadImages(arr) {
         arr.forEach(path => {
@@ -24,6 +27,7 @@ class DrawableObject {
             this.imageCache[path] = img;
         });
     }
+
 
     drawFrame(ctx) {
         if (this instanceof Character && this.frameMode || this instanceof Enemy && this.frameMode) {
@@ -35,6 +39,7 @@ class DrawableObject {
         }
     }
 
+
     drawFrameEnboss(ctx) {
         if (this instanceof Endboss && this.frameMode) { 
             ctx.beginPath();
@@ -44,6 +49,7 @@ class DrawableObject {
             ctx.stroke();
         }
     }
+
 
     drawFrameFireball(ctx) {
         if (this instanceof ThrowableObject && this.frameMode) {
@@ -55,6 +61,7 @@ class DrawableObject {
         }
     }
 
+
     drawFrameManaPortion(ctx) {
         if (this instanceof ManaPortion && this.frameMode) {
             ctx.beginPath();
@@ -65,6 +72,7 @@ class DrawableObject {
         }
     }
 
+    
     drawFramePoisonCloud(ctx) {
         if (this instanceof PoisonCloud && this.frameMode) {
             ctx.beginPath();

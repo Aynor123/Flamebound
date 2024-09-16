@@ -1,5 +1,4 @@
 class ThrowableObject extends MoveableObject {
-
     IMAGES_FLAMES = [
         '../assets/Fireball/tile000.png',
         '../assets/Fireball/tile001.png',
@@ -32,8 +31,8 @@ class ThrowableObject extends MoveableObject {
         this.throw();
         this.hitFrame = 0;
         this.isReset = true;
-        
     }
+
 
     throw() {
         if (!this.otherDirection) {
@@ -53,6 +52,7 @@ class ThrowableObject extends MoveableObject {
         }
     }
 
+
     animateFireball() {
         setInterval(() => {
             let i = this.currentImage % this.IMAGES_FLAMES.length;
@@ -62,23 +62,23 @@ class ThrowableObject extends MoveableObject {
         }, 1000 / 10);
     }
 
-    animateFireballHit(i, j, fireballs, enemies) {    
+
+    animateFireballHit(i, j, fireballs, enemies) {
         let interval = setInterval(() => {
             if (this.hitFrame < this.IMAGES_FLAMES_HIT.length) {
                 this.speedX = 0;
                 this.playOneTimeAnimation(this.IMAGES_FLAMES_HIT, this.isReset);
                 this.isReset = false;
                 this.hitFrame++;
-            
-              if (this.hitFrame === this.IMAGES_FLAMES_HIT.length) {
-                this.isReset = true;
-                this.hitFrame = 0;           
-                fireballs.splice(i, 1);
-                clearInterval(interval);
+
+                if (this.hitFrame === this.IMAGES_FLAMES_HIT.length) {
+                    this.isReset = true;
+                    this.hitFrame = 0;
+                    fireballs.splice(i, 1);
+                    clearInterval(interval);
+                }
             }
-        }
         }, 1000 / 60);
-        
     }
 }
 

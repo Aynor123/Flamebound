@@ -4,7 +4,7 @@ class MoveableObject extends DrawableObject {
     otherDirection = false;
     speedY = 0;
     acceleration = 1.3;
-    jumpFrameCount = 0; // Tracks frames since jump started
+    jumpFrameCount = 0;
     isJumping = false;
     health = 100;
     mana = 100;
@@ -17,14 +17,15 @@ class MoveableObject extends DrawableObject {
     drinkingMana = false;
     manaBar = new ManaBar();
     isJumping = false;
-    groundLevel = 100; //Initialisiere Groundlevel. Muss mit this Y im drawable Class übereinstimmen!
+    groundLevel = 100;
     frame = 0;
     isReset = true;
     
 
     jump() {
-        this.speedY = 23 //Sets jump height
+        this.speedY = 23
     }
+
 
     playAnimation(images) {
         let i = this.currentImage % images.length;
@@ -33,9 +34,10 @@ class MoveableObject extends DrawableObject {
         this.currentImage++;
     }
 
+
     playOneTimeAnimation(images, isReset) {
         if (isReset) {
-            this.currentImage = 0;  // Reset the current image index if needed.
+            this.currentImage = 0; 
         }
         let i = this.currentImage % images.length;
         let path = images[i];
@@ -47,17 +49,18 @@ class MoveableObject extends DrawableObject {
         }
     }
 
+
     playOneTimeAnimationRevB(images, intervalID) {
         if (this.imageIndex < images.length) {
             let path = images[this.imageIndex];
             this.img = this.imageCache[path];
             this.imageIndex++;
-            console.log("Enemy should die now");
         } else {
             this.imageIndex = 0;
             clearInterval(intervalID);
         }
     }
+
 
     applyGravity() {
         let gravityInterval = createInterval(allIntervals, () => {
@@ -68,17 +71,21 @@ class MoveableObject extends DrawableObject {
         }, 1000 / 60);
     }
 
+
     isAboveGround() {
         return this.y < this.groundLevel;
     }
+
 
     moveRight() {
         this.x += this.speed;
     }
 
+
     moveLeft() {
         this.x -= this.speed;
     }
+
 
     moveUp() {
         if (this.isAboveGround()) {
@@ -88,6 +95,7 @@ class MoveableObject extends DrawableObject {
         this.groundLevel = this.y;
     }
 
+
     moveDown() {
         if (this.isAboveGround()) {
             return;
@@ -96,13 +104,16 @@ class MoveableObject extends DrawableObject {
         this.groundLevel = this.y;
     }
 
+
     moveUpEnemy() {
         this.y -= this.speed;
     }
 
+
     moveDownEnemy() {
         this.y += this.speed;
     }
+
 
     isColliding(moveableObject) {
         return this.x + 120 + this.width - 250 > moveableObject.x + 120 &&
@@ -111,6 +122,7 @@ class MoveableObject extends DrawableObject {
             this.y + 145 < this.y + 145 + this.height - 145;
     }
 
+
     isCollidingFireball(moveableObject) {
         return this.x + 80 + this.width - 100 > moveableObject.x + 120 &&
             this.y + 75 + this.height - 145 > moveableObject.y + 145 &&
@@ -118,16 +130,14 @@ class MoveableObject extends DrawableObject {
             this.y + 75 < moveableObject.y + 145 + moveableObject.height - 145;
     }
 
+
     isCollidingManaPortion(moveableObject) {
         return this.x + 120 < moveableObject.x + 40 + moveableObject.width - 80 &&
         this.x + 120 + this.width - 250 > moveableObject.x + 40 &&
         this.y + 145 < moveableObject.y + 60 + moveableObject.height - 115 &&
         this.y + 145 + this.height - 145 > moveableObject.y + 60;
-        // return this.x + 120 + this.width - 250 > moveableObject.x + 40 &&
-        //     this.y + 145 + this.height - 145 > moveableObject.y + 60 &&
-        //     this.x + 120 < moveableObject.x + 40 &&
-        //     this.y + 145 < moveableObject.y + 60 + moveableObject.height - 115;
     }
+
 
     isCollidingPoisonCloud(moveableObject) {
         return this.x + 165 < moveableObject.x + 120 + moveableObject.width -250 &&
@@ -135,6 +145,7 @@ class MoveableObject extends DrawableObject {
         this.y + 175 < moveableObject.y + 145 + moveableObject.height - 145 &&
         this.y + 175 + this.height - 355 > moveableObject.y + 145;
     }
+
 
     isHit() {
         this.health -= 0.2;
@@ -145,20 +156,24 @@ class MoveableObject extends DrawableObject {
         }
     }
 
+
     isDead() {
         return this.health == 0;
 
     }
 
+
     isHurt() {
-        let timePassed = new Date().getTime() - this.lastHit; // Difference in ms.
-        timePassed = timePassed / 1000; // Difference in s.
-        return timePassed < 0.8; // true if hit between 5 seconds.
+        let timePassed = new Date().getTime() - this.lastHit; 
+        timePassed = timePassed / 1000; 
+        return timePassed < 0.8; 
     }
+
 
     isCasting() {
         return this.casting == true;
     }
+
 
     isCastingFireball() {
         this.mana -= 20;
@@ -167,6 +182,7 @@ class MoveableObject extends DrawableObject {
         }
     }
 
+    
     updateHitDetection() {
         this.hitDetection = true;
         setTimeout(() => {

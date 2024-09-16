@@ -18,9 +18,13 @@ function init() {
     start_about_sound.muted = true;
     close_sound.muted = true;
 }
-// function init2() {
-//     world = new World(canvas, keyboard); 
-// }
+function init2() {
+canvas = null;
+world.character = null;
+world.level = null;
+canvas = canvas = document.getElementById('canvas');
+    world = new World(canvas, keyboard); 
+}
 
 
 window.addEventListener('keydown', (event) => {
@@ -316,6 +320,12 @@ function updateMainMenuMusicButtonState() {
     }
 }
 
+
+/** This is handling touch events on a grid of cells (td elements). When a
+touchstart event is detected on a cell, it determines the position of the touch and triggers
+movement based on the cell's location within the grid without requiring the user to break contact with the touchscreen. The handleMovement function sets keyboard
+properties (LEFT, RIGHT, UP, DOWN) based on the cell's id, indicating the direction of movement. The
+resetMovement function resets all keyboard properties to false. */
 document.addEventListener('DOMContentLoaded', () => {
     let currentKey = null;
 
@@ -362,19 +372,17 @@ document.addEventListener('DOMContentLoaded', () => {
         keyboard.DOWN = false;
     }
 
-    // Start touch
     document.querySelectorAll('td').forEach(cell => {
         cell.addEventListener('touchstart', (event) => {
-            event.preventDefault(); // Prevent default touch behavior
+            event.preventDefault(); 
             let touch = event.touches[0];
             let element = document.elementFromPoint(touch.clientX, touch.clientY);
             if (element) {
                 handleMovement(touch.clientX, touch.clientY);
             }
-        }, { passive: false });  // Set passive: false to allow preventDefault
+        }, { passive: false }); 
     });
 
-    // Detect touch movement
     document.addEventListener('touchmove', (event) => {
         event.preventDefault();
         let touch = event.touches[0];
@@ -384,16 +392,13 @@ document.addEventListener('DOMContentLoaded', () => {
             currentKey = element.id;
             handleMovement(touch.clientX, touch.clientY);
         }
-    }, { passive: false });  // Set passive: false
+    }, { passive: false });
 
-    // End touch
     document.addEventListener('touchend', (event) => {
         resetMovement();
         currentKey = null;
     }, { passive: false });
-});
 
-document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('jump-btn').addEventListener('touchstart', (event) => {
         event.preventDefault();
         console.log("Jump button touched");
@@ -426,6 +431,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }, { passive: false });
 });
 
+
 function openIngameMenu() {
     let pauseMenu = document.getElementById('pause-menu');
 
@@ -433,12 +439,14 @@ function openIngameMenu() {
     pauseMenu.classList.remove("d-none");
 }
 
+
 function resumeGame() {
     let pauseMenu = document.getElementById('pause-menu');
-    
+
     resumeAllIntervals();
     pauseMenu.classList.add("d-none");
 }
+
 
 function showIngameControls() {
     let ingameControls = document.getElementById('ingame-controls');
@@ -448,6 +456,7 @@ function showIngameControls() {
     ingameMenu.classList.add("d-none");
 }
 
+
 function closeIngameControls() {
     let ingameControls = document.getElementById('ingame-controls');
     let ingameMenu = document.getElementById('ingame-menu');
@@ -456,18 +465,21 @@ function closeIngameControls() {
     ingameMenu.classList.remove("d-none");
 }
 
+
+/**
+ * The function `backToTitleScreen` reloads the current page to go back to the title screen.
+ */
 function backToTitleScreen() {
     location.reload();
 }
 
-function resetGame() {
-    // Clear existing game state, timers, or intervals
-    if (world) {
-        world.clear();  // Make sure World class has a clear method to stop ongoing processes.
-    }
 
-    // Re-initialize the game
-    init();
-}
+// function resetGame() {
+//     if (world) {
+//         world.clear();
+//     }
+
+//     init();
+// }
 
 

@@ -1,5 +1,4 @@
 class PortionBar extends DrawableObject {
-
     IMAGES_PORTION = [
         '../assets/Potions/BLUE/Sprites/Big Vial - BLUE - 0000.png', 
         '../assets/Potions/BLUE/Sprites/Big Vial - BLUE - 0001.png', 

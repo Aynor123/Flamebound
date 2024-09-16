@@ -1,13 +1,9 @@
-
-// let enemyIntervals = [];
-
 class Enemy extends MoveableObject {
     speed;
     health = 20;
     tolerance = 3;
     sightrangeOfEnemy = 350;
     isDead = false;
-
 
     IMAGES_WALKING = [
         '../assets/Enemies/Skeleton_Warrior/Walk_Mirrored/tile000.png',
@@ -69,6 +65,7 @@ class Enemy extends MoveableObject {
         this.animate();
     }
 
+
     animate() {
         let enemyIsDead = createInterval(allIntervals, () => {
             if (this.isDead) {
@@ -115,6 +112,7 @@ class Enemy extends MoveableObject {
             }
         }, 1000 / 10);
     }
+
 
     enemySetIsDead() {
         setTimeout(() => {
