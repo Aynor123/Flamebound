@@ -331,7 +331,6 @@ class World {
     checkGameEnd(gameInterval) {
         if (this.endboss.health <= 0) {
             this.showVictoryScreen();
-            clearInterval(gameInterval);
         }
         if (this.character.health <= 0) {
             this.showDefeatScreen();

@@ -131,6 +131,7 @@ class Endboss extends MoveableObject {
             clearInterval(castPoison);
             clearInterval(idleAnimation);
             clearInterval(movingAnimation);
+            clearInterval(checkRangeToCast);
             this.playOneTimeAnimationRevB(this.IMAGES_DEAD, enemyDiesInterval);
             this.collisionAllowed = false;
          }
@@ -189,7 +190,7 @@ class Endboss extends MoveableObject {
 
 
       let castPoison = createInterval(allIntervals, () => {
-         if (this.inRangeToCast) {
+         if (this.inRangeToCast && !this.world.gameIsOver) {
             if (this.frame < this.IMAGES_CASTING.length) {
                this.playOneTimeAnimation(this.IMAGES_CASTING, this.isReset);
                this.isReset = false;
