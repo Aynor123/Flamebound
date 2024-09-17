@@ -2,12 +2,13 @@ let canvas;
 let world;
 let keyboard = new Keyboard();
 let allSoundsMuted = true;
+let gameStarted = false;
 let start_game_sound = new Audio('../sounds/buttonstartclick.mp3');
 let start_controls_sound = new Audio('../sounds/buttonclick1.mp3');
 let start_about_sound = new Audio('../sounds/buttonclick.mp3');
 let menu_sound = new Audio('../sounds/menuambientemenace.mp3');
 let close_sound = new Audio('../sounds/close.mp3');
-let graveyard_sound = new Audio('../sounds/graveyard ambiente.mp3')
+let graveyard_sound = new Audio('../sounds/graveyard ambiente.mp3');
 
 
 function init() {
@@ -22,6 +23,9 @@ function init2() {
 canvas = null;
 world.character = null;
 world.level = null;
+if (world && world.intervalId) {
+    clearInterval(world.intervalId); 
+}
 canvas = canvas = document.getElementById('canvas');
     world = new World(canvas, keyboard); 
 }
@@ -59,7 +63,6 @@ window.addEventListener('keydown', (event) => {
     if (event.keyCode == 32) {
         keyboard.SPACE = true;
     }
-    console.log(event);
 });
 
 
@@ -91,10 +94,10 @@ window.addEventListener('keyup', (event) => {
     if (event.keyCode == 32) {
         keyboard.SPACE = false;
     }
-    console.log(event);
 });
 
 function startGame() {
+    gameStarted = true;
     let gameStartingPage = document.getElementById("game-starting-page");
     let musicMenu = document.getElementById("music-menu");
     let musicMenuIngame = document.getElementById("in-game-menu");
