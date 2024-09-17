@@ -374,9 +374,39 @@ canvas {
     justify-content: center;
     align-items: center;
     position: absolute;
-    bottom: 15px;
+    bottom: 7px;
     left: calc(100vw / 2 - 180);
     z-index: 3;
+    background-image: url('../assets/GUI/imprint/select_input.png');
+    background-position: center;
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    width: 200px;
+    height: 35px;
+}
+
+.legal::before {
+    content: '';
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    bottom: 4px;
+    left: calc(100vw / 2 - 180);
+    z-index: 3;
+    background-image: url('../assets/GUI/imprint/input_focus.png');
+    background-position: center;
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    width: 194px;
+    height: 27px;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+}
+
+.legal:hover::before {
+    opacity: 1;
+    cursor: var(--custom-cursor);
 }
 
 a {
