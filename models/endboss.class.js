@@ -11,6 +11,7 @@ class Endboss extends MoveableObject {
    inRangeToCast = false;
    endbossAttackSpeed = 3000;
    isMoving = false;
+   speed = 8.0;
    endbossCastsPoison = new Audio('../sounds/necromancercasting_sound_short.mp3');
 
    IMAGES_IDLE = [
@@ -74,6 +75,32 @@ class Endboss extends MoveableObject {
       '../assets/Enemies/witch/Witch_2/walk/tile000.png'
    ];
 
+   IMAGES_RUNNING = [
+      '../assets/Enemies/witch/Witch_2/run/tile000.png',
+      '../assets/Enemies/witch/Witch_2/run/tile001.png',
+      '../assets/Enemies/witch/Witch_2/run/tile002.png',
+      '../assets/Enemies/witch/Witch_2/run/tile003.png',
+      '../assets/Enemies/witch/Witch_2/run/tile004.png',
+      '../assets/Enemies/witch/Witch_2/run/tile005.png',
+      '../assets/Enemies/witch/Witch_2/run/tile006.png',
+      '../assets/Enemies/witch/Witch_2/run/tile007.png',
+      '../assets/Enemies/witch/Witch_2/run/tile008.png',
+      '../assets/Enemies/witch/Witch_2/run/tile009.png'
+   ];
+
+   IMAGES_RUNNING_REVERSE = [
+      '../assets/Enemies/witch/Witch_2/run/tile009.png',
+      '../assets/Enemies/witch/Witch_2/run/tile008.png',
+      '../assets/Enemies/witch/Witch_2/run/tile007.png',
+      '../assets/Enemies/witch/Witch_2/run/tile006.png',
+      '../assets/Enemies/witch/Witch_2/run/tile005.png',
+      '../assets/Enemies/witch/Witch_2/run/tile004.png',
+      '../assets/Enemies/witch/Witch_2/run/tile003.png',
+      '../assets/Enemies/witch/Witch_2/run/tile002.png',
+      '../assets/Enemies/witch/Witch_2/run/tile001.png',
+      '../assets/Enemies/witch/Witch_2/run/tile000.png'
+   ];
+
    IMAGES_CASTING = [
       '../assets/Enemies/witch/Witch_2/cast/tile000.png',
       '../assets/Enemies/witch/Witch_2/cast/tile001.png',
@@ -91,6 +118,8 @@ class Endboss extends MoveableObject {
       this.loadImages(this.IMAGES_DEAD);
       this.loadImages(this.IMAGES_HURT);
       this.loadImages(this.IMAGES_WALKING);
+      this.loadImages(this.IMAGES_RUNNING);
+      this.loadImages(this.IMAGES_RUNNING_REVERSE);
       this.loadImages(this.IMAGES_CASTING);
       this.loadImages(this.IMAGES_IDLE_STANDING);
       this.x = 1500;
@@ -159,7 +188,7 @@ class Endboss extends MoveableObject {
                this.isMoving = true;
             }
          }
-      }, 1000 / 10);
+      }, 1000 / 20);
 
       let endbossAssuresDistance = setInterval(() => {
          if (world && world.character !== null && !gamePaused) {
@@ -209,7 +238,7 @@ class Endboss extends MoveableObject {
                }
             }
          }
-      }, 1000 / 20);
+      }, 1000 / 30);
 
       let idleAnimation = setInterval(() => {
          if (world && world.character !== null && !gamePaused) {
@@ -221,13 +250,13 @@ class Endboss extends MoveableObject {
    }
 
 
-   moveRightEndboss() {
-      this.x += 8;
+   moveRightEndboss() { 
+      this.x += this.speed;
    }
 
 
    moveLeftEndboss() {
-      this.x -= 8;
+      this.x -= this.speed;
    }
 }
 

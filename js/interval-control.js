@@ -25,11 +25,6 @@ function stopAllIntervals() {
 }
 
 
-// function clearAllIntervals() {
-//     for (let i = 0; i < 999; i++) window.clearInterval(i);
-// }
-
-
 function resumeAllIntervals() {
     let newIntervals = [...allIntervals];
 

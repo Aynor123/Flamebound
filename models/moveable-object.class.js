@@ -23,7 +23,7 @@ class MoveableObject extends DrawableObject {
     
 
     jump() {
-        this.speedY = 23
+        this.speedY = 23;
     }
 
 
@@ -131,11 +131,22 @@ class MoveableObject extends DrawableObject {
     }
 
 
+/**
+ * The function `isCollidingManaPortion` checks for collision between a character and a mana portion
+ * based on their respective positions and dimensions:
+ * 1. Checking if the character's right side is greater than the mana portion's left side.
+ * 2. Checking if the character's left side is less than the mana portion's right side.
+ * 3. Checking if the character's bottom side is greater than the mana portion's bottom side.
+ * 4. Checking if the character's top side is less than the mana portion's bottom side.
+ * @param moveableObject - The `moveableObject` in the `isCollidingManaPortion` function represents an
+ * object that the character is interacting with in the game. 
+ * @returns The function returns a boolean value indicating whether the character is colliding with the mana portion.
+ */
     isCollidingManaPortion(moveableObject) {
-        return this.x + 120 < moveableObject.x + 40 + moveableObject.width - 80 &&
-        this.x + 120 + this.width - 250 > moveableObject.x + 40 &&
-        this.y + 145 < moveableObject.y + 60 + moveableObject.height - 115 &&
-        this.y + 145 + this.height - 145 > moveableObject.y + 60;
+        return this.x + 120 + this.width - 250 > moveableObject.x + 40 && 
+        this.x + 120 < moveableObject.x + 40 + moveableObject.width - 80 && 
+        this.y + 145 + this.height - 145 > moveableObject.y + 60 + moveableObject.height - 115 && 
+        this.y + 145 < moveableObject.y + 60 + moveableObject.height - 115 ;
     }
 
 

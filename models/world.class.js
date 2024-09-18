@@ -22,8 +22,8 @@ class World {
     poisonCloudHitsCharacter = false;
     collectedPortions = 0;
     totalPortions = 3;
-    rangeToRightFireball = 300;
-    rangeToLeftFireball = 165;
+    rangeToRightFireball = 260;
+    rangeToLeftFireball = 145;
     sightrangeOfEnemy = 300;
     collect_portion_sound = new Audio('../sounds/collectportion.mp3');
     fireball_hit_sound = new Audio('../sounds/fireballhitshortened.mp3');

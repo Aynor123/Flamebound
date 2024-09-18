@@ -3,12 +3,12 @@ let world;
 let keyboard = new Keyboard();
 let allSoundsMuted = true;
 let gameStarted = false;
-let start_game_sound = new Audio('../sounds/buttonstartclick.mp3');
-let start_controls_sound = new Audio('../sounds/buttonclick1.mp3');
-let start_about_sound = new Audio('../sounds/buttonclick.mp3');
-let menu_sound = new Audio('../sounds/menuambientemenace.mp3');
-let close_sound = new Audio('../sounds/close.mp3');
-let graveyard_sound = new Audio('../sounds/graveyard ambiente.mp3');
+// let start_game_sound = new Audio('../sounds/buttonstartclick.mp3');
+// let start_controls_sound = new Audio('../sounds/buttonclick1.mp3');
+// let start_about_sound = new Audio('../sounds/buttonclick.mp3');
+// let menu_sound = new Audio('../sounds/menuambientemenace.mp3');
+// let close_sound = new Audio('../sounds/close.mp3');
+// let graveyard_sound = new Audio('../sounds/graveyard ambiente.mp3');
 
 
 function init() {
@@ -20,14 +20,14 @@ function init() {
     close_sound.muted = true;
 }
 function init2() {
-canvas = null;
-world.character = null;
-world.level = null;
-if (world && world.intervalId) {
-    clearInterval(world.intervalId); 
-}
-canvas = canvas = document.getElementById('canvas');
-    world = new World(canvas, keyboard); 
+    canvas = null;
+    world.character = null;
+    world.level = null;
+    if (world && world.intervalId) {
+        clearInterval(world.intervalId);
+    }
+    canvas = canvas = document.getElementById('canvas');
+    world = new World(canvas, keyboard);
 }
 
 
@@ -97,17 +97,24 @@ window.addEventListener('keyup', (event) => {
 });
 
 function startGame() {
-    gameStarted = true;
     let gameStartingPage = document.getElementById("game-starting-page");
     let musicMenu = document.getElementById("music-menu");
     let musicMenuIngame = document.getElementById("in-game-menu");
     let mobileControls = document.getElementById("mobile-controls");
     let mobileOverlay = document.getElementById("mobile-overlay");
     let legal = document.getElementById("legal");
+
+    gameStarted = true;
+
+    start_game_sound.play();
+    menu_sound.pause();
+    menu_sound.currentTime = 0;
+    graveyard_sound.play();
     gameStartingPage.classList.add("fade-out");
     musicMenu.classList.add("d-none");
-    start_game_sound.play();
+    
     checkScreenOrientation();
+
     setTimeout(function () {
         gameStartingPage.classList.add("d-none");
         legal.classList.add("d-none");
@@ -116,11 +123,7 @@ function startGame() {
         mobileOverlay.classList.remove("d-none");
         updateIngameMusicButtonState();
     }, 375);
-    menu_sound.pause();
-    menu_sound.currentTime = 0;
-    graveyard_sound.play();
-    graveyard_sound.loop = true;
-    graveyard_sound.volume = 0.2;
+
     if (allSoundsMuted) {
         graveyard_sound.muted = true;
         world.character.walking_sound.muted = true;
@@ -377,13 +380,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.querySelectorAll('td').forEach(cell => {
         cell.addEventListener('touchstart', (event) => {
-            event.preventDefault(); 
+            event.preventDefault();
             let touch = event.touches[0];
             let element = document.elementFromPoint(touch.clientX, touch.clientY);
             if (element) {
                 handleMovement(touch.clientX, touch.clientY);
             }
-        }, { passive: false }); 
+        }, { passive: false });
     });
 
     document.addEventListener('touchmove', (event) => {

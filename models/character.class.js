@@ -1,7 +1,7 @@
 class Character extends MoveableObject {
     mana = 100;
     world;
-    speed = 1.5;
+    speed = 3.0;
     walking_sound = new Audio('../sounds/walking.mp3');
     drink_sound = new Audio('../sounds/drinkportion.mp3');
     lastActionTime;
@@ -15,6 +15,17 @@ class Character extends MoveableObject {
         '../assets/Fire_Wizard/Walk/tile003.png',
         '../assets/Fire_Wizard/Walk/tile004.png',
         '../assets/Fire_Wizard/Walk/tile005.png'
+    ];
+
+    IMAGES_RUNNING = [
+        '../assets/Fire_Wizard/Run/tile000.png',
+        '../assets/Fire_Wizard/Run/tile001.png',
+        '../assets/Fire_Wizard/Run/tile002.png',
+        '../assets/Fire_Wizard/Run/tile003.png',
+        '../assets/Fire_Wizard/Run/tile004.png',
+        '../assets/Fire_Wizard/Run/tile005.png',
+        '../assets/Fire_Wizard/Run/tile006.png',
+        '../assets/Fire_Wizard/Run/tile007.png'
     ];
 
     IMAGES_JUMPING = [
@@ -81,6 +92,7 @@ class Character extends MoveableObject {
     constructor() {
         super().loadImage('../assets/Fire_Wizard/Walk/tile000.png');
         this.loadImages(this.IMAGES_WALKING);
+        this.loadImages(this.IMAGES_RUNNING);
         this.loadImages(this.IMAGES_DEAD);
         this.loadImages(this.IMAGES_HURT);
         this.loadImages(this.IMAGES_JUMPING);
@@ -161,7 +173,7 @@ class Character extends MoveableObject {
                     isReset = true;
                     frame = 0;
                     this.casting = false;
-                    this.speed = 1.5;
+                    this.speed = 3.0;
                     this.trackIdleCounter();
                 }
             } else if (this.isHurt() && !this.isDead()) {
@@ -184,13 +196,13 @@ class Character extends MoveableObject {
                     isReset = true;
                     frame = 0;
                     this.drinkingMana = false;
-                    this.speed = 1.5;
+                    this.speed = 3.0;
                     this.trackIdleCounter();
                 }
             }
             else {
                 if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT || this.world.keyboard.UP || this.world.keyboard.DOWN) {
-                    this.playAnimation(this.IMAGES_WALKING);
+                    this.playAnimation(this.IMAGES_RUNNING);
                     this.trackIdleCounter();
                 }
             }
@@ -200,7 +212,7 @@ class Character extends MoveableObject {
         let characterShortIdleAnimation = setInterval(() => {
             let currentTime = Date.now();
 
-            if (!gamePaused && currentTime - this.lastActionTime < this.timeTillLongIdle && !this.world.keyboard.RIGHT && !this.world.keyboard.LEFT && !this.world.keyboard.UP && !this.world.keyboard.DOWN && !this.isHurt() && !this.drinkingMana && !this.isCasting() && !this.isJumping) {
+            if (!this.world.gameIsOver && !gamePaused && currentTime - this.lastActionTime < this.timeTillLongIdle && !this.world.keyboard.RIGHT && !this.world.keyboard.LEFT && !this.world.keyboard.UP && !this.world.keyboard.DOWN && !this.isHurt() && !this.drinkingMana && !this.isCasting() && !this.isJumping) {
                 this.playAnimation(this.IMAGES_IDLE);
             }
         }, 1000 / 5);
@@ -209,7 +221,7 @@ class Character extends MoveableObject {
         let characterLongIdleAnimation = setInterval(() => {
             if (gameStarted) {
                 let currentTime = Date.now();
-                if (gameStarted && !gamePaused && currentTime - this.lastActionTime > this.timeTillLongIdle) {
+                if (!this.world.gameIsOver && gameStarted && !gamePaused && currentTime - this.lastActionTime > this.timeTillLongIdle) {
                     if (!this.characterIsLongIdle && idleFrame < this.IMAGES_LONG_IDLE.length) {
                         this.playOneTimeAnimation(this.IMAGES_LONG_IDLE, isReset);
                         isReset = false;
