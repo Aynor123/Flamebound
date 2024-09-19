@@ -82,6 +82,9 @@ window.addEventListener('keydown', (event) => {
  * application. 
 */
 window.addEventListener('keyup', (event) => {
+    if (world.gameIsOver) {
+        return;
+    }
     if (event.keyCode == 39) {
         keyboard.RIGHT = false;
     }
