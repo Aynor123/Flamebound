@@ -2,8 +2,6 @@ class Character extends MoveableObject {
     mana = 100;
     world;
     speed = 3.0;
-    walking_sound = new Audio('../sounds/walking.mp3');
-    drink_sound = new Audio('../sounds/drinkportion.mp3');
     lastActionTime;
     timeTillLongIdle = 5000;
     characterIsLongIdle = false;
@@ -112,18 +110,18 @@ class Character extends MoveableObject {
         let isReset = true;
 
         let characterControlsInterval = createInterval(allIntervals, () => {
-            this.walking_sound.pause();
+            walking_sound.pause();
             if (this.world.keyboard.LEFT && this.x > 0) {
                 this.moveLeft();
                 this.otherDirection = true;
-                this.walking_sound.play();
+                walking_sound.play();
             }
 
 
             if (this.world.keyboard.RIGHT && this.x < world.level.level_end_x) {
                 this.moveRight();
                 this.otherDirection = false;
-                this.walking_sound.play();
+                walking_sound.play();
             }
 
             if (this.world.keyboard.SPACE && !this.isAboveGround()) {
@@ -139,17 +137,17 @@ class Character extends MoveableObject {
             if (this.world.keyboard.F) {
                 this.drinkingMana = true;
                 this.speed = 0;
-                this.drink_sound.play();
+                drink_sound.play();
             }
 
             if (this.world.keyboard.UP && this.y > -50) {
                 this.moveUp();
-                this.walking_sound.play();
+                walking_sound.play();
             }
 
             if (this.world.keyboard.DOWN && this.y < 120) {
                 this.moveDown();
-                this.walking_sound.play();
+                walking_sound.play();
             }
             this.world.camera_x = -this.x + 200;
         }, 1000 / 60);

@@ -12,7 +12,6 @@ class Endboss extends MoveableObject {
    endbossAttackSpeed = 3000;
    isMoving = false;
    speed = 8.0;
-   endbossCastsPoison = new Audio('../sounds/necromancercasting_sound_short.mp3');
 
    IMAGES_IDLE = [
       '../assets/Enemies/witch/Witch_2/idle_2/tile000.png',
@@ -233,7 +232,7 @@ class Endboss extends MoveableObject {
                   this.endbossAssuresDistance;
                   let poisonCloud = new PoisonCloud(this.x, this.y);
                   this.world.poisonClouds.push(poisonCloud);
-                  this.endbossCastsPoison.play();
+                  endbossCastsPoison.play();
                   this.isCasting = false;
                }
             }

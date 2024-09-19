@@ -25,16 +25,6 @@ class World {
     rangeToRightFireball = 260;
     rangeToLeftFireball = 145;
     sightrangeOfEnemy = 300;
-    collect_portion_sound = new Audio('../sounds/collectportion.mp3');
-    fireball_hit_sound = new Audio('../sounds/fireballhitshortened.mp3');
-    fireball_casting_sound = new Audio('../sounds/fireballcasting.mp3');
-    fireball_failed_to_cast_sound = new Audio('../sounds/failedtocastfireball.mp3');
-    boss_encounter_sound = new Audio('../sounds/bossencounter.mp3');
-    character_hit_sound = new Audio('../sounds/characterhit.mp3');
-    skeleton_dies_sound = new Audio('../sounds/skeletondies.mp3');
-    endboss_dies_sound = new Audio('../sounds/witchdies.mp3');
-    defeat_sound = new Audio('../sounds/defeat.mp3');
-    victory_sound = new Audio('../sounds/victory.mp3');
     gameIsOver = false;
 
     constructor(canvas, keyboard) {
@@ -79,7 +69,7 @@ class World {
 
         if (this.keyboard.S && (currentTime - this.lastThrowTime >= 1000) && this.character.mana > 0) {
             this.character.isCastingFireball();
-            this.fireball_casting_sound.play();
+            fireball_casting_sound.play();
             this.manaBar.setPercentage(this.character.mana);
             setTimeout(() => {
                 let fireball = new ThrowableObject(this.character.x, this.character.y, this.character.otherDirection);
@@ -87,7 +77,7 @@ class World {
             }, 500);
             this.lastThrowTime = currentTime;
         } else if (this.keyboard.S && (currentTime - this.lastThrowTime >= 1000) && this.character.mana <= 0) {
-            this.fireball_failed_to_cast_sound.play();
+            fireball_failed_to_cast_sound.play();
         }
     }
 
@@ -117,7 +107,7 @@ class World {
                 this.character.isHit();
                 this.statusBar.setPercentage(this.character.health);
                 if (this.character.health > 0) {
-                    this.character_hit_sound.play();
+                    character_hit_sound.play();
                 }
             }
         });
@@ -143,7 +133,7 @@ class World {
             throwableObject.animateFireballHit(i, j, this.throwableObjects, this.level.enemies);
             this.lastFireballImpactTime = currentTime;
             enemy.health -= 20;
-            this.fireball_hit_sound.play();
+            fireball_hit_sound.play();
             enemy.updateHitDetection();
     
             if (enemy.health <= 0) {
@@ -155,9 +145,9 @@ class World {
 
     playEnemyDeathSound(enemy) {
         if (enemy instanceof Endboss) {
-            this.endboss_dies_sound.play();
+            endboss_dies_sound.play();
         } else {
-            this.skeleton_dies_sound.play();
+            skeleton_dies_sound.play();
         }
     }
     
@@ -182,7 +172,7 @@ class World {
     collectManaPortion(index) {
         if (this.collectedPortions < 3) {
             this.collectedPortions++;
-            this.collect_portion_sound.play();
+            collect_portion_sound.play();
         }
         this.level.manaPortions.splice(index, 1);
     }
@@ -322,7 +312,7 @@ class World {
             this.endbossIsActive = true;
             if (!this.bossEncounter) {
                 this.bossEncounter = true;
-                this.boss_encounter_sound.play();
+                boss_encounter_sound.play();
             }
         }
     }
@@ -344,7 +334,7 @@ class World {
         this.gameIsOver = true;
         setTimeout(() => {
             defeatScreen.classList.remove('d-none');
-            this.defeat_sound.play();
+            defeat_sound.play();
             stopAllIntervals();
         }, 1000);
     }
@@ -355,7 +345,7 @@ class World {
         this.gameIsOver = true;
         setTimeout(() => {
             victoryScreen.classList.remove('d-none');
-            this.victory_sound.play();
+            victory_sound.play();
             stopAllIntervals();
         }, 1000);
     }

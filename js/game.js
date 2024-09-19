@@ -3,14 +3,11 @@ let world;
 let keyboard = new Keyboard();
 let allSoundsMuted = true;
 let gameStarted = false;
-// let start_game_sound = new Audio('../sounds/buttonstartclick.mp3');
-// let start_controls_sound = new Audio('../sounds/buttonclick1.mp3');
-// let start_about_sound = new Audio('../sounds/buttonclick.mp3');
-// let menu_sound = new Audio('../sounds/menuambientemenace.mp3');
-// let close_sound = new Audio('../sounds/close.mp3');
-// let graveyard_sound = new Audio('../sounds/graveyard ambiente.mp3');
 
 
+/**
+ * The `init` function initializes a canvas and mutes the sound effects of the main menu in order to avoid webbrowser violation.
+ */
 function init() {
     canvas = document.getElementById('canvas');
     world = new World(canvas, keyboard);
@@ -19,6 +16,12 @@ function init() {
     start_about_sound.muted = true;
     close_sound.muted = true;
 }
+
+
+/**
+ * The function initializes a canvas, character, and level in a world object and clears any existing
+ * interval before creating a new World instance.
+ */
 function init2() {
     canvas = null;
     world.character = null;
@@ -31,11 +34,16 @@ function init2() {
 }
 
 
+/**
+ * This code is adding an event listener to the window for the 'keydown' event. When a key is
+ * pressed, it checks if the game is over. If the game is not over, it then checks the keyCode of the
+ * pressed key and sets the corresponding property in the `keyboard` object to true. The `keyboard`
+ * object is likely used to keep track of which keys are currently pressed. 
+*/
 window.addEventListener('keydown', (event) => {
     if (world.gameIsOver) {
         return;
     }
-
     if (event.keyCode == 39) {
         keyboard.RIGHT = true;
     }
@@ -66,6 +74,13 @@ window.addEventListener('keydown', (event) => {
 });
 
 
+/** 
+ * This code is adding an event listener to the window for the 'keyup' event. When a key is
+ * released, it checks the event's keyCode to determine which key was released. Based on the key code,
+ * it sets the corresponding property in the `keyboard` object to false. This code is likely part of a
+ * larger program that is tracking the state of various keys on the keyboard for use in a game or
+ * application. 
+*/
 window.addEventListener('keyup', (event) => {
     if (event.keyCode == 39) {
         keyboard.RIGHT = false;
@@ -96,6 +111,10 @@ window.addEventListener('keyup', (event) => {
     }
 });
 
+/**
+ * The `startGame` function initializes the game by setting up various elements and transitioning to
+ * the in-game view.
+ */
 function startGame() {
     let gameStartingPage = document.getElementById("game-starting-page");
     let musicMenu = document.getElementById("music-menu");
@@ -106,58 +125,21 @@ function startGame() {
 
     gameStarted = true;
 
-    start_game_sound.play();
-    menu_sound.pause();
-    menu_sound.currentTime = 0;
-    graveyard_sound.play();
-    gameStartingPage.classList.add("fade-out");
-    musicMenu.classList.add("d-none");
-    
+    startGameMusicTransition(gameStartingPage, musicMenu);
     checkScreenOrientation();
-
-    setTimeout(function () {
-        gameStartingPage.classList.add("d-none");
-        legal.classList.add("d-none");
-        musicMenuIngame.classList.remove("d-none");
-        mobileControls.classList.remove("d-none");
-        mobileOverlay.classList.remove("d-none");
-        updateIngameMusicButtonState();
-    }, 375);
+    transitionToIngameView(gameStartingPage, legal, musicMenuIngame, mobileControls, mobileOverlay);
 
     if (allSoundsMuted) {
-        graveyard_sound.muted = true;
-        world.character.walking_sound.muted = true;
-        world.character.drink_sound.muted = true;
-        world.fireball_hit_sound.muted = true;
-        world.fireball_casting_sound.muted = true;
-        world.collect_portion_sound.muted = true;
-        world.fireball_failed_to_cast_sound.muted = true;
-        world.boss_encounter_sound.muted = true;
-        world.character_hit_sound.muted = true;
-        world.skeleton_dies_sound.muted = true;
-        world.endboss_dies_sound.muted = true;
-        world.endboss.endbossCastsPoison.muted = true;
-        world.defeat_sound.muted = true;
-        world.victory_sound.muted = true;
+        muteIngameSounds();
     } else {
-        graveyard_sound.muted = false;
-        world.character.walking_sound.muted = false;
-        world.character.drink_sound.muted = false;
-        world.fireball_hit_sound.muted = false;
-        world.fireball_casting_sound.muted = false;
-        world.collect_portion_sound.muted = false;
-        world.fireball_failed_to_cast_sound.muted = false;
-        world.boss_encounter_sound.muted = false;
-        world.character_hit_sound.muted = false;
-        world.skeleton_dies_sound.muted = false;
-        world.endboss_dies_sound.muted = false;
-        world.endboss.endbossCastsPoison.muted = false;
-        world.defeat_sound.muted = false;
-        world.victory_sound.muted = false;
+        unmuteIngameSounds();
     }
 }
 
 
+/**
+ * The function `startControls` plays a sound and displays a control menu overlay.
+ */
 function startControls() {
     start_controls_sound.play();
     let controlMenuOverlay = document.getElementById("control-menu");
@@ -165,6 +147,9 @@ function startControls() {
 }
 
 
+/**
+ * The function `startAbout` plays a sound and displays a about menu overlay.
+ */
 function startAbout() {
     start_about_sound.play();
     let aboutMenuOverlay = document.getElementById("about-menu");
@@ -172,6 +157,9 @@ function startAbout() {
 }
 
 
+/**
+ * The function `closeControlsMenu` closes the control menu overlay and plays a closing sound.
+ */
 function closeControlsMenu() {
     close_sound.play();
     let controlMenuOverlay = document.getElementById("control-menu");
@@ -179,6 +167,9 @@ function closeControlsMenu() {
 }
 
 
+/**
+ * The function `closeAboutMenu` closes the about menu overlay and plays a close sound.
+ */
 function closeAboutMenu() {
     close_sound.play();
     let aboutMenuOverlay = document.getElementById("about-menu");
@@ -186,6 +177,9 @@ function closeAboutMenu() {
 }
 
 
+/**
+ * The function `toggleSoundMainMenu` toggles the sound on and off for the main menu interface.
+ */
 function toggleSoundMainMenu() {
     onOffHandler = document.getElementById('onoff-handler');
     onOffHandlerHover = document.getElementById('onoff-handler-hover');
@@ -195,54 +189,21 @@ function toggleSoundMainMenu() {
 
     if (allSoundsMuted) {
         speaker.src = '../assets/GUI/SpeakerIcon_On.webp';
-        menu_sound.muted = false;
-        menu_sound.loop = true;
-        menu_sound.volume = 0.3;
+        unmuteMainMenuSounds();
         menu_sound.play();
-        start_game_sound.muted = false;
-        start_controls_sound.muted = false;
-        start_about_sound.muted = false;
-        close_sound.muted = false;
-        world.character.walking_sound.muted = false;
-        world.character.drink_sound.muted = false;
-        world.fireball_hit_sound.muted = false;
-        world.fireball_casting_sound.muted = false;
-        world.fireball_failed_to_cast_sound.muted = false;
-        world.boss_encounter_sound.muted = false;
-        world.collect_portion_sound.muted = false;
-        world.character_hit_sound.muted = false;
-        world.skeleton_dies_sound.muted = false;
-        world.endboss_dies_sound.muted = false;
-        world.endboss.endbossCastsPoison.muted = false;
-        world.defeat_sound.muted = false;
-        world.victory_sound.muted = false;
         allSoundsMuted = false;
     } else {
         speaker.src = '../assets/GUI/SpeakerIcon_Off.webp';
-        menu_sound.muted = true;
-        start_game_sound.muted = true;
-        start_controls_sound.muted = true;
-        start_about_sound.muted = true;
-        close_sound.muted = true;
-        world.character.walking_sound.muted = true;
-        world.character.drink_sound.muted = true;
-        world.fireball_hit_sound.muted = true;
-        world.fireball_casting_sound.muted = true;
-        world.fireball_failed_to_cast_sound.muted = true;
-        world.boss_encounter_sound.muted = true;
-        world.collect_portion_sound.muted = true;
-        world.character_hit_sound.muted = true;
-        world.skeleton_dies_sound.muted = true;
-        world.endboss_dies_sound.muted = true;
-        world.endboss.endbossCastsPoison.muted = true;
-        world.defeat_sound.muted = true;
-        world.victory_sound.muted = true;
+        muteMainMenuSounds();
         allSoundsMuted = true;
     }
     updateIngameMusicButtonState();
 }
 
 
+/**
+ * The function `toggleSoundIngame` toggles the sound on and off in the ingame interface.
+ */
 function toggleSoundIngame() {
     onOffHandlerIngame = document.getElementById('onoff-handler-ingame');
     onOffHandlerHoverIngame = document.getElementById('onoff-handler-hover-ingame');
@@ -252,47 +213,23 @@ function toggleSoundIngame() {
         speakerIngame.src = '../assets/GUI/SpeakerIcon_On.webp';
         onOffHandlerIngame.classList.add('onoff-handler-active-ingame');
         onOffHandlerHoverIngame.classList.add('onoff-handler-hover-active-ingame');
-
-        graveyard_sound.muted = false;
-        world.character.walking_sound.muted = false;
-        world.character.drink_sound.muted = false;
-        world.fireball_hit_sound.muted = false;
-        world.fireball_casting_sound.muted = false;
-        world.fireball_failed_to_cast_sound.muted = false;
-        world.boss_encounter_sound.muted = false;
-        world.collect_portion_sound.muted = false;
-        world.character_hit_sound.muted = false;
-        world.skeleton_dies_sound.muted = false;
-        world.endboss_dies_sound.muted = false;
-        world.endboss.endbossCastsPoison.muted = false;
-        world.defeat_sound.muted = false;
-        world.victory_sound.muted = false;
+        unmuteIngameSounds();
         allSoundsMuted = false;
     } else {
         speakerIngame.src = '../assets/GUI/SpeakerIcon_Off.webp';
         onOffHandlerIngame.classList.remove('onoff-handler-active-ingame');
         onOffHandlerHoverIngame.classList.remove('onoff-handler-hover-active-ingame');
-
-        graveyard_sound.muted = true;
-        world.character.walking_sound.muted = true;
-        world.character.drink_sound.muted = true;
-        world.fireball_hit_sound.muted = true;
-        world.fireball_casting_sound.muted = true;
-        world.fireball_failed_to_cast_sound.muted = true;
-        world.boss_encounter_sound.muted = true;
-        world.collect_portion_sound.muted = true;
-        world.character_hit_sound.muted = true;
-        world.skeleton_dies_sound.muted = true;
-        world.endboss_dies_sound.muted = true;
-        world.endboss.endbossCastsPoison.muted = true;
-        world.defeat_sound.muted = true;
-        world.victory_sound.muted = true;
+        muteIngameSounds();
         allSoundsMuted = true;
     }
     updateMainMenuMusicButtonState();
 }
 
 
+/**
+ * The function `updateIngameMusicButtonState` updates the visual state of an in-game music button
+ * based on whether all sounds are muted or not.
+ */
 function updateIngameMusicButtonState() {
     let speakerIngame = document.getElementById('speaker-ingame');
     let onOffHandlerIngame = document.getElementById('onoff-handler-ingame');
@@ -310,6 +247,10 @@ function updateIngameMusicButtonState() {
 }
 
 
+/**
+ * The function `updateMainMenuMusicButtonState` updates the visual state of a main menu music button
+ * based on whether all sounds are muted or not.
+ */
 function updateMainMenuMusicButtonState() {
     let speaker = document.getElementById('speaker');
     let onOffHandler = document.getElementById('onoff-handler');
@@ -327,11 +268,14 @@ function updateMainMenuMusicButtonState() {
 }
 
 
-/** This is handling touch events on a grid of cells (td elements). When a
-touchstart event is detected on a cell, it determines the position of the touch and triggers
-movement based on the cell's location within the grid without requiring the user to break contact with the touchscreen. The handleMovement function sets keyboard
-properties (LEFT, RIGHT, UP, DOWN) based on the cell's id, indicating the direction of movement. The
-resetMovement function resets all keyboard properties to false. */
+/** 
+ * This is handling touch events on a grid of cells (td elements used for the joystick). 
+ * When a touchstart event is detected on a cell, it determines the position of the touch 
+ * and triggers movement based on the cell's location within the grid without requiring 
+ * the user to break contact with the touchscreen. The handleMovement function sets keyboard
+ * properties (LEFT, RIGHT, UP, DOWN) based on the cell's id, indicating the direction of movement.
+ * The resetMovement function resets all keyboard properties to false.
+  */
 document.addEventListener('DOMContentLoaded', () => {
     let currentKey = null;
 
@@ -371,12 +315,14 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+
     function resetMovement() {
         keyboard.LEFT = false;
         keyboard.RIGHT = false;
         keyboard.UP = false;
         keyboard.DOWN = false;
     }
+
 
     document.querySelectorAll('td').forEach(cell => {
         cell.addEventListener('touchstart', (event) => {
@@ -389,6 +335,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }, { passive: false });
     });
 
+
     document.addEventListener('touchmove', (event) => {
         event.preventDefault();
         let touch = event.touches[0];
@@ -400,10 +347,12 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }, { passive: false });
 
+
     document.addEventListener('touchend', (event) => {
         resetMovement();
         currentKey = null;
     }, { passive: false });
+
 
     document.getElementById('jump-btn').addEventListener('touchstart', (event) => {
         event.preventDefault();
@@ -411,25 +360,30 @@ document.addEventListener('DOMContentLoaded', () => {
         keyboard.SPACE = true;
     }, { passive: false });
 
+
     document.getElementById('jump-btn').addEventListener('touchend', (event) => {
         event.preventDefault();
         keyboard.SPACE = false;
     }, { passive: false });
+
 
     document.getElementById('fireball-btn').addEventListener('touchstart', (event) => {
         event.preventDefault();
         keyboard.S = true;
     }, { passive: false });
 
+
     document.getElementById('fireball-btn').addEventListener('touchend', (event) => {
         event.preventDefault();
         keyboard.S = false;
     }, { passive: false });
 
+
     document.getElementById('mana-portion-btn').addEventListener('touchstart', (event) => {
         event.preventDefault();
         keyboard.F = true;
     }, { passive: false });
+
 
     document.getElementById('mana-portion-btn').addEventListener('touchend', (event) => {
         event.preventDefault();
@@ -438,6 +392,10 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 
+/**
+ * The function `openIngameMenu` opens the in-game menu by displaying the pause menu and stopping all
+ * intervals.
+ */
 function openIngameMenu() {
     let pauseMenu = document.getElementById('pause-menu');
 
@@ -446,6 +404,9 @@ function openIngameMenu() {
 }
 
 
+/**
+ * The function `resumeGame` resumes all intervals and hides the pause menu in a JavaScript game.
+ */
 function resumeGame() {
     let pauseMenu = document.getElementById('pause-menu');
 
@@ -454,6 +415,9 @@ function resumeGame() {
 }
 
 
+/**
+ * The function `showIngameControls` displays the in-game controls while hiding the in-game menu.
+ */
 function showIngameControls() {
     let ingameControls = document.getElementById('ingame-controls');
     let ingameMenu = document.getElementById('ingame-menu');
@@ -463,6 +427,9 @@ function showIngameControls() {
 }
 
 
+/**
+ * The function `closeIngameControls` hides the ingame controls and shows the ingame menu.
+ */
 function closeIngameControls() {
     let ingameControls = document.getElementById('ingame-controls');
     let ingameMenu = document.getElementById('ingame-menu');
@@ -480,12 +447,50 @@ function backToTitleScreen() {
 }
 
 
-// function resetGame() {
-//     if (world) {
-//         world.clear();
-//     }
+/**
+ * The function `startGameMusicTransition` plays game starting sounds, transitions the game starting
+ * page, and adjusts the volume.
+ * @param gameStartingPage - gameStartingPage is the HTML element that represents the starting page of
+ * the game, which gets hidden.
+ * @param musicMenu - The `musicMenu` parameter refers to the toggle switch in the main menu, whcih also gets hidden.
+ */
+function startGameMusicTransition(gameStartingPage, musicMenu) {
+    start_game_sound.play();
+    menu_sound.pause();
+    menu_sound.currentTime = 0;
+    graveyard_sound.play();
+    gameStartingPage.classList.add("fade-out");
+    musicMenu.classList.add("d-none");
+    reduceVolume();
+}
 
-//     init();
-// }
 
+/**
+ * The function `transitionToIngameView` hides main menu elements and shows/updates the ingame music toggle switch 
+ * after a delay of 375 milliseconds.
+ * @param gameStartingPage - The `gameStartingPage` parameter is a reference to the HTML element
+ * that represents the starting page of the game.
+ * @param legal - The `legal` parameter refers to an element on the webpage that contains legal
+ * information or terms of service related to the game. In the `transitionToIngameView` function, this
+ * element is being hidden by adding the "d-none" class to it.
+ * @param musicMenuIngame - The `musicMenuIngame` parameter is a reference to the ingame music toggle switch.
+ * In the `transitionToIngameView` function, it is being used to remove the "d-none" class from this element, making it visible.
+ * @param mobileControls - The `mobileControls` parameter in the `transitionToIngameView` function is
+ * a reference to an HTML element that contains controls for the game specifically designed for
+ * mobile devices. When the function is called, it removes the "d-none" class from this element, making
+ * it visible to the player.
+ * @param mobileOverlay - The `mobileOverlay` parameter in the `transitionToIngameView` function is a
+ * reference to an HTML element that is used to display an overlay on the game screen for mobile
+ * devices.
+ */
+function transitionToIngameView(gameStartingPage, legal, musicMenuIngame, mobileControls, mobileOverlay) {
+    setTimeout(function () {
+        gameStartingPage.classList.add("d-none");
+        legal.classList.add("d-none");
+        musicMenuIngame.classList.remove("d-none");
+        mobileControls.classList.remove("d-none");
+        mobileOverlay.classList.remove("d-none");
+        updateIngameMusicButtonState();
+    }, 375);
+}
 
