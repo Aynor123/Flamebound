@@ -107,7 +107,7 @@ class Character extends MoveableObject {
     }
 
     /**
-     * Animates the character with several intervals in different frequencies.
+     * Animates the character and the character's movement with several intervals in different frequencies.
      */
     animate() {
         let characterControlsInterval = createInterval(allIntervals, () => {
@@ -180,7 +180,9 @@ class Character extends MoveableObject {
         }, 1000 / 6);
     }
 
-
+/**
+ * 
+ */
     trackIdleCounter() {
         let currentTime = Date.now();
         this.lastActionTime = currentTime;
