@@ -106,8 +106,10 @@ class Character extends MoveableObject {
         this.startIdleCounter();
     }
 
+
     /**
-     * Animates the character and the character's movement with several intervals in different frequencies.
+     * This function sets the character's movement within the world and 
+     * animates the character with several intervals in different frequencies.
      */
     animate() {
         let characterControlsInterval = createInterval(allIntervals, () => {
@@ -180,8 +182,10 @@ class Character extends MoveableObject {
         }, 1000 / 6);
     }
 
+
 /**
- * 
+ * This function assures that every time a key down event happens, the last action time gets set to current time
+ * and sets the character is in long idle boolean to false;
  */
     trackIdleCounter() {
         let currentTime = Date.now();
@@ -190,6 +194,10 @@ class Character extends MoveableObject {
     }
 
 
+/**
+ * This is a helper function that only gets executed one-time when the game starts to set the last action time.
+ * This is to avoid that the character gets into long idle animation right from the start.
+ */
     startIdleCounter() {
         let startIdleCounter = setInterval(() => {
             if (gameStarted) {
@@ -200,6 +208,9 @@ class Character extends MoveableObject {
     }
 
 
+    /**
+     * This function checks if the character is dead and plays a one time animation. 
+     */
     handleDeath() {
         if (this.isDead() && this.frame < this.IMAGES_DEAD.length) {
             this.playOneTimeAnimation(this.IMAGES_DEAD, this.isReset);
@@ -209,12 +220,13 @@ class Character extends MoveableObject {
                 clearInterval(this.characterAnimationsInterval);
                 clearInterval(this.characterLongIdleAnimation);
             }
-            return true;
         }
-        return false;
     }
 
 
+    /**
+     * This function checks if the character is casting and plays a one time animation. 
+     */
     handleCasting() {
         if (this.isCasting() && this.frame < this.IMAGES_CHARGE_FIREBALL.length) {
             this.playOneTimeAnimation(this.IMAGES_CHARGE_FIREBALL, this.isReset);
@@ -227,21 +239,23 @@ class Character extends MoveableObject {
                 this.speed = 3.0;
                 this.trackIdleCounter();
             }
-            return true;
         }
-        return false;
     }
 
 
+    /**
+     * This function checks if the character is hurt and plays a looped animation.
+     */
     handleHurt() {
         if (this.isHurt() && !this.isDead()) {
             this.playAnimation(this.IMAGES_HURT);
-            return true;
         }
-        return false;
     }
 
 
+    /**
+     * This function checks if the character is jumping and plays a one time animation. 
+     */
     handleJumping() {
         if (this.isAboveGround() && this.isJumping) {
             this.playOneTimeAnimation(this.IMAGES_JUMPING, this.isReset);
@@ -253,12 +267,13 @@ class Character extends MoveableObject {
                 this.isJumping = false;
                 this.trackIdleCounter();
             }
-            return true;
         }
-        return false;
     }
 
 
+    /**
+     * This function checks if the character is drinking a mana portion and plays a one time animation. 
+     */
     handleDrinkingMana() {
         if (this.drinkingMana && this.frame < this.IMAGES_DRINK_MANA.length) {
             this.playOneTimeAnimation(this.IMAGES_DRINK_MANA, this.isReset);
@@ -271,12 +286,13 @@ class Character extends MoveableObject {
                 this.speed = 3.0;
                 this.trackIdleCounter();
             }
-            return true;
         }
-        return false;
     }
 
 
+    /**
+     * This function checks if the character is moving and plays a looped animation.
+     */
     handleMovement() {
         if (!this.world.gameIsOver && (this.world.keyboard.RIGHT || this.world.keyboard.LEFT || this.world.keyboard.UP || this.world.keyboard.DOWN)) {
             this.playAnimation(this.IMAGES_RUNNING);
@@ -285,6 +301,10 @@ class Character extends MoveableObject {
     }
 
 
+    /**
+     * This function checks if the character is not moving and plays a looped idle animation.
+     * @param {*} currentTime - Used to determine when the last action input was made.
+     */
     handleShortIdleAnimation(currentTime) {
         if (!this.world.gameIsOver && !gamePaused && currentTime - this.lastActionTime < this.timeTillLongIdle && !this.world.keyboard.RIGHT && !this.world.keyboard.LEFT && !this.world.keyboard.UP && !this.world.keyboard.DOWN && !this.isHurt() && !this.drinkingMana && !this.isCasting() && !this.isJumping) {
             this.playAnimation(this.IMAGES_IDLE);
@@ -292,6 +312,11 @@ class Character extends MoveableObject {
     }
 
 
+    /**
+     * This function checks if the character is in long idle state and plays a one time animation.
+     * @param {*} currentTime - Used to determine when the last action input was made. 
+     * If the current time - the last key input (action time) is bigger than 5 seconds, the long idle animation gets played.
+     */
     handleLongIdleAnimation(currentTime) {
         if (!this.world.gameIsOver && gameStarted && !gamePaused && currentTime - this.lastActionTime > this.timeTillLongIdle) {
             if (!this.characterIsLongIdle && this.idleFrame < this.IMAGES_LONG_IDLE.length) {
