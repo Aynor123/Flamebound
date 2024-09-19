@@ -5,6 +5,9 @@ class Character extends MoveableObject {
     lastActionTime;
     timeTillLongIdle = 5000;
     characterIsLongIdle = false;
+    frame = 0;
+    idleFrame = 0;
+    isReset = true;
 
     IMAGES_WALKING = [
         '../assets/Fire_Wizard/Walk/tile000.png',
@@ -103,12 +106,10 @@ class Character extends MoveableObject {
         this.startIdleCounter();
     }
 
-
+    /**
+     * Animates the character with several intervals in different frequencies.
+     */
     animate() {
-        let frame = 0;
-        let idleFrame = 0;
-        let isReset = true;
-
         let characterControlsInterval = createInterval(allIntervals, () => {
             walking_sound.pause();
             if (this.world.keyboard.LEFT && this.x > 0) {
@@ -116,35 +117,28 @@ class Character extends MoveableObject {
                 this.otherDirection = true;
                 walking_sound.play();
             }
-
-
             if (this.world.keyboard.RIGHT && this.x < world.level.level_end_x) {
                 this.moveRight();
                 this.otherDirection = false;
                 walking_sound.play();
             }
-
             if (this.world.keyboard.SPACE && !this.isAboveGround()) {
                 this.jump();
                 this.isJumping = true;
             }
-
             if (this.world.keyboard.S) {
                 this.casting = true;
                 this.speed = 0;
             }
-
             if (this.world.keyboard.F) {
                 this.drinkingMana = true;
                 this.speed = 0;
                 drink_sound.play();
             }
-
             if (this.world.keyboard.UP && this.y > -50) {
                 this.moveUp();
                 walking_sound.play();
             }
-
             if (this.world.keyboard.DOWN && this.y < 120) {
                 this.moveDown();
                 walking_sound.play();
@@ -153,87 +147,36 @@ class Character extends MoveableObject {
         }, 1000 / 60);
 
 
-
         let characterAnimationsInterval = createInterval(allIntervals, () => {
-            if (this.isDead() && frame < this.IMAGES_DEAD.length) {
-                this.playOneTimeAnimation(this.IMAGES_DEAD, isReset);
-                isReset = false;
-                frame++;
-                if (frame === this.IMAGES_DEAD.length) {
-                    clearInterval(characterAnimationsInterval);
-                    clearInterval(characterLongIdleAnimation);
-                }
-            } else if (this.isCasting() && frame < this.IMAGES_CHARGE_FIREBALL.length) {
-                this.playOneTimeAnimation(this.IMAGES_CHARGE_FIREBALL, isReset);
-                isReset = false;
-                frame++;
-                if (frame === this.IMAGES_CHARGE_FIREBALL.length) {
-                    isReset = true;
-                    frame = 0;
-                    this.casting = false;
-                    this.speed = 3.0;
-                    this.trackIdleCounter();
-                }
-            } else if (this.isHurt() && !this.isDead()) {
-                this.playAnimation(this.IMAGES_HURT);
-            } else if (this.isAboveGround() && this.isJumping) {
-                this.playOneTimeAnimation(this.IMAGES_JUMPING, isReset);
-                isReset = false;
-                frame++;
-                if (frame === this.IMAGES_JUMPING.length) {
-                    isReset = true;
-                    frame = 0;
-                    this.isJumping = false;
-                    this.trackIdleCounter();
-                }
-            } else if (this.drinkingMana && frame < this.IMAGES_DRINK_MANA.length) {
-                this.playOneTimeAnimation(this.IMAGES_DRINK_MANA, isReset);
-                isReset = false;
-                frame++;
-                if (frame === this.IMAGES_DRINK_MANA.length) {
-                    isReset = true;
-                    frame = 0;
-                    this.drinkingMana = false;
-                    this.speed = 3.0;
-                    this.trackIdleCounter();
-                }
-            }
-            else {
-                if (!this.world.gameIsOver && this.world.keyboard.RIGHT || this.world.keyboard.LEFT || this.world.keyboard.UP || this.world.keyboard.DOWN) {
-                    this.playAnimation(this.IMAGES_RUNNING);
-                    this.trackIdleCounter();
-                }
+            let currentTime = Date.now();
+
+            if (this.handleDeath()) {
+                return;
+            } else if (this.handleCasting()) {
+                return;
+            } else if (this.handleHurt()) {
+                return;
+            } else if (this.handleJumping()) {
+                return;
+            } else if (this.handleDrinkingMana()) {
+                return;
+            } else {
+                this.handleMovement();
             }
         }, 1000 / 9);
 
 
         let characterShortIdleAnimation = setInterval(() => {
             let currentTime = Date.now();
-
-            if (!this.world.gameIsOver && !gamePaused && currentTime - this.lastActionTime < this.timeTillLongIdle && !this.world.keyboard.RIGHT && !this.world.keyboard.LEFT && !this.world.keyboard.UP && !this.world.keyboard.DOWN && !this.isHurt() && !this.drinkingMana && !this.isCasting() && !this.isJumping) {
-                this.playAnimation(this.IMAGES_IDLE);
-            }
+            this.handleShortIdleAnimation(currentTime);
         }, 1000 / 5);
 
 
         let characterLongIdleAnimation = setInterval(() => {
             if (gameStarted) {
                 let currentTime = Date.now();
-                if (!this.world.gameIsOver && gameStarted && !gamePaused && currentTime - this.lastActionTime > this.timeTillLongIdle) {
-                    if (!this.characterIsLongIdle && idleFrame < this.IMAGES_LONG_IDLE.length) {
-                        this.playOneTimeAnimation(this.IMAGES_LONG_IDLE, isReset);
-                        isReset = false;
-                        idleFrame++;
-                        if (idleFrame === this.IMAGES_LONG_IDLE.length) {
-                            isReset = true;
-                            idleFrame = 0;
-                            this.characterIsLongIdle = true;
-                        }
-                    }
-                }
+                this.handleLongIdleAnimation(currentTime);
             }
-
-
         }, 1000 / 6);
     }
 
@@ -253,5 +196,114 @@ class Character extends MoveableObject {
             }
         }, 1000 / 60);
     }
+
+
+    handleDeath() {
+        if (this.isDead() && this.frame < this.IMAGES_DEAD.length) {
+            this.playOneTimeAnimation(this.IMAGES_DEAD, this.isReset);
+            this.isReset = false;
+            this.frame++;
+            if (this.frame === this.IMAGES_DEAD.length) {
+                clearInterval(this.characterAnimationsInterval);
+                clearInterval(this.characterLongIdleAnimation);
+            }
+            return true;
+        }
+        return false;
+    }
+
+
+    handleCasting() {
+        if (this.isCasting() && this.frame < this.IMAGES_CHARGE_FIREBALL.length) {
+            this.playOneTimeAnimation(this.IMAGES_CHARGE_FIREBALL, this.isReset);
+            this.isReset = false;
+            this.frame++;
+            if (this.frame === this.IMAGES_CHARGE_FIREBALL.length) {
+                this.isReset = true;
+                this.frame = 0;
+                this.casting = false;
+                this.speed = 3.0;
+                this.trackIdleCounter();
+            }
+            return true;
+        }
+        return false;
+    }
+
+
+    handleHurt() {
+        if (this.isHurt() && !this.isDead()) {
+            this.playAnimation(this.IMAGES_HURT);
+            return true;
+        }
+        return false;
+    }
+
+
+    handleJumping() {
+        if (this.isAboveGround() && this.isJumping) {
+            this.playOneTimeAnimation(this.IMAGES_JUMPING, this.isReset);
+            this.isReset = false;
+            this.frame++;
+            if (this.frame === this.IMAGES_JUMPING.length) {
+                this.isReset = true;
+                this.frame = 0;
+                this.isJumping = false;
+                this.trackIdleCounter();
+            }
+            return true;
+        }
+        return false;
+    }
+
+
+    handleDrinkingMana() {
+        if (this.drinkingMana && this.frame < this.IMAGES_DRINK_MANA.length) {
+            this.playOneTimeAnimation(this.IMAGES_DRINK_MANA, this.isReset);
+            this.isReset = false;
+            this.frame++;
+            if (this.frame === this.IMAGES_DRINK_MANA.length) {
+                this.isReset = true;
+                this.frame = 0;
+                this.drinkingMana = false;
+                this.speed = 3.0;
+                this.trackIdleCounter();
+            }
+            return true;
+        }
+        return false;
+    }
+
+
+    handleMovement() {
+        if (!this.world.gameIsOver && (this.world.keyboard.RIGHT || this.world.keyboard.LEFT || this.world.keyboard.UP || this.world.keyboard.DOWN)) {
+            this.playAnimation(this.IMAGES_RUNNING);
+            this.trackIdleCounter();
+        }
+    }
+
+
+    handleShortIdleAnimation(currentTime) {
+        if (!this.world.gameIsOver && !gamePaused && currentTime - this.lastActionTime < this.timeTillLongIdle && !this.world.keyboard.RIGHT && !this.world.keyboard.LEFT && !this.world.keyboard.UP && !this.world.keyboard.DOWN && !this.isHurt() && !this.drinkingMana && !this.isCasting() && !this.isJumping) {
+            this.playAnimation(this.IMAGES_IDLE);
+        }
+    }
+
+
+    handleLongIdleAnimation(currentTime) {
+        if (!this.world.gameIsOver && gameStarted && !gamePaused && currentTime - this.lastActionTime > this.timeTillLongIdle) {
+            if (!this.characterIsLongIdle && this.idleFrame < this.IMAGES_LONG_IDLE.length) {
+                this.playOneTimeAnimation(this.IMAGES_LONG_IDLE, this.isReset);
+                this.isReset = false;
+                this.idleFrame++;
+                if (this.idleFrame === this.IMAGES_LONG_IDLE.length) {
+                    this.isReset = true;
+                    this.idleFrame = 0;
+                    this.characterIsLongIdle = true;
+                }
+            }
+        }
+    }
+
 }
 
