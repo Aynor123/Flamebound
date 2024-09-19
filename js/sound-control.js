@@ -12,7 +12,7 @@ graveyard_sound.loop = true;
 menu_sound.loop = true;
 
 graveyard_sound.volume = 0.1;
-menu_sound.volume = 0.3;
+menu_sound.volume = 0.2;
 close_sound.volume = 0.5;
 start_game_sound.volume = 0.3;
 start_controls_sound.volume = 0.3;
