@@ -69,16 +69,16 @@ class ThrowableObject extends MoveableObject {
             this.currentImage++;
         }, 1000 / 10);
     }
-    
 
-/**
- * This function handles the hit animation if a fireball collides with an enemy and removes the fireball object from the 
- * array if the hit animation reaches it's last frame.
- * @param {*} i - Represents the index position of the casted fireball in the array `fireballs`.
- * @param {*} j 
- * @param {*} fireballs - Represents the array containing each casted fireball in the world.
- * @param {*} enemies 
- */
+
+    /**
+     * This function handles the hit animation if a fireball collides with an enemy and removes the fireball object from the 
+     * array if the hit animation reaches it's last frame.
+     * @param {*} i - Represents the index position of the casted fireball in the array `fireballs`.
+     * @param {*} j 
+     * @param {*} fireballs - Represents the array containing each casted fireball in the world.
+     * @param {*} enemies 
+     */
     animateFireballHit(i, j, fireballs, enemies) {
         let interval = setInterval(() => {
             if (this.hitFrame < this.IMAGES_FLAMES_HIT.length) {

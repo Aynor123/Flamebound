@@ -34,7 +34,7 @@ class HealthBarEndboss extends DrawableObject {
 
 
     /**
-     * This function handles the percentage of the endboss's healt bar.
+     * This function handles the percentage of the endboss's health bar.
      * @param {*} percentage - Represents the amount of health the endboss has.
      */
     setPercentage(percentage) {

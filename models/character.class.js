@@ -8,6 +8,9 @@ class Character extends MoveableObject {
     frame = 0;
     idleFrame = 0;
     isReset = true;
+    preventsFireballs = false;
+    preventsMovement = false;
+    isMoving = false;
 
     IMAGES_WALKING = [
         '../assets/Fire_Wizard/Walk/tile000.png',
@@ -112,78 +115,183 @@ class Character extends MoveableObject {
      * animates the character with several intervals in different frequencies.
      */
     animate() {
-        let characterControlsInterval = createInterval(allIntervals, () => {
-            walking_sound.pause();
-            if (this.world.keyboard.LEFT && this.x > 0) {
-                this.moveLeft();
-                this.otherDirection = true;
-                walking_sound.play();
-            }
-            if (this.world.keyboard.RIGHT && this.x < world.level.level_end_x) {
-                this.moveRight();
-                this.otherDirection = false;
-                walking_sound.play();
-            }
-            if (this.world.keyboard.SPACE && !this.isAboveGround()) {
-                this.jump();
-                this.isJumping = true;
-            }
-            if (this.world.keyboard.S) {
-                this.casting = true;
-                this.speed = 0;
-            }
-            if (this.world.keyboard.F) {
-                this.drinkingMana = true;
-                this.speed = 0;
-                drink_sound.play();
-            }
-            if (this.world.keyboard.UP && this.y > -50) {
-                this.moveUp();
-                walking_sound.play();
-            }
-            if (this.world.keyboard.DOWN && this.y < 120) {
-                this.moveDown();
-                walking_sound.play();
-            }
-            this.world.camera_x = -this.x + 200;
-        }, 1000 / 60);
+        this.setupCharacterMovementAndAction(60);
+        this.characterAnimations(9);
+        this.characterShortIdleAnimation(5);
+        this.characterLongIdleAnimation(6);
+    }
 
-        let characterAnimationsInterval = createInterval(allIntervals, () => {
-            let currentTime = Date.now();
 
-            if (this.handleDeath()) {
-                return;
-            } else if (this.handleCasting()) {
-                return;
-            } else if (this.handleHurt()) {
-                return;
-            } else if (this.handleJumping()) {
-                return;
-            } else if (this.handleDrinkingMana()) {
-                return;
-            } else {
-                this.handleMovement();
-            }
-        }, 1000 / 9);
+    /**
+     * This function handles the character's movement ans animation. It also sets the world camera on the x-coordinates of the character's x-position.
+     * @param {*} ms - Represents miliseconds used in the function `animate`.
+     */
+    setupCharacterMovementAndAction(ms) {
+        let characterMovementsControl = createInterval(allIntervals, () => {
+            this.characterMovement();
+            this.characterAction();
+            this.setupWorldCamera();
+        }, 1000 / ms);
+    }
 
+
+    /**
+     * This function breaks down the specific movements of the character such as walking left, right, up and down.
+     */
+    characterMovement() {
+        this.characterMovesLeft();
+        this.characterMovesRight();
+        this.characterMovesUp();
+        this.characterMovesDown();
+    }
+
+
+    /**
+     * This function moves the character to the left and plays a walking sound.
+     */
+    characterMovesLeft() {
+        if (this.world.keyboard.LEFT && this.x > 0) {
+            this.moveLeft();
+            this.otherDirection = true;
+            walking_sound.play();
+        }
+    }
+
+
+    /**
+     * This function moves the character to the right and plays a walking sound.
+     */
+    characterMovesRight() {
+        if (this.world.keyboard.RIGHT && this.x < world.level.level_end_x) {
+            this.moveRight();
+            this.otherDirection = false;
+            walking_sound.play();
+        }
+    }
+
+
+    /**
+     * This function moves the character up and plays a walking sound.
+     */
+    characterMovesUp() {
+        if (this.world.keyboard.UP && this.y > -50) {
+            this.moveUp();
+            walking_sound.play();
+        }
+    }
+
+
+    /**
+     * This function moves the character down and plays a walking sound.
+     */
+    characterMovesDown() {
+        if (this.world.keyboard.DOWN && this.y < 120) {
+            this.moveDown();
+            walking_sound.play();
+        }
+    }
+
+
+    /**
+     * This function breaks down several character actions such as jumping, casting a fireball and drinking a mana portion.
+     */
+    characterAction() {
+        this.characterJumps();
+        this.characterCastsFireball();
+        this.characterDrinksManaPortion();
+    }
+
+
+    /**
+     * This function detects if the jump button is pressed. And makes sure that the jump is only valid if the character is not already in the air by previos jumps.
+     */
+    characterJumps() {
+        if (this.world.keyboard.SPACE && !this.isAboveGround()) {
+            this.jump();
+            this.isJumping = true;
+        }
+    }
+
+
+    /**
+     * This function detects if the fireball button is pressed and stops any movements of the character.
+     */
+    characterCastsFireball() {
+        if (this.world.keyboard.S) {
+            this.casting = true;
+            this.speed = 0;
+        }
+    }
+
+
+    /**
+    * This function detects if the drink mana portion button is pressed and stops any movements of the character and plays a sound.
+    */
+    characterDrinksManaPortion() {
+        if (this.world.keyboard.F) {
+            this.drinkingMana = true;
+            this.speed = 0;
+            drink_sound.play();
+        }
+    }
+
+
+    /**
+     * Sets the world camera on the x-coordinates of the x-position of the character.
+     */
+    setupWorldCamera() {
+        this.world.camera_x = -this.x + 200;
+    }
+
+
+    /**
+     * This function handles the animations within an interval.
+     * @param {*} ms - Represents miliseconds used for intervals. 
+     */
+    characterAnimations(ms) {
+        let characterAnimations = createInterval(allIntervals, () => {
+
+            this.handleDeath();
+            this.handleCasting();
+            this.handleHurt();
+            this.handleJumping();
+            this.handleDrinkingMana();
+            this.handleMovement();
+
+        }, 1000 / ms);
+    }
+
+
+    /**
+     * This function creates an intervals for the short idle animation.
+     * @param {*} ms - Represents miliseconds for intervals.
+     */
+    characterShortIdleAnimation(ms) {
         let characterShortIdleAnimation = setInterval(() => {
             let currentTime = Date.now();
             this.handleShortIdleAnimation(currentTime);
-        }, 1000 / 5);
+        }, 1000 / ms);
+    }
 
+
+    /**
+     * This function creates an intervals for the long idle animation.
+     * @param {*} ms - Represents miliseconds for intervals.
+     */
+    characterLongIdleAnimation(ms) {
         let characterLongIdleAnimation = setInterval(() => {
             if (gameStarted) {
                 let currentTime = Date.now();
                 this.handleLongIdleAnimation(currentTime);
             }
-        }, 1000 / 6);
+        }, 1000 / ms);
     }
 
 
-/**
- * This function assures that every time a key down event happens, the last action time gets set to current time
- * and sets the character is in long idle boolean to false;
- */
+    /**
+     * This function assures that every time a key down event happens, the last action time gets set to current time
+     * and sets the character is in long idle boolean to false;
+     */
     trackIdleCounter() {
         let currentTime = Date.now();
         this.lastActionTime = currentTime;
@@ -191,10 +299,10 @@ class Character extends MoveableObject {
     }
 
 
-/**
- * This is a helper function that only gets executed one-time when the game starts to set the last action time.
- * This is to avoid that the character gets into long idle animation right from the start.
- */
+    /**
+     * This is a helper function that only gets executed one-time when the game starts to set the last action time.
+     * This is to avoid that the character gets into long idle animation right from the start.
+     */
     startIdleCounter() {
         let startIdleCounter = setInterval(() => {
             if (gameStarted) {
@@ -214,7 +322,7 @@ class Character extends MoveableObject {
             this.isReset = false;
             this.frame++;
             if (this.frame === this.IMAGES_DEAD.length) {
-                clearInterval(this.characterAnimationsInterval);
+                clearInterval(this.characterAnimations);
                 clearInterval(this.characterLongIdleAnimation);
             }
         }
@@ -225,7 +333,7 @@ class Character extends MoveableObject {
      * This function checks if the character is casting and plays a one time animation. 
      */
     handleCasting() {
-        if (this.isCasting() && this.frame < this.IMAGES_CHARGE_FIREBALL.length) {
+        if (this.isCasting() && !this.preventsFireballs && this.frame < this.IMAGES_CHARGE_FIREBALL.length) {
             this.playOneTimeAnimation(this.IMAGES_CHARGE_FIREBALL, this.isReset);
             this.isReset = false;
             this.frame++;
@@ -244,7 +352,7 @@ class Character extends MoveableObject {
      * This function checks if the character is hurt and plays a looped animation.
      */
     handleHurt() {
-        if (this.isHurt() && !this.isDead()) {
+        if (!this.isMoving && !this.isCasting() && this.isHurt() && !this.isDead()) {
             this.playAnimation(this.IMAGES_HURT);
         }
     }
@@ -258,10 +366,12 @@ class Character extends MoveableObject {
             this.playOneTimeAnimation(this.IMAGES_JUMPING, this.isReset);
             this.isReset = false;
             this.frame++;
+            this.preventsFireballs = true;
             if (this.frame === this.IMAGES_JUMPING.length) {
                 this.isReset = true;
                 this.frame = 0;
                 this.isJumping = false;
+                this.preventsFireballs = false;
                 this.trackIdleCounter();
             }
         }
@@ -276,11 +386,13 @@ class Character extends MoveableObject {
             this.playOneTimeAnimation(this.IMAGES_DRINK_MANA, this.isReset);
             this.isReset = false;
             this.frame++;
+            this.preventsMovement = true;
             if (this.frame === this.IMAGES_DRINK_MANA.length) {
                 this.isReset = true;
                 this.frame = 0;
                 this.drinkingMana = false;
                 this.speed = 3.0;
+                this.preventsMovement = false;
                 this.trackIdleCounter();
             }
         }
@@ -291,9 +403,12 @@ class Character extends MoveableObject {
      * This function checks if the character is moving and plays a looped animation.
      */
     handleMovement() {
-        if (!this.world.gameIsOver && (this.world.keyboard.RIGHT || this.world.keyboard.LEFT || this.world.keyboard.UP || this.world.keyboard.DOWN)) {
+        if (!this.preventsMovement && !this.isCasting() && !this.world.gameIsOver && (this.world.keyboard.RIGHT || this.world.keyboard.LEFT || this.world.keyboard.UP || this.world.keyboard.DOWN)) {
             this.playAnimation(this.IMAGES_RUNNING);
             this.trackIdleCounter();
+            this.isMoving = true;
+        } else {
+            this.isMoving = false;
         }
     }
 
