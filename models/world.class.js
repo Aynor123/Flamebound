@@ -119,10 +119,10 @@ class World {
     }
 
 
-/**
- * The function `checkEnemyCollisions` checks for collisions between the character and enemies,
- * updating health and playing a sound if a collision occurs.
- */
+    /**
+     * The function `checkEnemyCollisions` checks for collisions between the character and enemies,
+     * updating health and playing a sound if a collision occurs.
+     */
     checkEnemyCollisions() {
         this.level.enemies.forEach((enemy) => {
             if (enemy.collisionAllowed && this.character.isColliding(enemy)) {
@@ -136,10 +136,10 @@ class World {
     }
 
 
-/**
- * The function `checkFireballCollisions` iterates through throwable objects and enemies to handle
- * collisions and remove off-screen fireballs.
- */
+    /**
+     * The function `checkFireballCollisions` iterates through throwable objects and enemies to handle
+     * collisions and remove off-screen fireballs.
+     */
     checkFireballCollisions() {
         this.throwableObjects.forEach((throwableObject, i) => {
             this.level.enemies.forEach((enemy, j) => {
@@ -153,15 +153,15 @@ class World {
     }
 
 
-/**
- * The function `handleFireballImpact` checks for the time elapsed since the last fireball impact and
- * updates enemy health and animations accordingly.
- * @param throwableObject - The `throwableObject` parameter represents the object that is being thrown,
- * in this case, a fireball.
- * @param enemy - The `enemy` parameter in the `handleFireballImpact` function represents the enemy
- * that is being hit by the fireball. It is an object that contains properties such as `health`
- * and methods like `updateHitDetection`. When the fireball impacts the enemy, their health is reduced.
- */
+    /**
+     * The function `handleFireballImpact` checks for the time elapsed since the last fireball impact and
+     * updates enemy health and animations accordingly.
+     * @param throwableObject - The `throwableObject` parameter represents the object that is being thrown,
+     * in this case, a fireball.
+     * @param enemy - The `enemy` parameter in the `handleFireballImpact` function represents the enemy
+     * that is being hit by the fireball. It is an object that contains properties such as `health`
+     * and methods like `updateHitDetection`. When the fireball impacts the enemy, their health is reduced.
+     */
     handleFireballImpact(throwableObject, enemy, i, j) {
         let currentTime = Date.now();
 
@@ -178,10 +178,10 @@ class World {
     }
 
 
-/**
- * The function `playEnemyDeathSound` plays a specific sound based on the type of enemy that has died.
- * @param enemy - The `enemy` parameter is an object representing an enemy character in a game.
- */
+    /**
+     * The function `playEnemyDeathSound` plays a specific sound based on the type of enemy that has died.
+     * @param enemy - The `enemy` parameter is an object representing an enemy character in a game.
+     */
     playEnemyDeathSound(enemy) {
         if (enemy instanceof Endboss) {
             endboss_dies_sound.play();
@@ -191,15 +191,15 @@ class World {
     }
 
 
-/**
- * The function `removeOffScreenFireballs` removes fireball objects that are off-screen based on the
- * character's position.
- * @param throwableObject - The `throwableObject` parameter represents an object that is being thrown
- * or in the game. In this case a fireball.
- * @param index - The `index` parameter in the `removeOffScreenFireballs` function represents the
- * position of the `throwableObject` in the `throwableObjects` array that needs to be checked and
- * potentially removed if it is off-screen.
- */
+    /**
+     * The function `removeOffScreenFireballs` removes fireball objects that are off-screen based on the
+     * character's position.
+     * @param throwableObject - The `throwableObject` parameter represents an object that is being thrown
+     * or in the game. In this case a fireball.
+     * @param index - The `index` parameter in the `removeOffScreenFireballs` function represents the
+     * position of the `throwableObject` in the `throwableObjects` array that needs to be checked and
+     * potentially removed if it is off-screen.
+     */
     removeOffScreenFireballs(throwableObject, index) {
         if ((throwableObject.x - this.character.x) > this.rangeToRightFireball ||
             (this.character.x - throwableObject.x) > this.rangeToLeftFireball) {
@@ -208,10 +208,10 @@ class World {
     }
 
 
-/**
- * The function `checkManaPortionCollisions` checks for collisions between the character and mana
- * portions in the game level and collects the mana portion if a collision is detected.
- */
+    /**
+     * The function `checkManaPortionCollisions` checks for collisions between the character and mana
+     * portions in the game level and collects the mana portion if a collision is detected.
+     */
     checkManaPortionCollisions() {
         this.level.manaPortions.forEach((manaPortion, i) => {
             if (this.character.isCollidingManaPortion(manaPortion)) {
@@ -221,14 +221,14 @@ class World {
     }
 
 
-/**
- * The function `collectManaPortion` increments the number of collected mana portions by one and plays
- * a sound effect if the collected portions are less than three, then removes the mana portion from the
- * level's array.
- * @param index - The `index` parameter in the `collectManaPortion` function represents the index of
- * the mana portion that is being collected from the `manaPortions` array in the `level` object. This
- * index is used to splice out the collected mana portion from the array after it has been collected.
- */
+    /**
+     * The function `collectManaPortion` increments the number of collected mana portions by one and plays
+     * a sound effect if the collected portions are less than three, then removes the mana portion from the
+     * level's array.
+     * @param index - The `index` parameter in the `collectManaPortion` function represents the index of
+     * the mana portion that is being collected from the `manaPortions` array in the `level` object. This
+     * index is used to splice out the collected mana portion from the array after it has been collected.
+     */
     collectManaPortion(index) {
         if (this.collectedPortions < 3) {
             this.collectedPortions++;
@@ -238,10 +238,10 @@ class World {
     }
 
 
-/**
- * The function `checkPoisonCloudCollisions` checks for collisions between the character and poison
- * clouds in a game.
- */
+    /**
+     * The function `checkPoisonCloudCollisions` checks for collisions between the character and poison
+     * clouds in a game.
+     */
     checkPoisonCloudCollisions() {
         this.poisonClouds.forEach((poisonCloud) => {
             if (poisonCloud.isCollidingPoisonCloud(this.character)) {
@@ -254,9 +254,9 @@ class World {
     }
 
 
-/**
- * The function `checkPoisonHitAnimation` checks for poison cloud hits on the character and ground.
- */
+    /**
+     * The function `checkPoisonHitAnimation` checks for poison cloud hits on the character and ground.
+     */
     checkPoisonHitAnimation() {
         let lastPoisonCloudInArray = this.poisonClouds[this.poisonClouds.length - 1];
         if (this.poisonCloudHitsCharacter) {
@@ -272,10 +272,10 @@ class World {
     }
 
 
-/**
- * The `draw` function in clears the canvas, translates the context, adds various objects to
- * the map, draws bars and portions, and requests animation frame for continuous drawing.
- */
+    /**
+     * The `draw` function in clears the canvas, translates the context, adds various objects to
+     * the map, draws bars and portions, and requests animation frame for continuous drawing.
+     */
     draw() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         this.ctx.translate(this.camera_x, 0);
@@ -303,12 +303,12 @@ class World {
     }
 
 
-/**
- * The function `addObjectsToMap` iterates over an array of objects and adds each object to a map.
- * @param objects - The `objects` parameter is an array containing the objects that you want to add to
- * a map. The `addObjectsToMap` method iterates over each object in the array and adds it to the map
- * using the `addToMap` method.
- */
+    /**
+     * The function `addObjectsToMap` iterates over an array of objects and adds each object to a map.
+     * @param objects - The `objects` parameter is an array containing the objects that you want to add to
+     * a map. The `addObjectsToMap` method iterates over each object in the array and adds it to the map
+     * using the `addToMap` method.
+     */
     addObjectsToMap(objects) {
         objects.forEach(object => {
             this.addToMap(object);
@@ -316,12 +316,12 @@ class World {
     }
 
 
-/**
- * The `addToMap` function in JavaScript flips the image of a moveable object if it is in another
- * direction, then draws various frames using the object's context.
- * @param moveableObject - The `addToMap` function is responsible for adding a
- * `moveableObject` to a map and performing various drawing operations on it.
- */
+    /**
+     * The `addToMap` function in JavaScript flips the image of a moveable object if it is in another
+     * direction, then draws various frames using the object's context.
+     * @param moveableObject - The `addToMap` function is responsible for adding a
+     * `moveableObject` to a map and performing various drawing operations on it.
+     */
     addToMap(moveableObject) {
         if (moveableObject.otherDirection) {
             this.flipImage(moveableObject);
@@ -367,10 +367,10 @@ class World {
     }
 
 
-/**
- * The function `drawCollectedPortions` in JavaScript draws text on the canvas with specified styles and
- * shadows.
- */
+    /**
+     * The function `drawCollectedPortions` in JavaScript draws text on the canvas with specified styles and
+     * shadows.
+     */
     drawCollectedPortions() {
         this.ctx.font = '32px Inferno';
         this.ctx.fillStyle = 'rgb(125,142,203)';
@@ -389,24 +389,24 @@ class World {
     }
 
 
-/**
- * The function drawBlackRoundedRect draws a black rounded rectangle with specified dimensions and
- * corner radius on a canvas. It is used as background images for the collected mana portions GUI.
- * @param x - The `x` parameter represents the x-coordinate of the top-left corner of the rounded
- * rectangle.
- * @param y - The `y` parameter in the `drawBlackRoundedRect` function represents the vertical position
- * of the top-left corner of the rounded rectangle on the canvas. It determines how far down from the
- * top of the canvas the rectangle will be drawn.
- * @param width - The `width` parameter in the `drawBlackRoundedRect` function represents the width of
- * the rounded rectangle that you want to draw on the canvas. It determines how wide the rectangle will
- * be horizontally.
- * @param height - The `height` parameter in the `drawBlackRoundedRect` function represents the
- * vertical size of the rounded rectangle that will be drawn on the canvas. It determines how tall the
- * rectangle will be from top to bottom.
- * @param radius - The `radius` parameter in the `drawBlackRoundedRect` function represents the radius
- * of the rounded corners of the rectangle that will be drawn on the canvas. This parameter determines
- * how rounded the corners of the rectangle will be. 
- */
+    /**
+     * The function drawBlackRoundedRect draws a black rounded rectangle with specified dimensions and
+     * corner radius on a canvas. It is used as background images for the collected mana portions GUI.
+     * @param x - The `x` parameter represents the x-coordinate of the top-left corner of the rounded
+     * rectangle.
+     * @param y - The `y` parameter in the `drawBlackRoundedRect` function represents the vertical position
+     * of the top-left corner of the rounded rectangle on the canvas. It determines how far down from the
+     * top of the canvas the rectangle will be drawn.
+     * @param width - The `width` parameter in the `drawBlackRoundedRect` function represents the width of
+     * the rounded rectangle that you want to draw on the canvas. It determines how wide the rectangle will
+     * be horizontally.
+     * @param height - The `height` parameter in the `drawBlackRoundedRect` function represents the
+     * vertical size of the rounded rectangle that will be drawn on the canvas. It determines how tall the
+     * rectangle will be from top to bottom.
+     * @param radius - The `radius` parameter in the `drawBlackRoundedRect` function represents the radius
+     * of the rounded corners of the rectangle that will be drawn on the canvas. This parameter determines
+     * how rounded the corners of the rectangle will be. 
+     */
     drawBlackRoundedRect(x, y, width, height, radius) {
         this.ctx.beginPath();
         this.ctx.moveTo(x + radius, y);
@@ -424,10 +424,10 @@ class World {
     }
 
 
-/**
- * The function `checkEndbossVisibility` checks if the endboss is within sight range of the character
- * and updates the health bar and triggers a boss encounter sound if necessary.
- */
+    /**
+     * The function `checkEndbossVisibility` checks if the endboss is within sight range of the character
+     * and updates the health bar and triggers a boss encounter sound if necessary.
+     */
     checkEndbossVisibility() {
         if ((this.endboss.x - this.character.x) < this.sightrangeOfEnemy) {
             this.healthBarEndboss.setPercentage(this.endboss.health);
@@ -440,9 +440,9 @@ class World {
     }
 
 
-/**
- * The function `checkGameEnd` shows the victory screen or the defeat screen depending on the health of the endboss and character.
- */
+    /**
+     * The function `checkGameEnd` shows the victory screen or the defeat screen depending on the health of the endboss and character.
+     */
     checkGameEnd() {
         if (this.endboss.health <= 0) {
             this.showVictoryScreen();
@@ -466,10 +466,10 @@ class World {
         }, 1000);
     }
 
-    
-   /**
-     * Shows the victory screen and stops all intervals.
-     */
+
+    /**
+      * Shows the victory screen and stops all intervals.
+      */
     showVictoryScreen() {
         let victoryScreen = document.getElementById('victory-screen');
         this.gameIsOver = true;

@@ -9,17 +9,29 @@ class DrawableObject {
     frameMode = false;
 
 
+    /**
+     * This function loads an image.
+     * @param {*} path - Represents an image url.
+     */
     loadImage(path) {
         this.img = new Image(); 
         this.img.src = path;
     }
 
 
+    /**
+     * This function is responsible for rendering an image onto an HTML canvas.
+     * @param {*} ctx - This is the canvas rendering context, which provides the methods for drawing shapes, text, images, and other objects on the canvas.
+     */
     draw(ctx) {
         ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
     }
 
 
+    /**
+     * This function loads an array containing images.
+     * @param {*} arr - Represents an array that contains images.
+     */
     loadImages(arr) {
         arr.forEach(path => {
             let img = new Image();
@@ -29,6 +41,10 @@ class DrawableObject {
     }
 
 
+    /**
+     * This functions renders a frame around an object. This is used for making the edges of an object visible.
+     * @param {*} ctx - This is the canvas rendering context, which provides the methods for drawing shapes, text, images, and other objects on the canvas.
+     */
     drawFrame(ctx) {
         if (this instanceof Character && this.frameMode || this instanceof Enemy && this.frameMode) {
             ctx.beginPath();
@@ -40,6 +56,10 @@ class DrawableObject {
     }
 
 
+    /**
+     * This function renders the frame of the endboss object.
+     * @param {*} ctx - This is the canvas rendering context, which provides the methods for drawing shapes, text, images, and other objects on the canvas.
+     */
     drawFrameEnboss(ctx) {
         if (this instanceof Endboss && this.frameMode) { 
             ctx.beginPath();
@@ -51,6 +71,10 @@ class DrawableObject {
     }
 
 
+    /**
+     * This function renders the frame of a fireball.
+     * @param {*} ctx - This is the canvas rendering context, which provides the methods for drawing shapes, text, images, and other objects on the canvas.
+     */
     drawFrameFireball(ctx) {
         if (this instanceof ThrowableObject && this.frameMode) {
             ctx.beginPath();
@@ -62,6 +86,10 @@ class DrawableObject {
     }
 
 
+    /**
+     * This function renders the frame of a collectable mana portion.
+     * @param {*} ctx -This is the canvas rendering context, which provides the methods for drawing shapes, text, images, and other objects on the canvas.
+     */
     drawFrameManaPortion(ctx) {
         if (this instanceof ManaPortion && this.frameMode) {
             ctx.beginPath();
@@ -73,6 +101,10 @@ class DrawableObject {
     }
 
     
+    /**
+     * This function renders the frame of a poison cloud.
+     * @param {*} ctx -This is the canvas rendering context, which provides the methods for drawing shapes, text, images, and other objects on the canvas.
+     */
     drawFramePoisonCloud(ctx) {
         if (this instanceof PoisonCloud && this.frameMode) {
             ctx.beginPath();

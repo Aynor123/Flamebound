@@ -36,6 +36,9 @@ class PoisonCloud extends MoveableObject {
     }
 
 
+    /**
+     * This function sets an interval for the poison cloud's movement and animates the poison cloud.
+     */
     throw() {
         let throwPoison = createInterval(allIntervals, () => {
             if (this.speedX <= 20) {
@@ -54,6 +57,9 @@ class PoisonCloud extends MoveableObject {
     }
 
 
+    /**
+     * This function animates the poison cloud.
+     */
     animatePoisonCloud() {
         let poisonCloudAnimation = createInterval(allIntervals, () => {
             if (this.frame < this.IMAGES_POISON.length) {
@@ -65,6 +71,12 @@ class PoisonCloud extends MoveableObject {
     }
 
 
+    /**
+     * This function handles the animation of the poison cloud as soon as the poison cloud collides with the character.
+     * @param {*} poisonClouds - Represents an array of poison clouds to be spliced/removed from the world as soon as the poison cloud hits the character.
+     * @param {*} character - Represents the object character.
+     * @param {*} statusBar - Represents the health bar of the character.
+     */
     poisonCloudHitsCharacter(poisonClouds, character, statusBar) {
         if (this.framePoisonCloudHit < this.IMAGES_POISON_HIT.length) {
             this.playOneTimeAnimation(this.IMAGES_POISON_HIT, this.isResetPoisonCloudHit);
@@ -87,6 +99,10 @@ class PoisonCloud extends MoveableObject {
     }
 
 
+    /**
+     * This function handles the animation as soon as the poison cloud hits the ground.
+     * @param {*} poisonClouds - Represents an array of poison clouds to be spliced/removed from the world as soon as the poison cloud hits the ground.
+     */
     poisonCloudHitsGround(poisonClouds) {
         if (this.framePoisonCloudHit < this.IMAGES_POISON_HIT.length) {
             this.playOneTimeAnimation(this.IMAGES_POISON_HIT, this.isResetPoisonCloudHit);

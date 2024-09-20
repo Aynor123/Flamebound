@@ -148,7 +148,6 @@ class Character extends MoveableObject {
             this.world.camera_x = -this.x + 200;
         }, 1000 / 60);
 
-
         let characterAnimationsInterval = createInterval(allIntervals, () => {
             let currentTime = Date.now();
 
@@ -167,12 +166,10 @@ class Character extends MoveableObject {
             }
         }, 1000 / 9);
 
-
         let characterShortIdleAnimation = setInterval(() => {
             let currentTime = Date.now();
             this.handleShortIdleAnimation(currentTime);
         }, 1000 / 5);
-
 
         let characterLongIdleAnimation = setInterval(() => {
             if (gameStarted) {

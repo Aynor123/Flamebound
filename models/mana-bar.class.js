@@ -25,14 +25,21 @@ class ManaBar extends DrawableObject {
         this.setPercentage(100);
     }
 
-
+    /**
+    * This function handles the percentage of the character's mana bar.
+    * @param {*} percentage - Represents the amount of mana the character has.
+    */
     setPercentage(percentage) {
         this.percentage = percentage;
         let path = this.IMAGES_MANA[this.resolveImageIndex()];
         this.img = this.imageCache[path];
     }
 
-    
+
+     /**
+     * This function determines the mana amount to be displayed in the character's mana bar.
+     * @returns - Represents the image index to be shown from the array `IMAGES_MANA` depending on the amount of mana.
+     */
     resolveImageIndex() {
         if (this.percentage == 100) {
             return 0;

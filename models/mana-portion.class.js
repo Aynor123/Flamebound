@@ -22,6 +22,9 @@ class ManaPortion extends MoveableObject {
     }
 
 
+    /**
+     * This function animates the mana portions.
+     */
     animate() {
        let animateFlasks = createInterval(allIntervals, () => {
             this.playAnimation(this.IMAGES_PORTION);

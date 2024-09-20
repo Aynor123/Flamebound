@@ -66,7 +66,14 @@ class Enemy extends MoveableObject {
     }
 
 
+    /**
+     * This function handles several intervals and movements of the enemies in different frequencies.
+     */
     animate() {
+
+        /**
+         * This interval handles the enemy's death animation.
+         */
         let enemyIsDead = createInterval(allIntervals, () => {
             if (this.isDead) {
                 clearInterval(enemyDiesInterval);
@@ -74,6 +81,9 @@ class Enemy extends MoveableObject {
             }
         }, 1000 / 10);
 
+        /**
+         * This interval handles the enemy's movements.
+         */
         let moveTowardsCharacterAfterPaused = setInterval(() => {
             if (world && world.character !== null && !this.isDead && !gamePaused == true) {
                 if (this.x - world.character.x < this.sightrangeOfEnemy) {
@@ -104,6 +114,10 @@ class Enemy extends MoveableObject {
             }
         }, 1000 / 10);
 
+        /**
+         * This interval handles the enemy's death animation after the game has been previously paused.
+         * This assures that an enemy animation will not be played twice once the enemy is dead.
+         */
         let enemyDiesIntervalAfterPaused = setInterval(() => {
             if (this.health <= 0 && !this.isDead && !gamePaused == true) {
                 clearInterval(moveTowardsCharacterAfterPaused);
@@ -113,7 +127,10 @@ class Enemy extends MoveableObject {
         }, 1000 / 10);
     }
 
-
+    /**
+     * This function sets a variable to `true` if the enemy is dead.
+     * This variable is used to declare that an enemy has died.
+     */
     enemySetIsDead() {
         setTimeout(() => {
             this.isDead = true;

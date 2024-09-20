@@ -42,6 +42,9 @@ function checkScreenOrientation() {
 }
 
 
+/**
+ * This function makes the joystick and action butons visible.
+ */
 function showMobileControls() {
     let joystick = document.getElementById('joystick');
     let actionButtons = document.getElementById('action-btns');
@@ -51,6 +54,9 @@ function showMobileControls() {
 }
 
 
+/**
+ * This function hides the joystick and anction buttons.
+ */
 function hideMobileControls() {
     let joystick = document.getElementById('joystick');
     let actionButtons = document.getElementById('action-btns');

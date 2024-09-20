@@ -126,8 +126,14 @@ class Endboss extends MoveableObject {
       this.animate();
    }
 
-
+   /**
+    * This function `animate` animates the endboss movement by setting several intervals in ifferent frequencies.
+    */
    animate() {
+
+      /**
+       * This interval sets the initial animation of the endboss. This is only played until the character is in sight range of the endboss.
+       */
       let endbossIdleStormy = setInterval(() => {
          if (!gamePaused) {
             let i;
@@ -142,7 +148,9 @@ class Endboss extends MoveableObject {
          }
       }, 1000 / 9);
 
-
+      /**
+       * This interval handles the hurt animation, whenever a hit collision is detected.
+       */
       let enemyHurtInterval = createInterval(allIntervals, () => {
          if (this.hitDetection && this.health > 0) {
             clearInterval(endbossIdleStormy);
@@ -150,7 +158,10 @@ class Endboss extends MoveableObject {
          }
       }, 1000 / 30);
 
-
+      /**
+       * This interval plays the death animation as soon as the endboss health is zero and clears all other active 
+       * intervals to avoid animation overlapping.
+       */
       let enemyDiesInterval = setInterval(() => {
          if (!this.hitDetection && this.health <= 0 && !gamePaused) {
             clearInterval(endbossIdleStormy);
@@ -165,7 +176,10 @@ class Endboss extends MoveableObject {
          }
       }, 1000 / 10);
 
-
+      /**
+       * This interval handles the movement of the endboss and also plays the walking animation depening on
+       * whether the endboss shall move forward or backward.
+       */
       let movingAnimation = setInterval(() => {
          if (world && world.character !== null && !gamePaused) {
             if (world.character.x + world.rangeToRightFireball - 20 < this.x - this.tolerance && !this.inRangeToCast && world.endbossIsActive) {
@@ -189,6 +203,10 @@ class Endboss extends MoveableObject {
          }
       }, 1000 / 20);
 
+      /**
+       * This interval checks if the character is in range of the endboss poison cloud (poison cloud and fireball have the same range).
+       * If not, the endboss always seeks to get into range by moving backward or forward depending on the character's movement.
+       */
       let endbossAssuresDistance = setInterval(() => {
          if (world && world.character !== null && !gamePaused) {
             if (this.isMoving && !this.inRangeToCast && world.endbossIsActive && world.character.x + world.rangeToRightFireball - 20 < this.x - this.tolerance) {
@@ -196,11 +214,15 @@ class Endboss extends MoveableObject {
             } else if (this.isMoving && !this.inRangeToCast && world.endbossIsActive && world.character.x + world.rangeToRightFireball - 20 > this.x - this.tolerance) {
                this.playAnimation(this.IMAGES_WALKING_REVERSE);
             }
-           
+
          }
       }, 1000 / 10);
 
-
+      /**
+       * This interval gets active as soon as the endboss is in range to assure a hit on the character.
+       * If this is the case the second condition checks if the time gap between the allowed poison clouds (three seconds)
+       * is comlpied.
+       */
       let checkRangeToCast = createInterval(allIntervals, () => {
          let currentTime = Date.now();
          let timeSinceLastCast = (currentTime - this.castingTimeout);
@@ -210,13 +232,15 @@ class Endboss extends MoveableObject {
                this.castingTimeout = currentTime;
                this.inRangeToCast = true;
             }
-            if (this.x - world.character.x <= world.rangeToRightFireball + this.tolerance ) {
+            if (this.x - world.character.x <= world.rangeToRightFireball + this.tolerance) {
                this.isMoving = false;
             }
          }
       }, 1000 / 10);
 
-
+      /**
+       * This interval handles the cast poison cloud animation and pushes a new object in the poison clouds array.
+       */
       let castPoison = createInterval(allIntervals, () => {
          if (this.inRangeToCast && !this.world.gameIsOver) {
             if (this.frame < this.IMAGES_CASTING.length) {
@@ -239,6 +263,9 @@ class Endboss extends MoveableObject {
          }
       }, 1000 / 30);
 
+      /**
+       * This intervals plays the idle animation between the poison cloud animation.
+       */
       let idleAnimation = setInterval(() => {
          if (world && world.character !== null && !gamePaused) {
             if (!this.inRangeToCast && world.endbossIsActive && !this.isMoving) {
@@ -248,12 +275,16 @@ class Endboss extends MoveableObject {
       }, 1000 / 5);
    }
 
-
-   moveRightEndboss() { 
+   /**
+    * This function updates the endboss x-position when moving right.
+    */
+   moveRightEndboss() {
       this.x += this.speed;
    }
 
-
+   /**
+    * This function updates the endboss x-position when moving left.
+    */
    moveLeftEndboss() {
       this.x -= this.speed;
    }
