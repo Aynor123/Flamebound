@@ -11,6 +11,7 @@ class Character extends MoveableObject {
     preventsFireballs = false;
     preventsMovement = false;
     isMoving = false;
+    lastJumpTime = 0;
 
     IMAGES_WALKING = [
         '../assets/Fire_Wizard/Walk/tile000.png',
@@ -206,9 +207,13 @@ class Character extends MoveableObject {
      * This function detects if the jump button is pressed. And makes sure that the jump is only valid if the character is not already in the air by previos jumps.
      */
     characterJumps() {
-        if (this.world.keyboard.SPACE && !this.isAboveGround()) {
+        let currentTime = Date.now();
+        let jumpCooldown = 1000;
+
+        if (this.world.keyboard.SPACE && !this.isAboveGround() && this.health > 0  && (currentTime - this.lastJumpTime >= jumpCooldown)) {
             this.jump();
             this.isJumping = true;
+            this.lastJumpTime = currentTime;
         }
     }
 
@@ -362,7 +367,7 @@ class Character extends MoveableObject {
      * This function checks if the character is jumping and plays a one time animation. 
      */
     handleJumping() {
-        if (this.isAboveGround() && this.isJumping) {
+        if (this.isAboveGround() && this.isJumping && this.health > 0) {
             this.playOneTimeAnimation(this.IMAGES_JUMPING, this.isReset);
             this.isReset = false;
             this.frame++;
@@ -443,6 +448,5 @@ class Character extends MoveableObject {
             }
         }
     }
-
 }
 

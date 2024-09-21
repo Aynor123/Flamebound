@@ -128,13 +128,25 @@ class Endboss extends MoveableObject {
    }
 
    /**
-    * This function `animate` animates the endboss movement by setting several intervals in ifferent frequencies.
+    * This function `animate` animates the endboss movement by setting several intervals in different frequencies.
     */
    animate() {
+      this.endbossIntroAnimation(9);
+      this.enbossIsHurtAnimation(30);
+      this.endbossDiesAnimation(10);
+      this.endbossMovementAnimation(20);
+      this.endbossAssuresDistanceToCharacter(10);
+      this.endbossChecksRange(10);
+      this.endbossCastsPoisonAnimation(30);
+      this.endbossIdleAnimation(5);
+   }
 
-      /**
-       * This interval sets the initial animation of the endboss. This is only played until the character is in sight range of the endboss.
-       */
+
+   /**
+    * This interval sets the initial animation of the endboss. This is only played until the character is in sight range of the endboss.
+    * @param {*} ms - Represents the miliseconds.
+    */
+   endbossIntroAnimation(ms) {
       let endbossIdleStormy = setInterval(() => {
          if (!gamePaused && !this.health <= 0 && this.endbossIdleStormy) {
             let i;
@@ -148,70 +160,83 @@ class Endboss extends MoveableObject {
             this.currentImage++;
          }
       }, 1000 / 9);
+   }
 
-      /**
-       * This interval handles the hurt animation, whenever a hit collision is detected.
-       */
+
+   /**
+    * This interval handles the hurt animation, whenever a hit collision is detected.
+    * @param {*} ms -Represents the miliseconds.
+    */
+   enbossIsHurtAnimation(ms) {
       let enemyHurtInterval = createInterval(allIntervals, () => {
          if (this.hitDetection && this.health > 0) {
-            // clearInterval(endbossIdleStormy);
             this.playOneTimeAnimationRevB(this.IMAGES_HURT, enemyHurtInterval);
          }
-      }, 1000 / 30);
+      }, 1000 / ms);
+   }
 
-      /**
-       * This interval plays the death animation as soon as the endboss health is zero and clears all other active 
-       * intervals to avoid animation overlapping.
-       */
+
+   /**
+    * This interval plays the death animation as soon as the endboss health is zero and clears all other active 
+    * intervals to avoid animation overlapping.
+   */
+   endbossDiesAnimation(ms) {
       let enemyDiesInterval = setInterval(() => {
          if (!this.hitDetection && this.health <= 0 && !gamePaused) {
             this.playOneTimeAnimationRevB(this.IMAGES_DEAD, enemyDiesInterval);
             this.collisionAllowed = false;
          }
-      }, 1000 / 10);
-
-
-
-
-
-
-
-
-      this.endbossMovementAnimation(20);
-      this.endbossAssuresDistanceToCharacter(10);
-      this.endbossChecksRange(10);
-      this.endbossCastsPoisionAnimation(30);
-      this.endbossIdleAnimation(5);
+      }, 1000 / ms);
    }
 
 
-   /**
-    * This interval handles the movement of the endboss and also plays the walking animation depening on
-    * whether the endboss shall move forward or backward.
-   */
+
+
+
+
    endbossMovementAnimation(ms) {
       let movingAnimation = setInterval(() => {
          if (world && world.character !== null && !gamePaused && !this.health <= 0) {
             if (world.character.x + world.rangeToRightFireball - 20 < this.x - this.tolerance && !this.inRangeToCast && world.endbossIsActive) {
-               this.endbossIdleStormy = false;
-               this.moveLeftEndboss();
-               this.isMoving = true;
+               this.endbossMovesLeft();
             }
             if (world.character.x + world.rangeToRightFireball - 20 > this.x + this.tolerance && !this.inRangeToCast && world.endbossIsActive) {
-               this.endbossIdleStormy = false;
-               this.moveRightEndboss();
-               this.isMoving = true;
+               this.endbossMovesRight();
             }
             if (world.character.y > this.y + this.tolerance && !this.inRangeToCast && world.endbossIsActive) {
-               this.moveDownEnemy();
-               this.isMoving = true;
+               this.enbdbossMovesDown();
             }
             if (world.character.y < this.y - this.tolerance && this.y > -50 && !this.inRangeToCast && world.endbossIsActive) {
-               this.moveUpEnemy();
-               this.isMoving = true;
+               this.endbossMovesUp();
             }
          }
       }, 1000 / ms);
+   }
+
+
+   endbossMovesLeft() {
+      this.endbossIdleStormy = false;
+      this.moveLeftEndboss();
+      this.isMoving = true;
+   }
+
+
+   endbossMovesRight() {
+      this.endbossIdleStormy = false;
+      this.moveRightEndboss();
+      this.isMoving = true;
+   }
+
+
+   enbdbossMovesDown() {
+      this.moveDownEnemy();
+      this.isMoving = true;
+   }
+
+
+   endbossMovesUp() {
+      this.moveUpEnemy();
+      this.isMoving = true;
    }
 
 
@@ -259,28 +284,46 @@ class Endboss extends MoveableObject {
    /**
     * This interval handles the cast poison cloud animation and pushes a new object in the poison clouds array.
     */
-   endbossCastsPoisionAnimation(ms) {
-      let castPoison = createInterval(allIntervals, () => {
-         if (this.inRangeToCast && !this.world.gameIsOver && !this.health <= 0) {
-            if (this.frame < this.IMAGES_CASTING.length) {
-               this.playOneTimeAnimation(this.IMAGES_CASTING, this.isReset);
-               this.isReset = false;
-               this.frame++;
-               this.speed = 0;
-               if (this.frame === this.IMAGES_CASTING.length) {
-                  this.isReset = true;
-                  this.frame = 0;
-                  this.inRangeToCast = false;
-                  this.speed = 5;
-                  this.endbossAssuresDistance;
-                  let poisonCloud = new PoisonCloud(this.x, this.y);
-                  this.world.poisonClouds.push(poisonCloud);
-                  endbossCastsPoison.play();
-                  this.isCasting = false;
-               }
-            }
+   endbossCastsPoisonAnimation(ms) {
+      createInterval(allIntervals, () => {
+         if (this.inRangeToCast && !this.world.gameIsOver && this.health > 0) {
+            this.playPoisonCastingAnimation();
          }
       }, 1000 / ms);
+   }
+
+
+   /**
+    * This function plays the casting animation as long as the current image frame is smaller than the images in the array `IMAGES_CASTING`.
+    */
+   playPoisonCastingAnimation() {
+      if (this.frame < this.IMAGES_CASTING.length) {
+         this.playOneTimeAnimation(this.IMAGES_CASTING, this.isReset);
+         this.isReset = false;
+         this.frame++;
+         this.speed = 0;
+
+         if (this.frame === this.IMAGES_CASTING.length) {
+            this.resetPoisonCastingState();
+         }
+      }
+   }
+
+
+   /**
+    * This function sets the current frame to zero to assure that the next animation always starts at index zero of the image array.
+    * As soon as the casting animation has reached it's end frame this function shows a poision cloud that just has been casted by pushing
+    * it into the array `poisionClouds`.
+    */
+   resetPoisonCastingState() {
+      this.isReset = true;
+      this.frame = 0;
+      this.inRangeToCast = false;
+      this.speed = 5;
+      let poisonCloud = new PoisonCloud(this.x, this.y);
+      this.world.poisonClouds.push(poisonCloud);
+      endbossCastsPoison.play();
+      this.isCasting = false;
    }
 
 
@@ -304,6 +347,7 @@ class Endboss extends MoveableObject {
    moveRightEndboss() {
       this.x += this.speed;
    }
+
 
    /**
     * This function updates the endboss x-position when moving left.

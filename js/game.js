@@ -41,7 +41,7 @@ function init2() {
  * object is likely used to keep track of which keys are currently pressed. 
 */
 window.addEventListener('keydown', (event) => {
-    if (world.gameIsOver) {
+    if (world && world.gameIsOver) {
         return;
     }
     if (event.keyCode == 39) {
@@ -82,7 +82,7 @@ window.addEventListener('keydown', (event) => {
  * application. 
 */
 window.addEventListener('keyup', (event) => {
-    if (world.gameIsOver) {
+    if (world && world.gameIsOver) {
         return;
     }
     if (event.keyCode == 39) {

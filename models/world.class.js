@@ -469,14 +469,17 @@ class World {
 
     /**
       * Shows the victory screen and stops all intervals.
+      * Uses an if statement to assure that meanwhile the character has not been defeated.
       */
     showVictoryScreen() {
         let victoryScreen = document.getElementById('victory-screen');
         this.gameIsOver = true;
         setTimeout(() => {
-            victoryScreen.classList.remove('d-none');
-            victory_sound.play();
-            stopAllIntervals();
+            if (!this.character.health <= 0) {
+                victoryScreen.classList.remove('d-none');
+                victory_sound.play();
+                stopAllIntervals();
+            }
         }, 1000);
     }
 }
