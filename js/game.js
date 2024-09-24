@@ -2,6 +2,7 @@ let canvas;
 let world;
 let keyboard = new Keyboard();
 let gameStarted = false;
+let currentKey = null;
 
 /**
  * The `init` function initializes a canvas and mutes the sound effects of the main menu in order to avoid webbrowser violation.
@@ -157,121 +158,128 @@ function closeAboutMenu() {
  * This is handling touch events on a grid of cells (td elements used for the joystick). 
  * When a touchstart event is detected on a cell, it determines the position of the touch 
  * and triggers movement based on the cell's location within the grid without requiring 
- * the user to break contact with the touchscreen. The handleMovement function sets keyboard
- * properties (LEFT, RIGHT, UP, DOWN) based on the cell's id, indicating the direction of movement.
- * The resetMovement function resets all keyboard properties to false.
+ * the user to break contact with the touchscreen. 
   */
-document.addEventListener('DOMContentLoaded', () => {
-    let currentKey = null;
-
-    function handleMovement(x, y) {
-        let element = document.elementFromPoint(x, y);
-        if (element) {
-            switch (element.id) {
-                case 'top-left':
-                    keyboard.LEFT = true;
-                    keyboard.UP = true;
-                    break;
-                case 'top-right':
-                    keyboard.RIGHT = true;
-                    keyboard.UP = true;
-                    break;
-                case 'bottom-left':
-                    keyboard.LEFT = true;
-                    keyboard.DOWN = true;
-                    break;
-                case 'bottom-right':
-                    keyboard.RIGHT = true;
-                    keyboard.DOWN = true;
-                    break;
-                case 'top':
-                    keyboard.UP = true;
-                    break;
-                case 'bottom':
-                    keyboard.DOWN = true;
-                    break;
-                case 'left':
-                    keyboard.LEFT = true;
-                    break;
-                case 'right':
-                    keyboard.RIGHT = true;
-                    break;
-            }
-        }
-    }
-
-    function resetMovement() {
-        keyboard.LEFT = false;
-        keyboard.RIGHT = false;
-        keyboard.UP = false;
-        keyboard.DOWN = false;
-    }
-
-    document.querySelectorAll('td').forEach(cell => {
-        cell.addEventListener('touchstart', (event) => {
-            event.preventDefault();
-            let touch = event.touches[0];
-            let element = document.elementFromPoint(touch.clientX, touch.clientY);
-            if (element) {
-                handleMovement(touch.clientX, touch.clientY);
-            }
-        }, { passive: false });
-    });
-
-    document.addEventListener('touchmove', (event) => {
+document.querySelectorAll('td').forEach(cell => {
+    cell.addEventListener('touchstart', (event) => {
         event.preventDefault();
         let touch = event.touches[0];
         let element = document.elementFromPoint(touch.clientX, touch.clientY);
-        if (element && element.id !== currentKey) {
-            resetMovement();
-            currentKey = element.id;
+        if (element) {
             handleMovement(touch.clientX, touch.clientY);
         }
     }, { passive: false });
+});
 
-
-    document.addEventListener('touchend', (event) => {
+/**
+ * This function extend s the query selector and detects if the current touche element is the same cell as previously touched.
+ * If not it sets all movements to false, updates the var `currentKey` and sets the new key to true.
+ */
+document.addEventListener('touchmove', (event) => {
+    event.preventDefault();
+    let touch = event.touches[0];
+    let element = document.elementFromPoint(touch.clientX, touch.clientY);
+    if (element && element.id !== currentKey) {
         resetMovement();
-        currentKey = null;
-    }, { passive: false });
+        currentKey = element.id;
+        handleMovement(touch.clientX, touch.clientY);
+    }
+}, { passive: false });
 
+/**
+ * This listener detects if no touch happens.
+ */
+document.addEventListener('touchend', (event) => {
+    resetMovement();
+    currentKey = null;
+}, { passive: false });
 
+/**
+ * This function handles the movement of the character as soon as the y- and x-coordinates detect a td-element (part of the joystick) touched by the user.
+ * @param {*} x - Represents the x-coordinate.
+ * @param {*} y - Represents the x-coordinate.
+ */
+function handleMovement(x, y) {
+    let element = document.elementFromPoint(x, y);
+
+    if (element) {
+        switch (element.id) {
+            case 'top-left':
+                keyboard.LEFT = true;
+                keyboard.UP = true;
+                break;
+            case 'top-right':
+                keyboard.RIGHT = true;
+                keyboard.UP = true;
+                break;
+            case 'bottom-left':
+                keyboard.LEFT = true;
+                keyboard.DOWN = true;
+                break;
+            case 'bottom-right':
+                keyboard.RIGHT = true;
+                keyboard.DOWN = true;
+                break;
+            case 'top':
+                keyboard.UP = true;
+                break;
+            case 'bottom':
+                keyboard.DOWN = true;
+                break;
+            case 'left':
+                keyboard.LEFT = true;
+                break;
+            case 'right':
+                keyboard.RIGHT = true;
+                break;
+        }
+    }
+}
+
+/**
+ * This listener sets the action keys to true if touched.
+ */
+document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('jump-btn').addEventListener('touchstart', (event) => {
         event.preventDefault();
-        console.log("Jump button touched");
         keyboard.SPACE = true;
     }, { passive: false });
-
 
     document.getElementById('jump-btn').addEventListener('touchend', (event) => {
         event.preventDefault();
         keyboard.SPACE = false;
     }, { passive: false });
 
-
     document.getElementById('fireball-btn').addEventListener('touchstart', (event) => {
         event.preventDefault();
         keyboard.S = true;
     }, { passive: false });
-
 
     document.getElementById('fireball-btn').addEventListener('touchend', (event) => {
         event.preventDefault();
         keyboard.S = false;
     }, { passive: false });
 
-
     document.getElementById('mana-portion-btn').addEventListener('touchstart', (event) => {
         event.preventDefault();
         keyboard.F = true;
     }, { passive: false });
-
 
     document.getElementById('mana-portion-btn').addEventListener('touchend', (event) => {
         event.preventDefault();
         keyboard.F = false;
     }, { passive: false });
 });
+
+/**
+ * This function sets the movement keys to false.
+ */
+function resetMovement() {
+    keyboard.LEFT = false;
+    keyboard.RIGHT = false;
+    keyboard.UP = false;
+    keyboard.DOWN = false;
+}
 
 /**
  * The function `openIngameMenu` opens the in-game menu by displaying the pause menu and stopping all
