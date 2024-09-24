@@ -381,7 +381,6 @@ class World {
         }, 1000);
     }
 
-
     /**
       * Shows the victory screen and stops all intervals.
       * Uses an if statement to assure that meanwhile the character has not been defeated.
