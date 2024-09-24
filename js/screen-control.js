@@ -107,3 +107,39 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }, 1000 / 60);
 });
+
+/**
+ * The function `transitionToIngameView` hides main menu elements and shows/updates the ingame music toggle switch 
+ * after a delay of 375 milliseconds.
+ * @param gameStartingPage - The `gameStartingPage` parameter is a reference to the HTML element
+ * that represents the starting page of the game.
+ * @param legal - The `legal` parameter refers to an element on the webpage that contains legal
+ * information or terms of service related to the game. In the `transitionToIngameView` function, this
+ * element is being hidden by adding the "d-none" class to it.
+ * @param musicMenuIngame - The `musicMenuIngame` parameter is a reference to the ingame music toggle switch.
+ * In the `transitionToIngameView` function, it is being used to remove the "d-none" class from this element, making it visible.
+ * @param mobileControls - The `mobileControls` parameter in the `transitionToIngameView` function is
+ * a reference to an HTML element that contains controls for the game specifically designed for
+ * mobile devices. When the function is called, it removes the "d-none" class from this element, making
+ * it visible to the player.
+ * @param mobileOverlay - The `mobileOverlay` parameter in the `transitionToIngameView` function is a
+ * reference to an HTML element that is used to display an overlay on the game screen for mobile
+ * devices.
+ */
+function transitionToIngameView(gameStartingPage, legal, musicMenuIngame, mobileControls, mobileOverlay) {
+    setTimeout(function () {
+        gameStartingPage.classList.add("d-none");
+        legal.classList.add("d-none");
+        musicMenuIngame.classList.remove("d-none");
+        mobileControls.classList.remove("d-none");
+        mobileOverlay.classList.remove("d-none");
+        updateIngameMusicButtonState();
+    }, 375);
+}
+
+/**
+ * The function `backToTitleScreen` reloads the current page to go back to the title screen.
+ */
+function backToTitleScreen() {
+    location.reload();
+}

@@ -8,6 +8,8 @@ let menu_sound = new Audio('../sounds/menuambientemenace.mp3');
 let close_sound = new Audio('../sounds/close.mp3');
 let graveyard_sound = new Audio('../sounds/graveyard ambiente.mp3');
 
+let allSoundsMuted = true;
+
 graveyard_sound.loop = true;
 menu_sound.loop = true;
 
@@ -165,4 +167,107 @@ function reduceVolume() {
         sound.volume = 0.3;
     });
 }
+
+/**
+ * The function `startGameMusicTransition` plays game starting sounds, transitions the game starting
+ * page, and adjusts the volume.
+ * @param gameStartingPage - gameStartingPage is the HTML element that represents the starting page of
+ * the game, which gets hidden.
+ * @param musicMenu - The `musicMenu` parameter refers to the toggle switch in the main menu, whcih also gets hidden.
+ */
+function startGameMusicTransition(gameStartingPage, musicMenu) {
+    start_game_sound.play();
+    menu_sound.pause();
+    menu_sound.currentTime = 0;
+    graveyard_sound.play();
+    gameStartingPage.classList.add("fade-out");
+    musicMenu.classList.add("d-none");
+    reduceVolume();
+}
+
+/**
+ * The function `toggleSoundMainMenu` toggles the sound on and off for the main menu interface.
+ */
+function toggleSoundMainMenu() {
+    onOffHandler = document.getElementById('onoff-handler');
+    onOffHandlerHover = document.getElementById('onoff-handler-hover');
+    speaker = document.getElementById('speaker');
+    onOffHandler.classList.toggle('onoff-handler-active');
+    onOffHandlerHover.classList.toggle('onoff-handler-hover-active');
+    if (allSoundsMuted) {
+        speaker.src = '../assets/GUI/SpeakerIcon_On.webp';
+        unmuteMainMenuSounds();
+        menu_sound.play();
+        allSoundsMuted = false;
+    } else {
+        speaker.src = '../assets/GUI/SpeakerIcon_Off.webp';
+        muteMainMenuSounds();
+        allSoundsMuted = true;
+    }
+    updateIngameMusicButtonState();
+}
+
+/**
+ * The function `toggleSoundIngame` toggles the sound on and off in the ingame interface.
+ */
+function toggleSoundIngame() {
+    onOffHandlerIngame = document.getElementById('onoff-handler-ingame');
+    onOffHandlerHoverIngame = document.getElementById('onoff-handler-hover-ingame');
+    speakerIngame = document.getElementById('speaker-ingame');
+    if (allSoundsMuted) {
+        speakerIngame.src = '../assets/GUI/SpeakerIcon_On.webp';
+        onOffHandlerIngame.classList.add('onoff-handler-active-ingame');
+        onOffHandlerHoverIngame.classList.add('onoff-handler-hover-active-ingame');
+        unmuteIngameSounds();
+        allSoundsMuted = false;
+    } else {
+        speakerIngame.src = '../assets/GUI/SpeakerIcon_Off.webp';
+        onOffHandlerIngame.classList.remove('onoff-handler-active-ingame');
+        onOffHandlerHoverIngame.classList.remove('onoff-handler-hover-active-ingame');
+        muteIngameSounds();
+        allSoundsMuted = true;
+    }
+    updateMainMenuMusicButtonState();
+}
+
+/**
+ * The function `updateIngameMusicButtonState` updates the visual state of an in-game music button
+ * based on whether all sounds are muted or not.
+ */
+function updateIngameMusicButtonState() {
+    let speakerIngame = document.getElementById('speaker-ingame');
+    let onOffHandlerIngame = document.getElementById('onoff-handler-ingame');
+    let onOffHandlerHoverIngame = document.getElementById('onoff-handler-hover-ingame');
+
+    if (allSoundsMuted) {
+        speakerIngame.src = '../assets/GUI/SpeakerIcon_Off.webp';
+        onOffHandlerIngame.classList.remove('onoff-handler-active-ingame');
+        onOffHandlerHoverIngame.classList.remove('onoff-handler-hover-active-ingame');
+    } else {
+        speakerIngame.src = '../assets/GUI/SpeakerIcon_On.webp';
+        onOffHandlerIngame.classList.add('onoff-handler-active-ingame');
+        onOffHandlerHoverIngame.classList.add('onoff-handler-hover-active-ingame');
+    }
+}
+
+/**
+ * The function `updateMainMenuMusicButtonState` updates the visual state of a main menu music button
+ * based on whether all sounds are muted or not.
+ */
+function updateMainMenuMusicButtonState() {
+    let speaker = document.getElementById('speaker');
+    let onOffHandler = document.getElementById('onoff-handler');
+    let onOffHandlerHover = document.getElementById('onoff-handler-hover');
+
+    if (allSoundsMuted) {
+        speaker.src = '../assets/GUI/SpeakerIcon_Off.webp';
+        onOffHandler.classList.remove('onoff-handler-active');
+        onOffHandlerHover.classList.remove('onoff-handler-hover-active');
+    } else {
+        speaker.src = '../assets/GUI/SpeakerIcon_On.webp';
+        onOffHandler.classList.add('onoff-handler-active');
+        onOffHandlerHover.classList.add('onoff-handler-hover-active');
+    }
+}
+
 
