@@ -21,7 +21,6 @@ class ManaPortion extends MoveableObject {
         this.animate();
     }
 
-
     /**
      * This function animates the mana portions.
      */

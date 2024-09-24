@@ -35,7 +35,6 @@ class ManaBar extends DrawableObject {
         this.img = this.imageCache[path];
     }
 
-
      /**
      * This function determines the mana amount to be displayed in the character's mana bar.
      * @returns - Represents the image index to be shown from the array `IMAGES_MANA` depending on the amount of mana.
