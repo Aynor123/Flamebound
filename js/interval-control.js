@@ -2,7 +2,6 @@ let allIntervals = [];
 let gamePaused = false;
 let gamePausedCounter = 0;
 
-
 /**
  * This function is partially used to create a `setInterval` function with an interval ID/name and pushing it into
  * the array `allIntervals` together with the interval's timing in order to have access on the whole interval functionality
@@ -20,7 +19,6 @@ function createInterval(array, func, timing) {
     return intervalId;
 }
 
-
 /**
  * This function iterates through the array `allIntervals` and clears it.
  * This function is used as game pause feature.
@@ -31,7 +29,6 @@ function stopAllIntervals() {
     })
     gamePaused = true;
 }
-
 
 /**
  * This function resumes all previous cleared intervals by iterating through the array `newIntervals`,

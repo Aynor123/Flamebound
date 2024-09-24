@@ -4,7 +4,6 @@ let keyboard = new Keyboard();
 let allSoundsMuted = true;
 let gameStarted = false;
 
-
 /**
  * The `init` function initializes a canvas and mutes the sound effects of the main menu in order to avoid webbrowser violation.
  */
@@ -16,7 +15,6 @@ function init() {
     start_about_sound.muted = true;
     close_sound.muted = true;
 }
-
 
 /**
  * The function initializes a canvas, character, and level in a world object and clears any existing
@@ -32,7 +30,6 @@ function init2() {
     canvas = canvas = document.getElementById('canvas');
     world = new World(canvas, keyboard);
 }
-
 
 /**
  * This code is adding an event listener to the window for the 'keydown' event. When a key is
@@ -72,7 +69,6 @@ window.addEventListener('keydown', (event) => {
         keyboard.SPACE = true;
     }
 });
-
 
 /** 
  * This code is adding an event listener to the window for the 'keyup' event. When a key is
@@ -127,18 +123,15 @@ function startGame() {
     let legal = document.getElementById("legal");
 
     gameStarted = true;
-
     startGameMusicTransition(gameStartingPage, musicMenu);
     checkScreenOrientation();
     transitionToIngameView(gameStartingPage, legal, musicMenuIngame, mobileControls, mobileOverlay);
-
     if (allSoundsMuted) {
         muteIngameSounds();
     } else {
         unmuteIngameSounds();
     }
 }
-
 
 /**
  * The function `startControls` plays a sound and displays a control menu overlay.
@@ -149,7 +142,6 @@ function startControls() {
     controlMenuOverlay.classList.remove("d-none");
 }
 
-
 /**
  * The function `startAbout` plays a sound and displays a about menu overlay.
  */
@@ -158,7 +150,6 @@ function startAbout() {
     let aboutMenuOverlay = document.getElementById("about-menu");
     aboutMenuOverlay.classList.remove("d-none");
 }
-
 
 /**
  * The function `closeControlsMenu` closes the control menu overlay and plays a closing sound.
@@ -169,7 +160,6 @@ function closeControlsMenu() {
     controlMenuOverlay.classList.add("d-none");
 }
 
-
 /**
  * The function `closeAboutMenu` closes the about menu overlay and plays a close sound.
  */
@@ -178,7 +168,6 @@ function closeAboutMenu() {
     let aboutMenuOverlay = document.getElementById("about-menu");
     aboutMenuOverlay.classList.add("d-none");
 }
-
 
 /**
  * The function `toggleSoundMainMenu` toggles the sound on and off for the main menu interface.
@@ -189,7 +178,6 @@ function toggleSoundMainMenu() {
     speaker = document.getElementById('speaker');
     onOffHandler.classList.toggle('onoff-handler-active');
     onOffHandlerHover.classList.toggle('onoff-handler-hover-active');
-
     if (allSoundsMuted) {
         speaker.src = '../assets/GUI/SpeakerIcon_On.webp';
         unmuteMainMenuSounds();
@@ -211,7 +199,6 @@ function toggleSoundIngame() {
     onOffHandlerIngame = document.getElementById('onoff-handler-ingame');
     onOffHandlerHoverIngame = document.getElementById('onoff-handler-hover-ingame');
     speakerIngame = document.getElementById('speaker-ingame');
-
     if (allSoundsMuted) {
         speakerIngame.src = '../assets/GUI/SpeakerIcon_On.webp';
         onOffHandlerIngame.classList.add('onoff-handler-active-ingame');
@@ -227,7 +214,6 @@ function toggleSoundIngame() {
     }
     updateMainMenuMusicButtonState();
 }
-
 
 /**
  * The function `updateIngameMusicButtonState` updates the visual state of an in-game music button
@@ -249,7 +235,6 @@ function updateIngameMusicButtonState() {
     }
 }
 
-
 /**
  * The function `updateMainMenuMusicButtonState` updates the visual state of a main menu music button
  * based on whether all sounds are muted or not.
@@ -269,7 +254,6 @@ function updateMainMenuMusicButtonState() {
         onOffHandlerHover.classList.add('onoff-handler-hover-active');
     }
 }
-
 
 /** 
  * This is handling touch events on a grid of cells (td elements used for the joystick). 
@@ -394,7 +378,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }, { passive: false });
 });
 
-
 /**
  * The function `openIngameMenu` opens the in-game menu by displaying the pause menu and stopping all
  * intervals.
@@ -405,7 +388,6 @@ function openIngameMenu() {
     stopAllIntervals();
     pauseMenu.classList.remove("d-none");
 }
-
 
 /**
  * The function `resumeGame` resumes all intervals and hides the pause menu in a JavaScript game.
@@ -429,7 +411,6 @@ function showIngameControls() {
     ingameMenu.classList.add("d-none");
 }
 
-
 /**
  * The function `closeIngameControls` hides the ingame controls and shows the ingame menu.
  */
@@ -441,14 +422,12 @@ function closeIngameControls() {
     ingameMenu.classList.remove("d-none");
 }
 
-
 /**
  * The function `backToTitleScreen` reloads the current page to go back to the title screen.
  */
 function backToTitleScreen() {
     location.reload();
 }
-
 
 /**
  * The function `startGameMusicTransition` plays game starting sounds, transitions the game starting
@@ -466,7 +445,6 @@ function startGameMusicTransition(gameStartingPage, musicMenu) {
     musicMenu.classList.add("d-none");
     reduceVolume();
 }
-
 
 /**
  * The function `transitionToIngameView` hides main menu elements and shows/updates the ingame music toggle switch 

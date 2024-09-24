@@ -32,7 +32,6 @@ class HealthBarEndboss extends DrawableObject {
         this.setPercentage(-1);
     }
 
-
     /**
      * This function handles the percentage of the endboss's health bar.
      * @param {*} percentage - Represents the amount of health the endboss has.
@@ -43,7 +42,6 @@ class HealthBarEndboss extends DrawableObject {
         this.img = this.imageCache[path];
     }
 
-    
     /**
      * This function determines the health amount to be displayed in the endboss's health bar.
      * @returns - Represents the image index to be shown from the array `IMAGES_HEALTH` depending on the amount of health.

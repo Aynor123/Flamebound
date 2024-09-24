@@ -35,7 +35,6 @@ class PoisonCloud extends MoveableObject {
         this.isResetPoisonCloudHit = true;
     }
 
-
     /**
      * This function sets an interval for the poison cloud's movement and animates the poison cloud.
      */
@@ -51,11 +50,9 @@ class PoisonCloud extends MoveableObject {
                 this.y -= this.speedY;
                 this.speedY -= this.accelerationY;
             }
-
         }, 1000 / 30);
         this.animatePoisonCloud();
     }
-
 
     /**
      * This function animates the poison cloud.
@@ -70,7 +67,6 @@ class PoisonCloud extends MoveableObject {
         }, 1000 / 10);
     }
 
-
     /**
      * This function handles the animation of the poison cloud as soon as the poison cloud collides with the character.
      * @param {*} poisonClouds - Represents an array of poison clouds to be spliced/removed from the world as soon as the poison cloud hits the character.
@@ -83,21 +79,17 @@ class PoisonCloud extends MoveableObject {
             this.isResetPoisonCloudHit = false;
             this.framePoisonCloudHit++;
         }
-
         if (this.framePoisonCloudHit === this.IMAGES_POISON_HIT.length) {
             this.isResetPoisonCloudHit = true;
             this.framePoisonCloudHit = 0;
             poisonClouds.splice(0, 1);
             character.health -= 34;
-
             if (character.health < 0) {
                 character.health = 0;
             }
-
             statusBar.setPercentage(character.health);
         }
     }
-
 
     /**
      * This function handles the animation as soon as the poison cloud hits the ground.
@@ -109,7 +101,6 @@ class PoisonCloud extends MoveableObject {
             this.isResetPoisonCloudHit = false;
             this.framePoisonCloudHit++;
         }
-
         if (this.framePoisonCloudHit === this.IMAGES_POISON_HIT.length) {
             this.isResetPoisonCloudHit = true;
             this.framePoisonCloudHit = 0;

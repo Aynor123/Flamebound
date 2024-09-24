@@ -12,14 +12,13 @@ class Sky extends MoveableObject {
         this.animate();
     }
 
-
     /**
      * This function handles the movement of the sky objects from left to right by calling the function `moveRight`.
      */
     animate() {
         this.moveRight();
     }
-
+    
     /**
      * This function uses an intervals to move the sky object to the right.
      */

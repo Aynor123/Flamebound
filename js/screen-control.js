@@ -19,7 +19,6 @@ window.matchMedia("(orientation: portrait)").addEventListener("change", e => {
     }
 });
 
-
 /**
  * The function `checkScreenOrientation` checks if the screen orientation is portrait and adjusts the
  * game accordingly. It gets called when the user presses the start button.
@@ -41,7 +40,6 @@ function checkScreenOrientation() {
     }
 }
 
-
 /**
  * This function makes the joystick and action butons visible.
  */
@@ -53,7 +51,6 @@ function showMobileControls() {
     actionButtons.classList.remove('d-none');
 }
 
-
 /**
  * This function hides the joystick and anction buttons.
  */
@@ -64,7 +61,6 @@ function hideMobileControls() {
     joystick.classList.add('d-none');
     actionButtons.classList.add('d-none');
 }
-
 
 /**
  * The function `checkMobileDevice` determines if the user is accessing the website from a mobile
@@ -79,7 +75,6 @@ function checkMobileDevice() {
     return /android|iPad|iPhone|iPod|windows phone/i.test(userAgent);
 }
 
-
 document.addEventListener('DOMContentLoaded', function () {
     if (checkMobileDevice()) {
         showMobileControls();
@@ -87,7 +82,6 @@ document.addEventListener('DOMContentLoaded', function () {
         hideMobileControls();
     }
 });
-
 
 /**
  * Generates a loading screen as long as the DOM is not fully loaded. ProgressX 97.5% due to best fitting to the background image. 
@@ -106,7 +100,6 @@ document.addEventListener('DOMContentLoaded', function () {
         loadingPercentage.textContent = progressX + '%';
         opacityBar += 3;
         loadingBar.style.opacity = opacityBar + '%';
-
         if (progressX >= 97.5) {
             clearInterval(loadingInterval);
             loadingPercentage.textContent = progressX + 2 + '%';

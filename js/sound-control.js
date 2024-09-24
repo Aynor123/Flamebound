@@ -18,7 +18,6 @@ start_game_sound.volume = 0.3;
 start_controls_sound.volume = 0.3;
 start_about_sound.volume = 0.3;
 
-
 /** 
 * World Sounds. 
 */
@@ -111,7 +110,6 @@ let reduceSoundVolume = [
     close_sound
 ];
 
-
 /**
  * The function muteIngameSounds mutes all ingame sounds by setting their muted property to true.
  */
@@ -120,7 +118,6 @@ function muteIngameSounds() {
         sound.muted = true;
     });
 }
-
 
 /**
  * The function `unmuteIngameSounds` unmutes all ingame sounds by setting their `muted` property to
@@ -132,7 +129,6 @@ function unmuteIngameSounds() {
     });
 }
 
-
 /**
  * The function `muteMainMenuSounds` mutes all sounds in the `mainMenuSounds` array.
  */
@@ -142,7 +138,6 @@ function muteMainMenuSounds() {
     });
 }
 
-
 /**
  * The function `unmuteMainMenuSounds` unmutes all sounds in the `mainMenuSounds` array.
  */
@@ -152,7 +147,6 @@ function unmuteMainMenuSounds() {
     });
 }
 
-
 /**
  * The function `unmuteMainMenuSounds` unmutes all sounds in the `mainMenuSounds` array.
  */
@@ -161,7 +155,6 @@ function unmuteMainMenuSounds() {
         sound.muted = false;
     });
 }
-
 
 /**
  * The function `reduceVolume` reduces the volume of all sound elements in the `reduceSoundVolume`

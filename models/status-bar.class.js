@@ -24,7 +24,6 @@ class StatusBar extends DrawableObject {
         this.setPercentage(100);
     }
 
-
     /**
      * This function handles the percentage of the character's health bar.
      * @param {*} percentage - Represents the amount of health the character has.
@@ -34,7 +33,6 @@ class StatusBar extends DrawableObject {
         let path = this.IMAGES_HEALTH[this.resolveImageIndex()];
         this.img = this.imageCache[path];
     }
-
 
     /**
      * This function determines the health amount to be displayed in the character's health bar.

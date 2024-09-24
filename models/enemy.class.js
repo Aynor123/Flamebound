@@ -66,7 +66,6 @@ class Enemy extends MoveableObject {
         this.animate();
     }
 
-
     /**
      * This function handles several intervals and movements of the enemies in different frequencies.
      */
@@ -75,7 +74,6 @@ class Enemy extends MoveableObject {
         this.enemyMovementAnimation(10);
         this.enemyDiesAnimation(10);
     }
-
 
     /**
      * This interval handles the enemy's death animation.
@@ -88,7 +86,6 @@ class Enemy extends MoveableObject {
             }
         }, 1000 / ms);
     }
-
 
     /**
      * This function handles all action animations as soon as the character gets in sight of an enemy.
@@ -109,7 +106,6 @@ class Enemy extends MoveableObject {
         }, 1000 / ms);
     }
 
-
     /**
      * This function assures that an enemy loops the walking animation when not colliding/attacking the character.
      */
@@ -118,7 +114,6 @@ class Enemy extends MoveableObject {
             this.playAnimation(this.IMAGES_WALKING);
         }
     }
-
 
     /**
      * This function plays the attack animation as soon as the enemy is colliding with the enemy.
@@ -129,7 +124,6 @@ class Enemy extends MoveableObject {
             this.speed = 0;
         }
     }
-
 
     /**
      * This function handles the enemy's movement on the x-coordinates.
@@ -146,7 +140,6 @@ class Enemy extends MoveableObject {
         }
     }
 
-
     /**
      * This function handles the enemy's movement on the y-coordinates.
      */
@@ -159,7 +152,6 @@ class Enemy extends MoveableObject {
         }
     }
 
-    
     /**
      * This interval handles the enemy's death animation after the game has been previously paused.
      * This assures that an enemy animation will not be played twice once the enemy is dead.
@@ -174,7 +166,6 @@ class Enemy extends MoveableObject {
             }
         }, 1000 / ms);
     }
-
 
     /**
      * This function sets a variable to `true` if the enemy is dead.

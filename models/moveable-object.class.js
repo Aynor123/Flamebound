@@ -21,14 +21,12 @@ class MoveableObject extends DrawableObject {
     frame = 0;
     isReset = true;
 
-
     /**
      * This function sets the jump height.
      */
     jump() {
         this.speedY = 23;
     }
-
 
     /**
      * This function plays a looped animation with the `images` array.
@@ -40,7 +38,6 @@ class MoveableObject extends DrawableObject {
         this.img = this.imageCache[path];
         this.currentImage++;
     }
-
 
     /**
      * This function plays a one time animation and ensures that the animation always starts with the first frame in the `images` array.
@@ -62,7 +59,6 @@ class MoveableObject extends DrawableObject {
         }
     }
 
-
     /**
      * This function is a alternative version of the `playOneTimeAnimation`. It assures that a animation definetly cannot be played
      * more than once (e.g. death animations) by clearing the intervals ID.
@@ -80,7 +76,6 @@ class MoveableObject extends DrawableObject {
         }
     }
 
-
     /**
      * This function reduces the y-value of the character when jumping from in this case twentythree to zero.
      */
@@ -93,7 +88,6 @@ class MoveableObject extends DrawableObject {
         }, 1000 / 60);
     }
 
-
     /**
      * This function returns true if the character is above ground level while jumping.
      * @returns - Represents a boolean.
@@ -102,7 +96,6 @@ class MoveableObject extends DrawableObject {
         return this.y < this.groundLevel;
     }
 
-
     /**
      * This function moves moveable objects to the right of the canvas.
      */
@@ -110,14 +103,12 @@ class MoveableObject extends DrawableObject {
         this.x += this.speed;
     }
 
-
     /**
      * This function moves moveable objects to the left of the canvas.
      */
     moveLeft() {
         this.x -= this.speed;
     }
-
 
     /**
      * This function moves the character up on the canvas. If the character is jumping, this function assures that
@@ -132,7 +123,6 @@ class MoveableObject extends DrawableObject {
         this.groundLevel = this.y;
     }
 
-
     /**
      * This function moves the character down on the canvas. If the character is jumping, this function assures that
      * the character is not landing further down on the y-coordinates.
@@ -146,7 +136,6 @@ class MoveableObject extends DrawableObject {
         this.groundLevel = this.y;
     }
 
-
     /**
      * This function handles the movement of the enemies on the y-coordinates.
      * They cannot jump, whcih is the reason they have a seperate function from the character.
@@ -155,7 +144,6 @@ class MoveableObject extends DrawableObject {
         this.y -= this.speed;
     }
 
-
     /**
      * This function handles the movement of the enemies on the y-coordinates.
      * They cannot jump, whcih is the reason they have a seperate function from the character.
@@ -163,7 +151,6 @@ class MoveableObject extends DrawableObject {
     moveDownEnemy() {
         this.y += this.speed;
     }
-
 
     /**
      * This function checks for collison between the character and enemies.
@@ -177,7 +164,6 @@ class MoveableObject extends DrawableObject {
             this.y + 145 < this.y + 145 + this.height - 145;
     }
 
-
     /**
      * This function checks for collison between a fireball and enemies.
      * @param {*} moveableObject - Represents an object that the fireball is colliding with. Here an enemy.
@@ -189,7 +175,6 @@ class MoveableObject extends DrawableObject {
             this.x - 0 < moveableObject.x + 120 &&
             this.y + 75 < moveableObject.y + 145 + moveableObject.height - 145;
     }
-
 
     /**
      * The function `isCollidingManaPortion` checks for collision between a character and a mana portion
@@ -209,7 +194,6 @@ class MoveableObject extends DrawableObject {
             this.y + 145 < moveableObject.y + 60 + moveableObject.height - 115;
     }
 
-
     /**
      * This function checks for collison between a poison cloud and the character.
      * @param {*} moveableObject - Represents the poison cloud object.
@@ -221,7 +205,6 @@ class MoveableObject extends DrawableObject {
             this.y + 175 < moveableObject.y + 145 + moveableObject.height - 145 &&
             this.y + 175 + this.height - 355 > moveableObject.y + 145;
     }
-
 
     /**
      * This function handles the time gap between possible hits and reduces the health.
@@ -235,7 +218,6 @@ class MoveableObject extends DrawableObject {
         }
     }
 
-
     /**
      * This function returns a health value of zero.
      * @returns This function returns a boolean depening on whether the health is zero.
@@ -243,7 +225,6 @@ class MoveableObject extends DrawableObject {
     isDead() {
         return this.health == 0;
     }
-
 
     /**
      * This function handles the time gap between hits.
@@ -255,7 +236,6 @@ class MoveableObject extends DrawableObject {
         return timePassed < 0.8;
     }
 
-
     /**
      * This function handles the casting request of the character.
      * @returns This returns a boolean depending whether the character is currently casting a fireball.
@@ -263,7 +243,6 @@ class MoveableObject extends DrawableObject {
     isCasting() {
         return this.casting == true;
     }
-
 
     /**
      * This function handles the mana reduction if the character is casting a fireball.
@@ -274,7 +253,6 @@ class MoveableObject extends DrawableObject {
             this.mana = 0;
         }
     }
-
 
     /**
      * This function handles the timout between possible hits when the cgaracter is colliding with enemies.

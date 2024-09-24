@@ -33,7 +33,6 @@ class ThrowableObject extends MoveableObject {
         this.isReset = true;
     }
 
-
     /**
      * This function handles the offset and movement of a fireball, so that it looks like the fireball comes directly
      * out of the character's hand and accelerates when moving away from the character.
@@ -57,7 +56,6 @@ class ThrowableObject extends MoveableObject {
         }
     }
 
-
     /**
      * This function handles the animation of a flying fireball.
      */
@@ -69,7 +67,6 @@ class ThrowableObject extends MoveableObject {
             this.currentImage++;
         }, 1000 / 10);
     }
-
 
     /**
      * This function handles the hit animation if a fireball collides with an enemy and removes the fireball object from the 
