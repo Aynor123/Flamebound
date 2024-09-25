@@ -5,16 +5,22 @@
 window.matchMedia("(orientation: portrait)").addEventListener("change", e => {
     let portrait = e.matches;
     let portraitScreen = document.getElementById('portrait-screen');
+    let turnDeviceVideo = document.getElementById('turn-device-video');
+    let fallbackImage = document.getElementById('fallbackImage');
 
     if (portrait) {
-        portraitScreen.classList.remove('d-none');
+        portraitScreen.classList.remove('d-none'); //exchange with 'remove' instead of 'add' and delete the fallbackImage.
         stopAllIntervals();
         gamePaused = true;
+        turnDeviceVideo.play();
+        fallbackImage.style.display = 'block';
         checkMobileDevice();
     } else {
         portraitScreen.classList.add('d-none');
         resumeAllIntervals();
         gamePaused = false;
+        turnDeviceVideo.pause();
+        fallbackImage.style.display = 'none';
         checkMobileDevice();
     }
 });
@@ -26,16 +32,22 @@ window.matchMedia("(orientation: portrait)").addEventListener("change", e => {
 function checkScreenOrientation() {
     let portrait = window.matchMedia("(orientation: portrait)").matches;
     let portraitScreen = document.getElementById('portrait-screen');
+    let turnDeviceVideo = document.getElementById('turn-device-video');
+    let fallbackImage = document.getElementById('fallbackImage');
 
     if (portrait) {
-        portraitScreen.classList.remove('d-none');
+        portraitScreen.classList.remove('d-none'); //exchange with 'remove' instead of 'add' and delete the fallbackImage.
         stopAllIntervals();
         gamePaused = true;
+        turnDeviceVideo.play();
+        fallbackImage.style.display = 'block';
         checkMobileDevice();
     } else {
         portraitScreen.classList.add('d-none');
         resumeAllIntervals();
         gamePaused = false;
+        turnDeviceVideo.pause();
+        fallbackImage.style.display = 'none';
         checkMobileDevice();
     }
 }

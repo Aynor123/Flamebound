@@ -185,10 +185,11 @@
     <!-- Screen Rotation -->
     <div class="portrait-screen d-none" id="portrait-screen">
         <!-- <img src="../assets/Mobile/Rotate_150px.gif"> -->
-        <video autoplay muted loop playsinline width="100%" height="auto">
+        <video id="turn-device-video" muted loop playsinline width="100%" height="auto" poster="../assets/Mobile/phone_rotation_gif.gif">
             <source src="../assets/Mobile/phone_rotation.mp4" type="video/mp4">
             Your browser does not support the video tag.
         </video>
+        <img id="fallbackImage" src="../assets/Mobile/phone_rotation_gif.gif" alt="Rotate Device" style="display:none; width:100%; height:auto;">
     </div>
 
     <!-- Control Section -->
