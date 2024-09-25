@@ -5,21 +5,18 @@
 window.matchMedia("(orientation: portrait)").addEventListener("change", e => {
     let portrait = e.matches;
     let portraitScreen = document.getElementById('portrait-screen');
-    let turnDeviceVideo = document.getElementById('turn-device-video');
     let fallbackImage = document.getElementById('fallbackImage');
 
     if (portrait) {
-        portraitScreen.classList.remove('d-none'); //exchange with 'remove' instead of 'add' and delete the fallbackImage.
+        portraitScreen.classList.remove('d-none');
         stopAllIntervals();
         gamePaused = true;
-        turnDeviceVideo.play();
         fallbackImage.style.display = 'block';
         checkMobileDevice();
     } else {
         portraitScreen.classList.add('d-none');
         resumeAllIntervals();
         gamePaused = false;
-        turnDeviceVideo.pause();
         fallbackImage.style.display = 'none';
         checkMobileDevice();
     }
@@ -32,21 +29,18 @@ window.matchMedia("(orientation: portrait)").addEventListener("change", e => {
 function checkScreenOrientation() {
     let portrait = window.matchMedia("(orientation: portrait)").matches;
     let portraitScreen = document.getElementById('portrait-screen');
-    let turnDeviceVideo = document.getElementById('turn-device-video');
     let fallbackImage = document.getElementById('fallbackImage');
 
     if (portrait) {
-        portraitScreen.classList.remove('d-none'); //exchange with 'remove' instead of 'add' and delete the fallbackImage.
+        portraitScreen.classList.remove('d-none'); 
         stopAllIntervals();
         gamePaused = true;
-        turnDeviceVideo.play();
         fallbackImage.style.display = 'block';
         checkMobileDevice();
     } else {
         portraitScreen.classList.add('d-none');
         resumeAllIntervals();
         gamePaused = false;
-        turnDeviceVideo.pause();
         fallbackImage.style.display = 'none';
         checkMobileDevice();
     }
@@ -90,6 +84,9 @@ function checkMobileDevice() {
 document.addEventListener('DOMContentLoaded', function () {
     if (checkMobileDevice()) {
         showMobileControls();
+        if (gameStarted) {
+            openFullScreen();
+        }
     } else {
         hideMobileControls();
     }
@@ -154,4 +151,37 @@ function transitionToIngameView(gameStartingPage, legal, musicMenuIngame, mobile
  */
 function backToTitleScreen() {
     location.reload();
+}
+
+function setFullScreenStyles(element) {
+    element.style.width = "100vw";
+    element.style.height = "100vh";
+    element.style.position = "absolute";
+    element.style.top = "0";
+    element.style.left = "0";
+}
+
+function openFullScreen() {
+    let elements = [
+        document.getElementById('canvas'), 
+        document.getElementById('mobile-overlay'),
+        document.getElementById('control-fullscreen'),
+        document.getElementById('defeat-screen'),
+        document.getElementById('victory-screen'),
+        document.getElementById('defeat-cont'),
+        document.getElementById('victory-cont')
+    ];
+
+    elements.forEach(setFullScreenStyles);
+
+    let body = document.body;
+    if (body.requestFullscreen) {
+        body.requestFullscreen();
+    } else if (body.mozRequestFullScreen) { // Firefox
+        body.mozRequestFullScreen();
+    } else if (body.webkitRequestFullscreen) { // Chrome, Safari, Opera
+        body.webkitRequestFullscreen();
+    } else if (body.msRequestFullscreen) { // IE/Edge
+        body.msRequestFullscreen();
+    }
 }

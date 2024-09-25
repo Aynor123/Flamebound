@@ -99,7 +99,7 @@
 
     <!-- Game Over Section Defeat -->
     <div class="game-over-defeat-cont d-none" id="defeat-screen">
-        <div class="defeat-cont">
+        <div class="defeat-cont" id="defeat-cont">
             <h1 class="fire-text-defeat headline">Defeated</h1>
             <div class="menu-btn" onclick="backToTitleScreen()">
                 <span class="golden-text-menu">Back to title</span>
@@ -109,7 +109,7 @@
 
     <!-- Game Over Section Victory -->
     <div class="game-over-defeat-cont d-none" id="victory-screen">
-        <div class="defeat-cont">
+        <div class="defeat-cont" id="victory-cont">
             <h1 class="fire-text-defeat headline">Victory</h1>
             <div class="menu-btn" onclick="backToTitleScreen()">
                 <span class="golden-text-menu">Back to title</span>
@@ -119,7 +119,7 @@
 
     <!-- Mobile-Section -->
     <div class="mobile-cont d-none" id="mobile-overlay">
-        <div class="mobile-canvas-wrapper">
+        <div class="mobile-canvas-wrapper" id="control-fullscreen">
             <div class="mobile-music-cont">
                 <div class="speaker-slider-menu-wrapper">
                     <div class="in-game-menu d-none" id="in-game-menu">
@@ -184,11 +184,6 @@
 
     <!-- Screen Rotation -->
     <div class="portrait-screen d-none" id="portrait-screen">
-        <!-- <img src="../assets/Mobile/Rotate_150px.gif"> -->
-        <video id="turn-device-video" muted loop playsinline width="100%" height="auto" poster="../assets/Mobile/phone_rotation_gif.gif">
-            <source src="../assets/Mobile/phone_rotation.mp4" type="video/mp4">
-            Your browser does not support the video tag.
-        </video>
         <img id="fallbackImage" src="../assets/Mobile/phone_rotation_gif.gif" alt="Rotate Device" style="display:none; width:100%; height:auto;">
     </div>
 

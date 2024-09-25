@@ -116,6 +116,14 @@ function startGame() {
     } else {
         unmuteIngameSounds();
     }
+    if (checkMobileDevice()) {
+        showMobileControls();
+        if (gameStarted) {
+            openFullScreen();
+        }
+    } else {
+        hideMobileControls();
+    }
 }
 
 /**
